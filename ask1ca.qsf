@@ -1,0 +1,131 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2013 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+# Date created = 14:16:17  February 24, 2014
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		klok1_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY Cyclone
+set_global_assignment -name DEVICE EP1C3T144C8
+set_global_assignment -name TOP_LEVEL_ENTITY klok1
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:16:17  FEBRUARY 24, 2014"
+set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
+set_global_assignment -name DEVICE_FILTER_PACKAGE TQFP
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 144
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 8
+set_global_assignment -name QSYS_FILE klok1.qsys
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+set_location_assignment PIN_17 -to clk_clk
+set_location_assignment PIN_4 -to reset_reset_n
+set_location_assignment PIN_113 -to sram_conduit_end_ADDR[16]
+set_location_assignment PIN_112 -to sram_conduit_end_ADDR[15]
+set_location_assignment PIN_111 -to sram_conduit_end_ADDR[14]
+set_location_assignment PIN_110 -to sram_conduit_end_ADDR[13]
+set_location_assignment PIN_104 -to sram_conduit_end_ADDR[12]
+set_location_assignment PIN_103 -to sram_conduit_end_ADDR[11]
+set_location_assignment PIN_100 -to sram_conduit_end_ADDR[10]
+set_location_assignment PIN_99 -to sram_conduit_end_ADDR[9]
+set_location_assignment PIN_98 -to sram_conduit_end_ADDR[8]
+set_location_assignment PIN_97 -to sram_conduit_end_ADDR[7]
+set_location_assignment PIN_96 -to sram_conduit_end_ADDR[6]
+set_location_assignment PIN_85 -to sram_conduit_end_ADDR[5]
+set_location_assignment PIN_84 -to sram_conduit_end_ADDR[4]
+set_location_assignment PIN_75 -to sram_conduit_end_ADDR[3]
+set_location_assignment PIN_74 -to sram_conduit_end_ADDR[2]
+set_location_assignment PIN_73 -to sram_conduit_end_ADDR[1]
+set_location_assignment PIN_72 -to sram_conduit_end_ADDR[0]
+set_location_assignment PIN_76 -to sram_conduit_end_CE_n
+set_location_assignment PIN_108 -to sram_conduit_end_DQ[7]
+set_location_assignment PIN_107 -to sram_conduit_end_DQ[6]
+set_location_assignment PIN_106 -to sram_conduit_end_DQ[5]
+set_location_assignment PIN_105 -to sram_conduit_end_DQ[4]
+set_location_assignment PIN_82 -to sram_conduit_end_DQ[3]
+set_location_assignment PIN_79 -to sram_conduit_end_DQ[2]
+set_location_assignment PIN_78 -to sram_conduit_end_DQ[1]
+set_location_assignment PIN_77 -to sram_conduit_end_DQ[0]
+set_location_assignment PIN_83 -to sram_conduit_end_WE_n
+set_location_assignment PIN_109 -to sram_conduit_end_OE_n
+set_location_assignment PIN_141 -to uart_0_external_connection_rxd
+set_location_assignment PIN_142 -to uart_0_external_connection_txd
+set_location_assignment PIN_34 -to leds_0_conduit_end_export[7]
+set_location_assignment PIN_33 -to leds_0_conduit_end_export[6]
+set_location_assignment PIN_32 -to leds_0_conduit_end_export[5]
+set_location_assignment PIN_31 -to leds_0_conduit_end_export[4]
+set_location_assignment PIN_28 -to leds_0_conduit_end_export[3]
+set_location_assignment PIN_27 -to leds_0_conduit_end_export[2]
+set_location_assignment PIN_11 -to leds_0_conduit_end_export[1]
+set_location_assignment PIN_10 -to leds_0_conduit_end_export[0]
+set_location_assignment PIN_35 -to segment_0_en_readdata[7]
+set_location_assignment PIN_36 -to segment_0_en_readdata[6]
+set_location_assignment PIN_37 -to segment_0_en_readdata[5]
+set_location_assignment PIN_38 -to segment_0_en_readdata[4]
+set_location_assignment PIN_51 -to segment_0_en_readdata[3]
+set_location_assignment PIN_52 -to segment_0_en_readdata[2]
+set_location_assignment PIN_53 -to segment_0_en_readdata[1]
+set_location_assignment PIN_56 -to segment_0_en_readdata[0]
+set_location_assignment PIN_48 -to segment_0_seg_data_readdata[7]
+set_location_assignment PIN_50 -to segment_0_seg_data_readdata[6]
+set_location_assignment PIN_40 -to segment_0_seg_data_readdata[5]
+set_location_assignment PIN_42 -to segment_0_seg_data_readdata[4]
+set_location_assignment PIN_47 -to segment_0_seg_data_readdata[3]
+set_location_assignment PIN_49 -to segment_0_seg_data_readdata[2]
+set_location_assignment PIN_41 -to segment_0_seg_data_readdata[1]
+set_location_assignment PIN_39 -to segment_0_seg_data_readdata[0]
+set_location_assignment PIN_5 -to buttons_external_connection_export[2]
+set_location_assignment PIN_6 -to buttons_external_connection_export[1]
+set_location_assignment PIN_7 -to buttons_external_connection_export[0]
+
+set_location_assignment PIN_119 -to vga_0_conduit_end_b
+set_location_assignment PIN_121 -to vga_0_conduit_end_g
+set_location_assignment PIN_129 -to vga_0_conduit_end_hsync
+set_location_assignment PIN_123 -to vga_0_conduit_end_r
+set_location_assignment PIN_128 -to vga_0_conduit_end_vsync
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_location_assignment PIN_59 -to ds1302_clk_external_connection_export
+set_location_assignment PIN_60 -to ds1302_io_external_connection_export
+set_location_assignment PIN_58 -to ds1302_reset_external_connection_export
+
+
+set_global_assignment -name GENERATE_TTF_FILE ON
+set_global_assignment -name GENERATE_RBF_FILE ON
+set_global_assignment -name GENERATE_SVF_FILE ON
+set_global_assignment -name GENERATE_JAM_FILE ON
+set_global_assignment -name GENERATE_JBC_FILE ON
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
