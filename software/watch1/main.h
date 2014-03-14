@@ -6,6 +6,8 @@
 #include "segment.h"
 #include "buttons.h"
 
+class Watch;
+
 class Leds
 {
 public:
@@ -32,6 +34,7 @@ class DisplayTimeMode : public AbstractMode
 {
 public:
     DisplayTimeMode();
+    DisplayTimeMode(Watch *);
     void increase();
 };
 
@@ -75,7 +78,7 @@ private:
     JtagUart *jtagUart;
     Leds *leds;
     Buttons *buttons;
-    TimeDisplay segDisplay;
+    TimeDisplay *segDisplay;
     Timer *timer;
     RTC *rtc;
     static const uint8_t DISPLAY_TIME_MODE = 1;

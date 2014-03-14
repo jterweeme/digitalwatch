@@ -54,19 +54,29 @@ DisplayTimeMode::DisplayTimeMode()
 {
 }
 
+DisplayTimeMode::DisplayTimeMode(Watch *watch)
+{
+    watch->getLeds()->write(~1);
+    watch->getTimeDisplay()->setBlinkMask(0);
+}
+
 IncrementHoursMode::IncrementHoursMode()
 {
-    Watch::getInstance()->getLeds()->write(~2);
+    Watch *watch = Watch::getInstance();
+    watch->getLeds()->write(~2);
+    watch->getTimeDisplay()->setBlinkMask(0x0c);
 }
 
 IncrementMinutesMode::IncrementMinutesMode()
 {
-    Watch::getInstance()->getLeds()->write(~4);
+    Watch *watch = Watch::getInstance();
+    watch->getLeds()->write(~4);
+    watch->getTimeDisplay()->setBlinkMask(3);
 }
 
 TimeDisplay *Watch::getTimeDisplay()
 {
-    return &segDisplay;
+    return segDisplay;
 }
 
 JtagUart::JtagUart()
@@ -107,13 +117,15 @@ void JtagUart::puts(const char *s)
 
 void Watch::nextMode()
 {
+    delete mode2;
+
     if (++mode > INCREMENT_MINUTES_MODE)
         mode = DISPLAY_TIME_MODE;
 
     switch (mode)
     {
         case DISPLAY_TIME_MODE:
-            mode2 = new DisplayTimeMode();
+            mode2 = new DisplayTimeMode(this);
             break;
         case INCREMENT_HOURS_MODE:
             mode2 = new IncrementHoursMode();
@@ -130,8 +142,9 @@ void Watch::nextMode()
 void Watch::init()
 {
     leds = new Leds();
+    segDisplay = new TimeDisplay();
     mode = DISPLAY_TIME_MODE;
-    mode2 = new DisplayTimeMode();
+    mode2 = new DisplayTimeMode(this);
     Uart::getInstance()->puts("Initializing Digital Watch...\r\n");
     RTCFactory rtcFactory;
     rtc = rtcFactory.createRTC();

@@ -10,16 +10,21 @@ public:
     SegDisplay();
     void write(uint32_t);
 private:
-    void init();
     volatile uint32_t *handle;
+protected:
+    void init();
+    volatile uint8_t *blinkMask;
 };
 
 class TimeDisplay : public SegDisplay
 {
 public:
+    TimeDisplay();
+    void init();
     void setMinutes(uint8_t);
     void setTime(uint8_t, uint8_t);
     void setTime(TimeStamp *);
+    void setBlinkMask(uint8_t);
     static uint8_t lookup[];
 };
 
