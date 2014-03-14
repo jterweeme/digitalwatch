@@ -92,14 +92,6 @@
          type = "int";
       }
    }
-   element leds_1
-   {
-      datum _sortIndex
-      {
-         value = "13";
-         type = "int";
-      }
-   }
    element nios2_qsys_0
    {
       datum _sortIndex
@@ -116,35 +108,11 @@
          type = "String";
       }
    }
-   element ds1302_reset.s1
-   {
-      datum baseAddress
-      {
-         value = "266384";
-         type = "String";
-      }
-   }
-   element uart_0.s1
-   {
-      datum baseAddress
-      {
-         value = "266304";
-         type = "String";
-      }
-   }
    element buttons.s1
    {
       datum baseAddress
       {
          value = "266416";
-         type = "String";
-      }
-   }
-   element ds1302_io.s1
-   {
-      datum baseAddress
-      {
-         value = "266240";
          type = "String";
       }
    }
@@ -164,19 +132,35 @@
          type = "String";
       }
    }
+   element uart_0.s1
+   {
+      datum baseAddress
+      {
+         value = "266304";
+         type = "String";
+      }
+   }
+   element ds1302_io.s1
+   {
+      datum baseAddress
+      {
+         value = "266240";
+         type = "String";
+      }
+   }
+   element ds1302_reset.s1
+   {
+      datum baseAddress
+      {
+         value = "266384";
+         type = "String";
+      }
+   }
    element leds_0.slave
    {
       datum baseAddress
       {
          value = "266352";
-         type = "String";
-      }
-   }
-   element leds_1.slave
-   {
-      datum baseAddress
-      {
-         value = "266336";
          type = "String";
       }
    }
@@ -235,7 +219,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1394830812348" />
+ <parameter name="timeStamp" value="1394837251551" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -283,11 +267,6 @@
  <interface
    name="leds_0_conduit_end"
    internal="leds_0.conduit_end"
-   type="conduit"
-   dir="end" />
- <interface
-   name="leds_1_conduit_end"
-   internal="leds_1.conduit_end"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk_0">
@@ -402,7 +381,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x40800' end='0x41000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x40800' end='0x41000' /><slave name='ds1302_io.s1' start='0x41000' end='0x41020' /><slave name='timer_0.s1' start='0x41020' end='0x41040' /><slave name='uart_0.s1' start='0x41040' end='0x41060' /><slave name='leds_1.slave' start='0x41060' end='0x41070' /><slave name='leds_0.slave' start='0x41070' end='0x41080' /><slave name='slave_template_0.s0' start='0x41080' end='0x41090' /><slave name='ds1302_reset.s1' start='0x41090' end='0x410A0' /><slave name='ds1302_clk.s1' start='0x410A0' end='0x410B0' /><slave name='buttons.s1' start='0x410B0' end='0x410C0' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x410C0' end='0x410C8' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x40800' end='0x41000' /><slave name='ds1302_io.s1' start='0x41000' end='0x41020' /><slave name='timer_0.s1' start='0x41020' end='0x41040' /><slave name='uart_0.s1' start='0x41040' end='0x41060' /><slave name='leds_0.slave' start='0x41070' end='0x41080' /><slave name='slave_template_0.s0' start='0x41080' end='0x41090' /><slave name='ds1302_reset.s1' start='0x41090' end='0x410A0' /><slave name='ds1302_clk.s1' start='0x410A0' end='0x410B0' /><slave name='buttons.s1' start='0x410B0' end='0x410C0' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x410C0' end='0x410C8' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone" />
   <parameter name="internalIrqMaskSystemInfo" value="15" />
@@ -558,9 +537,6 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone" />
  </module>
  <module kind="leds2" version="1.0" enabled="1" name="leds_0">
-  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
- </module>
- <module kind="leds" version="1.0" enabled="1" name="leds_1">
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <connection
@@ -781,21 +757,6 @@
    end="leds_0.slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00041070" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection kind="clock" version="13.0" start="clk_0.clk" end="leds_1.clock" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="leds_1.reset" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="nios2_qsys_0.data_master"
-   end="leds_1.slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00041060" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
