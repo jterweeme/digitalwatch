@@ -104,11 +104,8 @@ set_interface_property slave PORT_NAME_MAP ""
 set_interface_property slave SVD_ADDRESS_GROUP ""
 
 add_interface_port slave slave_address address Input 4
-add_interface_port slave slave_read read Input 1
 add_interface_port slave slave_write write Input 1
-add_interface_port slave slave_readdata readdata Output 8
 add_interface_port slave slave_writedata writedata Input 8
-add_interface_port slave slave_byteenable byteenable Input 1
 set_interface_assignment slave embeddedsw.configuration.isFlash 0
 set_interface_assignment slave embeddedsw.configuration.isMemoryDevice 0
 set_interface_assignment slave embeddedsw.configuration.isNonVolatileStorage 0
