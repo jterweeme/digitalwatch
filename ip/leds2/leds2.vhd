@@ -14,7 +14,7 @@ begin
     ledjes: process(clk, reset) begin
         if reset = '1' then
             user_dataout_0 <= (others => '0');
-        elsif slave_write = '1' then
+        elsif slave_write = '1' and rising_edge(clk) then
             user_dataout_0 <= slave_writedata;
         end if;
     end process;
