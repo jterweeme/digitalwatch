@@ -48,7 +48,7 @@
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "9";
          type = "int";
       }
    }
@@ -56,7 +56,7 @@
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "8";
          type = "int";
       }
    }
@@ -64,7 +64,7 @@
    {
       datum _sortIndex
       {
-         value = "11";
+         value = "10";
          type = "int";
       }
    }
@@ -80,7 +80,7 @@
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "11";
          type = "int";
       }
    }
@@ -108,22 +108,6 @@
          type = "String";
       }
    }
-   element ds1302_clk.s1
-   {
-      datum baseAddress
-      {
-         value = "266496";
-         type = "String";
-      }
-   }
-   element uart_0.s1
-   {
-      datum baseAddress
-      {
-         value = "266432";
-         type = "String";
-      }
-   }
    element ds1302_io.s1
    {
       datum baseAddress
@@ -140,11 +124,11 @@
          type = "String";
       }
    }
-   element timer_0.s1
+   element ds1302_clk.s1
    {
       datum baseAddress
       {
-         value = "266400";
+         value = "266496";
          type = "String";
       }
    }
@@ -156,12 +140,20 @@
          type = "String";
       }
    }
-   element segment_0
+   element timer_0.s1
    {
-      datum _sortIndex
+      datum baseAddress
       {
-         value = "7";
-         type = "int";
+         value = "266400";
+         type = "String";
+      }
+   }
+   element uart_0.s1
+   {
+      datum baseAddress
+      {
+         value = "266432";
+         type = "String";
       }
    }
    element leds_0.slave
@@ -172,19 +164,11 @@
          type = "String";
       }
    }
-   element segment_0.slave
-   {
-      datum baseAddress
-      {
-         value = "266240";
-         type = "String";
-      }
-   }
    element slave_template_0
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "12";
          type = "int";
       }
    }
@@ -200,7 +184,7 @@
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "7";
          type = "int";
       }
    }
@@ -235,7 +219,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1394575697026" />
+ <parameter name="timeStamp" value="1394753707401" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -263,12 +247,6 @@
  <interface
    name="vga_0_conduit_end"
    internal="vga_0.conduit_end"
-   type="conduit"
-   dir="end" />
- <interface name="segment_0_en" internal="segment_0.en" type="conduit" dir="end" />
- <interface
-   name="segment_0_seg_data"
-   internal="segment_0.seg_data"
    type="conduit"
    dir="end" />
  <interface
@@ -403,7 +381,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x40800' end='0x41000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x40800' end='0x41000' /><slave name='segment_0.slave' start='0x41000' end='0x41080' /><slave name='ds1302_io.s1' start='0x41080' end='0x410A0' /><slave name='timer_0.s1' start='0x410A0' end='0x410C0' /><slave name='uart_0.s1' start='0x410C0' end='0x410E0' /><slave name='slave_template_0.s0' start='0x410E0' end='0x410F0' /><slave name='ds1302_reset.s1' start='0x410F0' end='0x41100' /><slave name='ds1302_clk.s1' start='0x41100' end='0x41110' /><slave name='buttons.s1' start='0x41110' end='0x41120' /><slave name='leds_0.slave' start='0x41120' end='0x41130' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x41130' end='0x41138' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x40800' end='0x41000' /><slave name='ds1302_io.s1' start='0x41080' end='0x410A0' /><slave name='timer_0.s1' start='0x410A0' end='0x410C0' /><slave name='uart_0.s1' start='0x410C0' end='0x410E0' /><slave name='slave_template_0.s0' start='0x410E0' end='0x410F0' /><slave name='ds1302_reset.s1' start='0x410F0' end='0x41100' /><slave name='ds1302_clk.s1' start='0x41100' end='0x41110' /><slave name='buttons.s1' start='0x41110' end='0x41120' /><slave name='leds_0.slave' start='0x41120' end='0x41130' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x41130' end='0x41138' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone" />
   <parameter name="internalIrqMaskSystemInfo" value="15" />
@@ -460,14 +438,9 @@
   <parameter name="clockRate" value="50000000" />
  </module>
  <module kind="sram" version="1.0" enabled="1" name="sram_0">
-  <parameter name="DATA_BITS" value="8" />
-  <parameter name="ADDR_BITS" value="20" />
   <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="50000000" />
  </module>
  <module kind="vga" version="1.0" enabled="1" name="vga_0">
-  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
- </module>
- <module kind="segment" version="1.0" enabled="1" name="segment_0">
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <module
@@ -562,24 +535,7 @@
    version="1.0"
    enabled="1"
    name="slave_template_0">
-  <parameter name="DATA_WIDTH" value="8" />
   <parameter name="ENABLE_SYNC_SIGNALS" value="0" />
-  <parameter name="MODE_0" value="1" />
-  <parameter name="MODE_1" value="1" />
-  <parameter name="MODE_2" value="1" />
-  <parameter name="MODE_3" value="4" />
-  <parameter name="MODE_4" value="4" />
-  <parameter name="MODE_5" value="4" />
-  <parameter name="MODE_6" value="4" />
-  <parameter name="MODE_7" value="4" />
-  <parameter name="MODE_8" value="4" />
-  <parameter name="MODE_9" value="4" />
-  <parameter name="MODE_10" value="4" />
-  <parameter name="MODE_11" value="4" />
-  <parameter name="MODE_12" value="4" />
-  <parameter name="MODE_13" value="4" />
-  <parameter name="MODE_14" value="4" />
-  <parameter name="MODE_15" value="4" />
   <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone" />
  </module>
@@ -695,21 +651,6 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="clock" version="13.0" start="clk_0.clk" end="vga_0.clock" />
- <connection kind="clock" version="13.0" start="clk_0.clk" end="segment_0.clock" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="segment_0.reset" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="nios2_qsys_0.data_master"
-   end="segment_0.slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00041000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection kind="clock" version="13.0" start="clk_0.clk" end="timer_0.clk" />
  <connection
    kind="reset"

@@ -8,7 +8,13 @@ CHAIN = ask1ca_jtag
 all:
 	quartus_sh --flow compile $(NAAM) -c $(BOARD)
 
-upload:
+download:
 	quartus_pgm $(CHAIN).cdf
+
+urjtag:
+	jtag ask1ca_urjtag.cmd
+
+clean:
+	rm -Rvf db incremental_db *.rpt *.summary *.smsg *.sof *.pof *.sopcinfo *.pin *.svf
 
 

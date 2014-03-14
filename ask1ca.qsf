@@ -92,22 +92,6 @@ set_location_assignment PIN_28 -to leds_0_conduit_end_export[3]
 set_location_assignment PIN_27 -to leds_0_conduit_end_export[2]
 set_location_assignment PIN_11 -to leds_0_conduit_end_export[1]
 set_location_assignment PIN_10 -to leds_0_conduit_end_export[0]
-set_location_assignment PIN_35 -to segment_0_en_readdata[7]
-set_location_assignment PIN_36 -to segment_0_en_readdata[6]
-set_location_assignment PIN_37 -to segment_0_en_readdata[5]
-set_location_assignment PIN_38 -to segment_0_en_readdata[4]
-set_location_assignment PIN_51 -to segment_0_en_readdata[3]
-set_location_assignment PIN_52 -to segment_0_en_readdata[2]
-set_location_assignment PIN_53 -to segment_0_en_readdata[1]
-set_location_assignment PIN_56 -to segment_0_en_readdata[0]
-set_location_assignment PIN_48 -to segment_0_seg_data_readdata[7]
-set_location_assignment PIN_50 -to segment_0_seg_data_readdata[6]
-set_location_assignment PIN_40 -to segment_0_seg_data_readdata[5]
-set_location_assignment PIN_42 -to segment_0_seg_data_readdata[4]
-set_location_assignment PIN_47 -to segment_0_seg_data_readdata[3]
-set_location_assignment PIN_49 -to segment_0_seg_data_readdata[2]
-set_location_assignment PIN_41 -to segment_0_seg_data_readdata[1]
-set_location_assignment PIN_39 -to segment_0_seg_data_readdata[0]
 set_location_assignment PIN_5 -to buttons_external_connection_export[2]
 set_location_assignment PIN_6 -to buttons_external_connection_export[1]
 set_location_assignment PIN_7 -to buttons_external_connection_export[0]
@@ -117,7 +101,6 @@ set_location_assignment PIN_121 -to vga_0_conduit_end_g
 set_location_assignment PIN_129 -to vga_0_conduit_end_hsync
 set_location_assignment PIN_123 -to vga_0_conduit_end_r
 set_location_assignment PIN_128 -to vga_0_conduit_end_vsync
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_location_assignment PIN_59 -to ds1302_clk_external_connection_export
 set_location_assignment PIN_60 -to ds1302_io_external_connection_export
 set_location_assignment PIN_58 -to ds1302_reset_external_connection_export
@@ -129,3 +112,21 @@ set_global_assignment -name GENERATE_SVF_FILE ON
 set_global_assignment -name GENERATE_JAM_FILE ON
 set_global_assignment -name GENERATE_JBC_FILE ON
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_location_assignment PIN_48 -to slave_template_0_user_interface_0[7]
+set_location_assignment PIN_50 -to slave_template_0_user_interface_0[6]
+set_location_assignment PIN_40 -to slave_template_0_user_interface_0[5]
+set_location_assignment PIN_42 -to slave_template_0_user_interface_0[4]
+set_location_assignment PIN_47 -to slave_template_0_user_interface_0[3]
+set_location_assignment PIN_49 -to slave_template_0_user_interface_0[2]
+set_location_assignment PIN_41 -to slave_template_0_user_interface_0[1]
+set_location_assignment PIN_39 -to slave_template_0_user_interface_0[0]
+set_location_assignment PIN_56 -to slave_template_0_user_interface_1[7]
+set_location_assignment PIN_53 -to slave_template_0_user_interface_1[6]
+set_location_assignment PIN_52 -to slave_template_0_user_interface_1[5]
+set_location_assignment PIN_51 -to slave_template_0_user_interface_1[4]
+set_location_assignment PIN_38 -to slave_template_0_user_interface_1[3]
+set_location_assignment PIN_37 -to slave_template_0_user_interface_1[2]
+set_location_assignment PIN_36 -to slave_template_0_user_interface_1[1]
+set_location_assignment PIN_35 -to slave_template_0_user_interface_1[0]
