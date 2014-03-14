@@ -24,3 +24,6 @@ buttons.o: buttons.cpp buttons.h observer.h
 download: main.elf
 	nios2-download -g $<
 
+clean:
+	rm -v *.o
+

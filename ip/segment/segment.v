@@ -29,12 +29,8 @@ module segment(clk, reset, slave_address, slave_read,
     assign address_bank_decode[0] = (address_decode_d1[3:0] != 0)? 1'b1 : 1'b0;
     assign blinkmask = 8'b11111111;
 
-    always @(posedge clk or posedge reset)
-    begin
-    if (reset == 1)
-        cnt <= 0;
-    else
-        cnt <= cnt + 1;
+    always @(posedge clk or posedge reset) begin
+        cnt <= (reset == 1) ? 0 : cnt + 1;
     end
 
     always @(cnt[26:17])
@@ -91,7 +87,7 @@ module segment(clk, reset, slave_address, slave_read,
     if (reset == 1)
         slave_readdata <= 0;
     else
-    begin
+      begin
         if (slave_read_d1 == 1)
         begin
             case (address_decode_d1[3:0])
@@ -108,7 +104,7 @@ module segment(clk, reset, slave_address, slave_read,
                 4'b1000: slave_readdata <= mux_first_stage_d;
             endcase
         end
-    end
+      end
     end
 
 endmodule
