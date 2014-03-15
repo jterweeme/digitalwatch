@@ -11,30 +11,6 @@ DS1302::DS1302()
     init();
 }
 
-FallBackRTC::FallBackRTC()
-{
-}
-
-TimeStamp::TimeStamp(ds1302_struct ds)
-{
-    this->ds = ds;
-}
-
-int DS1302::bcd2bin(int hi, int lo)
-{
-    return hi * 10 + lo;
-}
-
-TimeStamp *DS1302::getTimeStamp()
-{
-    return new TimeStamp(rtc);
-}
-
-TimeStamp *FallBackRTC::getTimeStamp()
-{
-    return new TimeStamp(rtc);
-}
-
 uint8_t TimeStamp::getHour10()
 {
     return ds.h24.Hour10;
@@ -81,7 +57,7 @@ const char *TimeStamp::toString()
 {
     static char buffer[80];
 
-    sprintf(buffer, "Time = %c%c:%c%c:%c%c\r\n", ds.h24.Hour10 + 48,
+    ::sprintf(buffer, "Time = %c%c:%c%c:%c%c\r\n", ds.h24.Hour10 + 48,
         ds.h24.Hour + 48, ds.Minutes10 + 48, ds.Minutes + 48,
         ds.Seconds10 + 48, ds.Seconds + 48);
 
@@ -116,6 +92,11 @@ uint8_t DS1302::toggleRead()
     return data;
 }
 
+void DS1302::increaseHours()
+{
+    
+}
+
 void DS1302::toggleWrite(uint8_t data, uint8_t release)
 {
     for (int i = 0; i <= 7; i++)
@@ -139,7 +120,6 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 
 RTC *RTCFactory::createRTC()
 {
-    //return FallBackRTC::getInstance();
     return DS1302::getInstance();
 }
 

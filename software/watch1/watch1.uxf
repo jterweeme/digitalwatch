@@ -470,7 +470,7 @@ _-isr(context: void): void_
 --
 --
 +timerTick(): void
-/+increase(): void/</panel_attributes>
++increase(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -484,7 +484,7 @@ _-isr(context: void): void_
     <panel_attributes>*DisplayTimeMode*
 --
 --
-+increase(): void</panel_attributes>
++timerTick(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -650,8 +650,9 @@ _-isr(context: void): void_
     <panel_attributes>*RTCFactory*
 --
 --
+_+createRTC(): RTC_
 +RTCFactory(): void
-+createRTC(): RTC</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

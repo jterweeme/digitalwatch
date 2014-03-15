@@ -45,15 +45,15 @@ struct ds1302_struct
 
 class TimeStamp
 {
+private:
+    ds1302_struct ds;
 public:
-    TimeStamp(ds1302_struct);
+    TimeStamp(ds1302_struct ds) { this->ds = ds; };
     const char *toString();
     uint8_t getHour10();
     uint8_t getHour();
     uint8_t getMinutes10();
     uint8_t getMinutes();
-private:
-    ds1302_struct ds;
 };
 
 class RTC
@@ -69,18 +69,14 @@ class FallBackRTC : public RTC
 public:
     static FallBackRTC *getInstance();
     void update();
-    TimeStamp *getTimeStamp();
+    TimeStamp *getTimeStamp() {};
 private:
-    FallBackRTC();
+    FallBackRTC() {};
     ds1302_struct rtc;
 };
 
 class DS1302 : public RTC
 {
-public:
-    static DS1302 *getInstance();
-    void update();
-    TimeStamp *getTimeStamp();
 private:
     void write(int, uint8_t);
     DS1302();
@@ -97,8 +93,13 @@ private:
     int digitalLees(int n);
     uint8_t toggleRead();
     void toggleWrite(uint8_t data, uint8_t release);
-    int bcd2bin(int hi, int lo);
     ds1302_struct rtc;
+public:
+    TimeStamp *getTimeStamp() { return new TimeStamp(rtc); };
+    static DS1302 *getInstance();
+    void increaseMinutes();
+    void increaseHours();
+    void update();
 };
 
 class RTCFactory

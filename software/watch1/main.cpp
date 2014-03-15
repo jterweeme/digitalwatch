@@ -53,6 +53,21 @@ DisplayTimeMode::DisplayTimeMode(Watch *watch)
     watch->getTimeDisplay()->setBlinkMask(0);
 }
 
+IncrementMinutesMode::IncrementMinutesMode(Watch *watch)
+{
+    this->watch = watch;
+    watch->getLeds()->write(~4);
+    watch->getTimeDisplay()->setBlinkMask(3);
+   
+}
+
+IncrementHoursMode::IncrementHoursMode(Watch *watch)
+{
+    this->watch = watch;
+    watch->getLeds()->write(~2);
+    watch->getTimeDisplay()->setBlinkMask(0x0c);
+}
+
 IncrementHoursMode::IncrementHoursMode()
 {
     Watch *watch = Watch::getInstance();
@@ -117,10 +132,10 @@ void Watch::nextMode()
             mode2 = new DisplayTimeMode(this);
             break;
         case INCREMENT_HOURS_MODE:
-            mode2 = new IncrementHoursMode();
+            mode2 = new IncrementHoursMode(this);
             break;
         case INCREMENT_MINUTES_MODE:
-            mode2 = new IncrementMinutesMode();
+            mode2 = new IncrementMinutesMode(this);
             break;
         default:
             leds->write(0xff);

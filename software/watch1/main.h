@@ -46,14 +46,20 @@ class IncrementHoursMode : public AbstractMode
 {
 public:
     IncrementHoursMode();
+    IncrementHoursMode(Watch *);
     void increase();
+private:
+    Watch *watch;
 };
 
 class IncrementMinutesMode : public AbstractMode
 {
 public:
     IncrementMinutesMode();
+    IncrementMinutesMode(Watch *);
     void increase();
+private:
+    Watch *watch;
 };
 
 class Watch
