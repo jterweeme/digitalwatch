@@ -104,6 +104,7 @@ void DisplayTimeMode::timerTick()
     RTC *rtc = watch->getRTC();
     rtc->update();
     TimeStamp *ts = rtc->getTimeStamp();
+    watch->getUart()->puts(ts->toString());
     watch->getTimeDisplay()->setTime(ts);
 }
 
@@ -161,18 +162,19 @@ void Watch::nextMode()
 
 void Watch::init()
 {
+    uart = Uart::getInstance();
     timer = Timer::getInstance();
     leds = new Leds();
     segDisplay = new TimeDisplay();
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
-    Uart::getInstance()->puts("Initializing Digital Watch...\r\n");
+    uart->puts("Initializing Digital Watch...\r\n");
     RTCFactory rtcFactory;
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();
     buttons->addObserver(new ButtonS4Action(), 4);
     buttons->addObserver(new ButtonS5Action(), 5);
-    Timer::getInstance()->addObserver(new TimerTick());
+    timer->addObserver(new TimerTick());
 }
 
 void Watch::increase()

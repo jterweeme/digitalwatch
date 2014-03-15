@@ -105,7 +105,7 @@ class RTCFactory
 {
 public:
     RTCFactory() {};
-    RTC *createRTC();
+    static RTC *createRTC();
 };
 #endif
 
