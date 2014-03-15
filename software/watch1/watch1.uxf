@@ -24,6 +24,7 @@
 +getTimeDisplay(): TimeDisplay
 +getLeds(): Leds
 +getRTC(): RTC
++timerTick(): void
 - init(): void
 </panel_attributes>
     <additional_attributes/>

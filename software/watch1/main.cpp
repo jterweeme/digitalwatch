@@ -56,6 +56,7 @@ DisplayTimeMode::DisplayTimeMode()
 
 DisplayTimeMode::DisplayTimeMode(Watch *watch)
 {
+    this->watch = watch;
     watch->getLeds()->write(~1);
     watch->getTimeDisplay()->setBlinkMask(0);
 }
@@ -92,6 +93,20 @@ void IncrementHoursMode::increase()
 {
 }
 
+Uart *Watch::getUart()
+{
+    return uart;
+}
+
+void DisplayTimeMode::timerTick()
+{
+
+    RTC *rtc = watch->getRTC();
+    rtc->update();
+    TimeStamp *ts = rtc->getTimeStamp();
+    watch->getTimeDisplay()->setTime(ts);
+}
+
 void IncrementMinutesMode::increase()
 {
 }
@@ -113,6 +128,11 @@ void JtagUart::puts(const char *s)
 {
     while (*s)
         putc(*s++);
+}
+
+void Watch::timerTick()
+{
+    mode2->timerTick();
 }
 
 void Watch::nextMode()
@@ -141,6 +161,7 @@ void Watch::nextMode()
 
 void Watch::init()
 {
+    timer = Timer::getInstance();
     leds = new Leds();
     segDisplay = new TimeDisplay();
     mode = DISPLAY_TIME_MODE;

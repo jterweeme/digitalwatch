@@ -19,15 +19,12 @@ TimerTick::TimerTick()
 
 void TimerTick::update()
 {
-    RTC *rtc = Watch::getInstance()->getRTC();
-    rtc->update();
-    TimeStamp *ts = rtc->getTimeStamp();
-    Uart::getInstance()->puts(ts->toString());
-    Watch::getInstance()->getTimeDisplay()->setTime(ts);
+    Watch::getInstance()->timerTick();
 }
 
 void Timer::addObserver(Observer *obs)
 {
+    Uart::getInstance()->puts("Add timer observer\r\n");
     rh = obs;
 }
 

@@ -28,6 +28,7 @@ class AbstractMode
 public:
     AbstractMode();
     virtual void increase() = 0;
+    virtual void timerTick() {};
 };
 
 class DisplayTimeMode : public AbstractMode
@@ -35,7 +36,10 @@ class DisplayTimeMode : public AbstractMode
 public:
     DisplayTimeMode();
     DisplayTimeMode(Watch *);
+    void timerTick();
     void increase();
+private:
+    Watch *watch;
 };
 
 class IncrementHoursMode : public AbstractMode
@@ -69,8 +73,10 @@ public:
     TimeDisplay *getTimeDisplay();
     Leds *getLeds();
     RTC *getRTC();
+    Uart *getUart();
     void nextMode();
     void increase();
+    void timerTick();
 private:
     Watch();
     void init();
