@@ -94,7 +94,16 @@ uint8_t DS1302::toggleRead()
 
 void DS1302::increaseHours()
 {
-    
+    if (rtc.h24.Hour10 >= 2 && rtc.h24.Hour >= 3)
+    {
+        rtc.h24.Hour10 = 0;
+        rtc.h24.Hour = 0;
+    }
+    else if (rtc.h24.Hour++ >= 9)
+    {
+        rtc.h24.Hour = 0;
+        rtc.h24.Hour10++;
+    }
 }
 
 void DS1302::toggleWrite(uint8_t data, uint8_t release)

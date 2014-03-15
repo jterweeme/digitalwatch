@@ -48,7 +48,7 @@ class TimeStamp
 private:
     ds1302_struct ds;
 public:
-    TimeStamp(ds1302_struct ds) { this->ds = ds; };
+    TimeStamp(ds1302_struct ds) { this->ds = ds; }
     const char *toString();
     uint8_t getHour10();
     uint8_t getHour();
@@ -62,6 +62,7 @@ public:
     RTC() {};
     virtual void update() = 0;
     virtual TimeStamp *getTimeStamp() = 0;
+    virtual void increaseHours() {}
 };
 
 class FallBackRTC : public RTC
@@ -69,9 +70,9 @@ class FallBackRTC : public RTC
 public:
     static FallBackRTC *getInstance();
     void update();
-    TimeStamp *getTimeStamp() {};
+    TimeStamp *getTimeStamp() {}
 private:
-    FallBackRTC() {};
+    FallBackRTC() {}
     ds1302_struct rtc;
 };
 
@@ -95,7 +96,7 @@ private:
     void toggleWrite(uint8_t data, uint8_t release);
     ds1302_struct rtc;
 public:
-    TimeStamp *getTimeStamp() { return new TimeStamp(rtc); };
+    TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
     static DS1302 *getInstance();
     void increaseMinutes();
     void increaseHours();

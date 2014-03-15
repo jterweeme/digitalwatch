@@ -89,6 +89,9 @@ TimeDisplay *Watch::getTimeDisplay()
 
 void IncrementHoursMode::increase()
 {
+    RTC *rtc = watch->getRTC();
+    rtc->increaseHours();
+    watch->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
 Uart *Watch::getUart()
