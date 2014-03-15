@@ -59,10 +59,11 @@ public:
 class RTC
 {
 public:
-    RTC() {};
+    RTC() {}
     virtual void update() = 0;
     virtual TimeStamp *getTimeStamp() = 0;
     virtual void increaseHours() {}
+    virtual void increaseMinutes() {}
 };
 
 class FallBackRTC : public RTC
@@ -85,16 +86,21 @@ private:
     volatile bool *io_handle;
     volatile bool *reset_handle;
     volatile bool *clk_handle;
-    static const uint8_t CLOCK_BURST_READ = 0xbf;
+    static const uint8_t SECONDS = 0x80;
+    static const uint8_t MINUTES = 0x82;
+    static const uint8_t HOURS = 0x84;
+    static const uint8_t DATE = 0x86;
     static const uint8_t ENABLE = 0x8e;
     static const uint8_t TRICKLE = 0x90;
-    static const uint8_t READBIT = 0;
+    static const uint8_t CLOCK_BURST_WRITE = 0xbe;
+    static const uint8_t CLOCK_BURST_READ = 0xbf;
     void stop();
     void start();
     int digitalLees(int n);
     uint8_t toggleRead();
     void toggleWrite(uint8_t data, uint8_t release);
     ds1302_struct rtc;
+    void burstWrite(uint8_t *);
 public:
     TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
     static DS1302 *getInstance();

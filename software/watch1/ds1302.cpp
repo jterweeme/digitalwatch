@@ -92,6 +92,17 @@ uint8_t DS1302::toggleRead()
     return data;
 }
 
+void DS1302::burstWrite(uint8_t *p)
+{
+    start();
+    toggleWrite(CLOCK_BURST_WRITE, false);
+    
+    for (int i = 0; i < 8; i++)
+        toggleWrite(*p++, false);
+
+    stop();
+}
+
 void DS1302::increaseHours()
 {
     if (rtc.h24.Hour10 >= 2 && rtc.h24.Hour >= 3)
@@ -104,6 +115,21 @@ void DS1302::increaseHours()
         rtc.h24.Hour = 0;
         rtc.h24.Hour10++;
     }
+
+    burstWrite((uint8_t *)&rtc);
+}
+
+void DS1302::increaseMinutes()
+{
+    if (++rtc.Minutes > 9)
+    {
+        rtc.Minutes = 0;
+
+        if (++rtc.Minutes10 > 5)
+            rtc.Minutes10 = 0;
+    }
+
+    burstWrite((uint8_t *)&rtc);
 }
 
 void DS1302::toggleWrite(uint8_t data, uint8_t release)

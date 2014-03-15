@@ -94,6 +94,13 @@ void IncrementHoursMode::increase()
     watch->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
+void IncrementMinutesMode::increase()
+{
+    RTC *rtc = watch->getRTC();
+    rtc->increaseMinutes();
+    watch->getTimeDisplay()->setTime(rtc->getTimeStamp());
+}
+
 Uart *Watch::getUart()
 {
     return uart;
@@ -106,10 +113,6 @@ void DisplayTimeMode::timerTick()
     TimeStamp *ts = rtc->getTimeStamp();
     watch->getUart()->puts(ts->toString());
     watch->getTimeDisplay()->setTime(ts);
-}
-
-void IncrementMinutesMode::increase()
-{
 }
 
 void Watch::timerTick()
