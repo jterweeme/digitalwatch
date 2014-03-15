@@ -46,14 +46,6 @@ RTC *Watch::getRTC()
     return rtc;
 }
 
-AbstractMode::AbstractMode()
-{
-}
-
-DisplayTimeMode::DisplayTimeMode()
-{
-}
-
 DisplayTimeMode::DisplayTimeMode(Watch *watch)
 {
     this->watch = watch;
@@ -80,15 +72,6 @@ TimeDisplay *Watch::getTimeDisplay()
     return segDisplay;
 }
 
-JtagUart::JtagUart()
-{
-    init();
-}
-
-void DisplayTimeMode::increase()
-{
-}
-
 void IncrementHoursMode::increase()
 {
 }
@@ -100,7 +83,6 @@ Uart *Watch::getUart()
 
 void DisplayTimeMode::timerTick()
 {
-
     RTC *rtc = watch->getRTC();
     rtc->update();
     TimeStamp *ts = rtc->getTimeStamp();
@@ -112,28 +94,14 @@ void IncrementMinutesMode::increase()
 {
 }
 
-void JtagUart::init()
-{
-    handle = (volatile uint32_t *)JTAG_UART_0_BASE;
-}
-
-void JtagUart::putc(const char c)
-{
-    while ((handle[2] & (1<<6)) == 0) {
-    }
-    
-    handle[1] = c;
-}
-
-void JtagUart::puts(const char *s)
-{
-    while (*s)
-        putc(*s++);
-}
-
 void Watch::timerTick()
 {
     mode2->timerTick();
+}
+
+Terminal *Watch::getDebugger()
+{
+    return debugger;
 }
 
 void Watch::nextMode()
@@ -163,12 +131,13 @@ void Watch::nextMode()
 void Watch::init()
 {
     uart = Uart::getInstance();
+    debugger = Uart::getInstance();
     timer = Timer::getInstance();
     leds = new Leds();
     segDisplay = new TimeDisplay();
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
-    uart->puts("Initializing Digital Watch...\r\n");
+    debugger->puts("Initializing Digital Watch...\r\n");
     RTCFactory rtcFactory;
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();

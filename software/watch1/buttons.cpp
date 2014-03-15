@@ -23,13 +23,11 @@ ButtonS5Action::ButtonS5Action()
 
 void ButtonS4Action::update()
 {
-    Uart::getInstance()->puts("Button S4 prezzed\r\n");
     Watch::getInstance()->nextMode();
 }
 
 void ButtonS5Action::update()
 {
-    Uart::getInstance()->puts("Button S5 prezzed\r\n");
     Watch::getInstance()->increase();
 }
 
@@ -37,8 +35,6 @@ void Buttons::init()
 {
     IOWR(BUTTONS_BASE, 2, 0xf);
     alt_ic_isr_register(BUTTONS_IRQ_INTERRUPT_CONTROLLER_ID, BUTTONS_IRQ, isr, 0, 0);
-    Uart::getInstance()->puts("Init buttons\r\n");
-
 }
 
 void Buttons::update()
@@ -60,8 +56,6 @@ void Buttons::update()
 
 void Buttons::addObserver(Observer *obs, int n)
 {
-    Uart::getInstance()->puts("Add button observer\r\n");
-
     switch (n)
     {
     case 4:

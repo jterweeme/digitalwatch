@@ -2,6 +2,36 @@
 #include <stdint.h>
 #include <system.h>
 
+JtagUart::JtagUart()
+{
+    init();
+}
+
+JtagUart *JtagUart::getInstance()
+{
+    static JtagUart instance;
+    return &instance;
+}
+
+void JtagUart::init()
+{
+    handle = (volatile uint32_t *)JTAG_UART_0_BASE;
+}
+
+void JtagUart::putc(const char c)
+{
+    while ((handle[2] & (1<<6)) == 0) {
+    }
+
+    handle[1] = c;
+}
+
+void JtagUart::puts(const char *s)
+{
+    while (*s)
+        putc(*s++);
+}
+
 Uart::Uart()
 {
     uart = (volatile uint32_t *)UART_0_BASE;

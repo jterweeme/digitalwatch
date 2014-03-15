@@ -24,7 +24,6 @@ void TimerTick::update()
 
 void Timer::addObserver(Observer *obs)
 {
-    Uart::getInstance()->puts("Add timer observer\r\n");
     rh = obs;
 }
 

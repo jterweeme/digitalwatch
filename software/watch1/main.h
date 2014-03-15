@@ -23,21 +23,21 @@ public:
     Alarm();
 };
 
+/* State Pattern */
 class AbstractMode
 {
 public:
-    AbstractMode();
-    virtual void increase() = 0;
+    AbstractMode() {};
+    virtual void increase() {};
     virtual void timerTick() {};
 };
 
 class DisplayTimeMode : public AbstractMode
 {
 public:
-    DisplayTimeMode();
+    DisplayTimeMode() {};
     DisplayTimeMode(Watch *);
     void timerTick();
-    void increase();
 private:
     Watch *watch;
 };
@@ -56,16 +56,6 @@ public:
     void increase();
 };
 
-class JtagUart
-{
-public:
-    JtagUart();
-    void init();
-    void puts(const char *);
-    void putc(const char);
-    volatile uint32_t *handle;
-};
-
 class Watch
 {
 public:
@@ -74,6 +64,7 @@ public:
     Leds *getLeds();
     RTC *getRTC();
     Uart *getUart();
+    Terminal *getDebugger();
     void nextMode();
     void increase();
     void timerTick();
@@ -81,12 +72,12 @@ private:
     Watch();
     void init();
     Uart *uart;
-    JtagUart *jtagUart;
     Leds *leds;
     Buttons *buttons;
     TimeDisplay *segDisplay;
     Timer *timer;
     RTC *rtc;
+    Terminal *debugger;
     static const uint8_t DISPLAY_TIME_MODE = 1;
     static const uint8_t INCREMENT_HOURS_MODE = 2;
     static const uint8_t INCREMENT_MINUTES_MODE = 3;
