@@ -4,7 +4,7 @@
 int main()
 {
     volatile uint8_t *leds = (volatile uint8_t *)LEDS_0_BASE;
-    volatile uint32_t *segs = (volatile uint32_t *)SEGMENT_0_BASE;
+    volatile uint32_t *segs = (volatile uint32_t *)SLAVE_TEMPLATE_0_BASE;
     *leds = 0x14;
     segs[0] = 0x8e8c5e7c;
     segs[1] = 0x8e8c5e7c;

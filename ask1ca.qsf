@@ -46,7 +46,7 @@ set_global_assignment -name DEVICE_FILTER_PACKAGE TQFP
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 144
 set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 8
 set_global_assignment -name QSYS_FILE klok1.qsys
-set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
@@ -111,7 +111,6 @@ set_global_assignment -name GENERATE_RBF_FILE ON
 set_global_assignment -name GENERATE_SVF_FILE ON
 set_global_assignment -name GENERATE_JAM_FILE ON
 set_global_assignment -name GENERATE_JBC_FILE ON
-set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
 
 set_location_assignment PIN_48 -to slave_template_0_user_interface_0[7]
 set_location_assignment PIN_50 -to slave_template_0_user_interface_0[6]
@@ -130,3 +129,5 @@ set_location_assignment PIN_37 -to slave_template_0_user_interface_1[2]
 set_location_assignment PIN_36 -to slave_template_0_user_interface_1[1]
 set_location_assignment PIN_35 -to slave_template_0_user_interface_1[0]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
