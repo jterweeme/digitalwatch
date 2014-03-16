@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Mar 16, 2014 1:01:49 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1394928109051</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Mar 16, 2014 1:57:53 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1394974673313</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/onzin/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../klok1.sopcinfo</SopcDesignFile>
@@ -886,6 +886,12 @@
                 <Enabled>false</Enabled>
                 <Group xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         </Setting>
+        <MemoryMap>
+                <slaveDescriptor>epcs_flash_controller_0</slaveDescriptor>
+                <addressRange>0x00000000 - 0x000007FF</addressRange>
+                <addressSpan>2048</addressSpan>
+                <attributes>flash, memory, non-volatile</attributes>
+        </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>sram_0</slaveDescriptor>
                 <addressRange>0x00020000 - 0x0003FFFF</addressRange>

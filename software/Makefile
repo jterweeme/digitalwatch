@@ -4,3 +4,6 @@ all:
 	make -C segment1
 	make -C watch1
 
+clean:
+	make -C watch1 clean
+
