@@ -6,7 +6,7 @@
 	<width>1</width>
 	<mode>7</mode>
 	<hex_block>
-		<hex_filename>/data/stenden/dpc/tmp/onzin/digitalwatch/software/watch1/main.hex</hex_filename>
+		<hex_filename>/data/stenden/dpc/tmp/digitalwatch/software/watch1/main.hex</hex_filename>
 		<hex_addressing>relative</hex_addressing>
 		<hex_offset>0</hex_offset>
 	</hex_block>

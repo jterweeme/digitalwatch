@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EPCS1) Path("/data/stenden/dpc/tmp/onzin/digitalwatch/") File("ask1ca.pof") MfrSpec(OpMask(1) Child_OpMask(1 1));
+		Device PartName(EPCS1) File("ask1ca.pof") MfrSpec(OpMask(1) Child_OpMask(1 1));
 
 ChainEnd;
 
