@@ -116,19 +116,11 @@
          type = "String";
       }
    }
-   element uart_0.s1
+   element ds1302_reset.s1
    {
       datum baseAddress
       {
-         value = "266304";
-         type = "String";
-      }
-   }
-   element ds1302_clk.s1
-   {
-      datum baseAddress
-      {
-         value = "266400";
+         value = "266384";
          type = "String";
       }
    }
@@ -140,11 +132,11 @@
          type = "String";
       }
    }
-   element ds1302_reset.s1
+   element uart_0.s1
    {
       datum baseAddress
       {
-         value = "266384";
+         value = "266304";
          type = "String";
       }
    }
@@ -153,6 +145,14 @@
       datum baseAddress
       {
          value = "266240";
+         type = "String";
+      }
+   }
+   element ds1302_clk.s1
+   {
+      datum baseAddress
+      {
+         value = "266400";
          type = "String";
       }
    }
@@ -227,7 +227,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1394974220582" />
+ <parameter name="timeStamp" value="1394976911175" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -341,7 +341,7 @@
   <parameter name="cpuID_stored" value="0" />
   <parameter name="breakOffset" value="32" />
   <parameter name="userDefinedSettings" value="" />
-  <parameter name="resetSlave" value="sram_0.avalon_slave" />
+  <parameter name="resetSlave">epcs_flash_controller_0.epcs_control_port</parameter>
   <parameter name="mmu_TLBMissExcSlave" value="None" />
   <parameter name="exceptionSlave" value="sram_0.avalon_slave" />
   <parameter name="breakSlave">nios2_qsys_0.jtag_debug_module</parameter>
