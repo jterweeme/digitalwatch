@@ -1,6 +1,15 @@
+BOARD = ask1ca
 MACHINE := -msmallc -msys-crt0='../bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp
 
-all: main.o uart.o timer.o segment.o ds1302.o buttons.o
+all: main.hex
+
+main.hex: main.flash
+	nios2-elf-objcopy -I srec -O ihex $< $@
+
+main.flash: main.elf
+	elf2flash --epcs --after=../../$(BOARD).flash --input=$< --output=$@
+
+main.elf: main.o uart.o timer.o segment.o ds1302.o buttons.o
 	nios2-elf-g++ -o main.elf -T'../bsp//linker.x' $(MACHINE) -L ../bsp $^
 
 main.o: main.cpp main.h

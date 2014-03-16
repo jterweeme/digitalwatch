@@ -3,9 +3,9 @@
 
 NAAM = klok1
 BOARD = ask1ca
-CHAIN = ask1ca_jtag
+CHAIN = ask1ca_as
 
-all: $(BOARD).sof
+all: $(BOARD).pof
 
 $(BOARD).sof:
 	quartus_sh --flow compile $(NAAM) -c $(BOARD)
