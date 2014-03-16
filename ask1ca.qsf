@@ -128,6 +128,6 @@ set_location_assignment PIN_38 -to slave_template_0_user_interface_1[3]
 set_location_assignment PIN_37 -to slave_template_0_user_interface_1[2]
 set_location_assignment PIN_36 -to slave_template_0_user_interface_1[1]
 set_location_assignment PIN_35 -to slave_template_0_user_interface_1[0]
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
