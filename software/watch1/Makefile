@@ -1,7 +1,10 @@
 BOARD = ask1ca
 MACHINE := -msmallc -msys-crt0='../bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp
 
-all: main.hex
+all: main.hex watch1.png
+
+watch1.png: watch1.uxf
+	umlet -action=convert -format=png -filename=$< -output=$@
 
 main.hex: main.flash
 	nios2-elf-objcopy -I srec -O ihex $< $@
