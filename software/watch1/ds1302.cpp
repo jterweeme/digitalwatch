@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #define SYSTEM_BUS_WIDTH 32
 
 #include "ds1302.h"
@@ -170,6 +174,7 @@ RTC *RTCFactory::createRTC()
     DS1302 *test = DS1302::getInstance();
     test->update();
     TimeStamp *testStamp = test->getTimeStamp();
+    Uart::getInstance()->puts(testStamp->toString());
 
     if (testStamp->getHour10() > 2)
         return FallBackRTC::getInstance();

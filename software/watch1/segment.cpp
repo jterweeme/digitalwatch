@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #include "segment.h"
 #include <stdint.h>
 #include <system.h>

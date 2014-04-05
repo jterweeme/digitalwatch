@@ -1,3 +1,5 @@
+# 2014 Jasper ter Weeme
+
 all:
 	cd bsp && ./create-this-bsp
 	make -C leds1

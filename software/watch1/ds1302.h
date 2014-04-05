@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #ifndef _DS1302_H_
 #define _DS1302_H_
 

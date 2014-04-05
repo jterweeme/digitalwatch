@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #ifndef _BUTTONS_H_
 #define _BUTTONS_H_
 

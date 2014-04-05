@@ -1,4 +1,6 @@
 /*
+2014 Jasper ter Weeme
+
 A simple digital watch displays the time of day. Setting of the time is
 achieved by two buttons. Button #1 will switch from displaying time mode
 to increment hours mode. In this mode the hours flash and pressing

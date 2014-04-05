@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #define SYSTEM_BUS_WIDTH 32
 
 #include "timer.h"
