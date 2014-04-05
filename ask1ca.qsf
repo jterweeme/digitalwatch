@@ -129,6 +129,24 @@ set_location_assignment PIN_36 -to slave_template_0_user_interface_1[1]
 set_location_assignment PIN_35 -to slave_template_0_user_interface_1[0]
 set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_global_assignment -name BDF_FILE ip/leds2/dinges.bdf
+set_global_assignment -name VHDL_FILE ip/leds2/leds2.vhd
+set_global_assignment -name VERILOG_FILE ip/leds2/leds.v
+set_global_assignment -name SOURCE_FILE ep1c3t144.bsd
+set_global_assignment -name SOURCE_FILE software/watch1/uart.h
+set_global_assignment -name CUSP_FILE software/watch1/uart.cpp
+set_global_assignment -name SOURCE_FILE software/watch1/timer.h
+set_global_assignment -name CUSP_FILE software/watch1/timer.cpp
+set_global_assignment -name SOURCE_FILE software/watch1/segment.h
+set_global_assignment -name CUSP_FILE software/watch1/segment.cpp
+set_global_assignment -name SOURCE_FILE software/watch1/observer.h
+set_global_assignment -name SOURCE_FILE software/watch1/main.h
+set_global_assignment -name CUSP_FILE software/watch1/main.cpp
+set_global_assignment -name SOURCE_FILE software/watch1/ds1302.h
+set_global_assignment -name CUSP_FILE software/watch1/ds1302.cpp
+set_global_assignment -name CUSP_FILE software/watch1/cmdline.cpp
+set_global_assignment -name SOURCE_FILE software/watch1/buttons.h
+set_global_assignment -name CUSP_FILE software/watch1/buttons.cpp
 set_global_assignment -name VERILOG_FILE ip/vga/vga.v
 set_global_assignment -name VHDL_FILE ip/vga/klokdeler.vhd
 set_global_assignment -name VHDL_FILE ip/vga/display.vhd
