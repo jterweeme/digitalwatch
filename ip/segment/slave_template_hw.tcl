@@ -7,7 +7,7 @@ set_module_property VERSION 1.0
 set_module_property GROUP Jasper
 set_module_property AUTHOR JCJB
 set_module_property DISPLAY_NAME slave_template
-set_module_property TOP_LEVEL_HDL_FILE slave_template.v
+set_module_property TOP_LEVEL_HDL_FILE segment.v
 set_module_property TOP_LEVEL_HDL_MODULE slave_template
 set_module_property INSTANTIATE_IN_SYSTEM_MODULE true
 set_module_property EDITABLE false
@@ -22,7 +22,7 @@ set_module_property SIMULATION_MODEL_IS_OBFUSCATED false
 set_module_property ELABORATION_CALLBACK    elaborate_me
 
 
-add_file slave_template.v {SYNTHESIS SIMULATION}
+add_file segment.v {SYNTHESIS SIMULATION}
 
 
 add_parameter ENABLE_SYNC_SIGNALS int 0 "Output syncronization signals"

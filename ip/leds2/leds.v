@@ -1,5 +1,5 @@
 /*
-Jasper ter Weeme
+2014 Jasper ter Weeme
 */
 
 module leds(input clk, input reset, input [3:0] slave_address,
