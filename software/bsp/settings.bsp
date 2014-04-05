@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Apr 5, 2014 7:21:42 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1396718502608</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Apr 6, 2014 1:28:29 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1396740509762</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../klok1.sopcinfo</SopcDesignFile>
@@ -887,70 +887,82 @@
                 <Group xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         </Setting>
         <MemoryMap>
-                <slaveDescriptor>epcs_flash_controller_0</slaveDescriptor>
-                <addressRange>0x00000000 - 0x000007FF</addressRange>
-                <addressSpan>2048</addressSpan>
-                <attributes>flash, memory, non-volatile</attributes>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>sram_0</slaveDescriptor>
                 <addressRange>0x00020000 - 0x0003FFFF</addressRange>
                 <addressSpan>131072</addressSpan>
                 <attributes>memory</attributes>
         </MemoryMap>
         <MemoryMap>
+                <slaveDescriptor>epcs_flash_controller_0</slaveDescriptor>
+                <addressRange>0x00041000 - 0x000417FF</addressRange>
+                <addressSpan>2048</addressSpan>
+                <attributes>flash, memory, non-volatile</attributes>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>ds1302_io</slaveDescriptor>
-                <addressRange>0x00041000 - 0x0004101F</addressRange>
+                <addressRange>0x00042000 - 0x0004201F</addressRange>
                 <addressSpan>32</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>timer_0</slaveDescriptor>
-                <addressRange>0x00041020 - 0x0004103F</addressRange>
+                <addressRange>0x00042020 - 0x0004203F</addressRange>
                 <addressSpan>32</addressSpan>
                 <attributes>timer</attributes>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>uart_0</slaveDescriptor>
-                <addressRange>0x00041040 - 0x0004105F</addressRange>
+                <addressRange>0x00042040 - 0x0004205F</addressRange>
                 <addressSpan>32</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>
         <MemoryMap>
+                <slaveDescriptor>myrtc_0_slave</slaveDescriptor>
+                <addressRange>0x00042060 - 0x0004206F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>leds_0</slaveDescriptor>
-                <addressRange>0x00041070 - 0x0004107F</addressRange>
+                <addressRange>0x00042070 - 0x0004207F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>slave_template_0</slaveDescriptor>
-                <addressRange>0x00041080 - 0x0004108F</addressRange>
+                <addressRange>0x00042080 - 0x0004208F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>ds1302_reset</slaveDescriptor>
-                <addressRange>0x00041090 - 0x0004109F</addressRange>
+                <addressRange>0x00042090 - 0x0004209F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>ds1302_clk</slaveDescriptor>
-                <addressRange>0x000410A0 - 0x000410AF</addressRange>
+                <addressRange>0x000420A0 - 0x000420AF</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>buttons</slaveDescriptor>
-                <addressRange>0x000410B0 - 0x000410BF</addressRange>
+                <addressRange>0x000420B0 - 0x000420BF</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>jtag_uart_0</slaveDescriptor>
-                <addressRange>0x000410C0 - 0x000410C7</addressRange>
+                <addressRange>0x000420C0 - 0x000420C7</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>myrtc_0_avalon_slave_0</slaveDescriptor>
+                <addressRange>0x000420C8 - 0x000420C8</addressRange>
+                <addressSpan>1</addressSpan>
+                <attributes/>
         </MemoryMap>
         <LinkerSection>
                 <sectionName>.text</sectionName>

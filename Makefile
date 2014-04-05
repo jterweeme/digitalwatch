@@ -1,5 +1,4 @@
-# This is a comment
-# I love comments
+# 2014 Jasper ter Weeme
 
 NAAM = klok1
 BOARD = ask1ca

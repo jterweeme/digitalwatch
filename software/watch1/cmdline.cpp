@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #include <unistd.h>
 #include <stdio.h>
 

@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #ifndef _UART_H_
 #define _UART_H_
 #include <stdint.h>

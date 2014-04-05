@@ -1,3 +1,5 @@
+-- 2014 Jasper ter Weeme
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -21,7 +23,7 @@ begin
         end if;
     end process;
 
-    user_dataout_0 <= std_logic_vector(cnt(31 downto 28));
+    user_dataout_0 <= std_logic_vector(cnt(31 downto 24));
     
 --    process (reset) begin
 --        if reset = '1' then

@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 #include "uart.h"
 #include <stdint.h>
 #include <system.h>
