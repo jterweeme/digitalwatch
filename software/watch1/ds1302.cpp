@@ -1,6 +1,7 @@
 #define SYSTEM_BUS_WIDTH 32
 
 #include "ds1302.h"
+#include "uart.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <system.h>
@@ -155,6 +156,14 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 
 RTC *RTCFactory::createRTC()
 {
+    Uart::getInstance()->puts("RTC Factory\r\n");
+    DS1302 *test = DS1302::getInstance();
+    test->update();
+    TimeStamp *testStamp = test->getTimeStamp();
+
+    if (testStamp->getHour10() > 2)
+        return FallBackRTC::getInstance();
+
     return DS1302::getInstance();
 }
 
@@ -184,6 +193,7 @@ int DS1302::digitalLees(int n)
 
 FallBackRTC *FallBackRTC::getInstance()
 {
+    Uart::getInstance()->puts("Get FallBackRTC instance\r\n");
     static FallBackRTC instance;
     return &instance;
 }

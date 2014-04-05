@@ -49,6 +49,7 @@ private:
     ds1302_struct ds;
 public:
     TimeStamp(ds1302_struct ds) { this->ds = ds; }
+    ds1302_struct *getDS() { return &ds; }
     const char *toString();
     uint8_t getHour10();
     uint8_t getHour();
