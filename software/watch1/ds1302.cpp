@@ -12,6 +12,11 @@ DS1302::DS1302()
     init();
 }
 
+FallBackRTC::FallBackRTC()
+{
+    init();
+}
+
 uint8_t TimeStamp::getHour10()
 {
     return ds.h24.Hour10;
@@ -43,6 +48,11 @@ void DS1302::update()
 
     stop();
 
+}
+
+void FallBackRTC::init()
+{
+    rtc.h24.Hour10 = 1;
 }
 
 void DS1302::write(int address, uint8_t data)
@@ -200,5 +210,6 @@ FallBackRTC *FallBackRTC::getInstance()
 
 void FallBackRTC::update()
 {
+    
 }
 

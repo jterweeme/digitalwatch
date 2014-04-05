@@ -69,13 +69,14 @@ public:
 
 class FallBackRTC : public RTC
 {
+private:
+    FallBackRTC();
+    void init();
+    ds1302_struct rtc;
 public:
     static FallBackRTC *getInstance();
     void update();
-    TimeStamp *getTimeStamp() {}
-private:
-    FallBackRTC() {}
-    ds1302_struct rtc;
+    TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
 };
 
 class DS1302 : public RTC
