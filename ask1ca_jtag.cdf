@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP1C3T144) Path("/data/utwente/vhdl/tmp/newfpga/klok1/") File("ask1ca.sof") MfrSpec(OpMask(1));
+		Device PartName(EP1C3T144) Path("/data/stenden/dpc/tmp/digitalwatch/") File("ask1ca.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
