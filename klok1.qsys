@@ -116,11 +116,27 @@
          type = "String";
       }
    }
+   element ds1302_io.s1
+   {
+      datum baseAddress
+      {
+         value = "266240";
+         type = "String";
+      }
+   }
    element ds1302_reset.s1
    {
       datum baseAddress
       {
          value = "266384";
+         type = "String";
+      }
+   }
+   element ds1302_clk.s1
+   {
+      datum baseAddress
+      {
+         value = "266400";
          type = "String";
       }
    }
@@ -137,22 +153,6 @@
       datum baseAddress
       {
          value = "266304";
-         type = "String";
-      }
-   }
-   element ds1302_io.s1
-   {
-      datum baseAddress
-      {
-         value = "266240";
-         type = "String";
-      }
-   }
-   element ds1302_clk.s1
-   {
-      datum baseAddress
-      {
-         value = "266400";
          type = "String";
       }
    }
@@ -227,7 +227,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1394976911175" />
+ <parameter name="timeStamp" value="1396694857037" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />

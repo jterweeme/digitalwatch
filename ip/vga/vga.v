@@ -1,3 +1,7 @@
+/*
+2014 Jasper ter Weeme
+*/
+
 module vga(input clk, output r, output g, output b, output hsync, output vsync);
     wire clk25;
 
