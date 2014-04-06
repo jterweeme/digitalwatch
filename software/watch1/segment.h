@@ -11,12 +11,11 @@
 class SegDisplay
 {
 public:
-    SegDisplay();
+    SegDisplay(volatile uint32_t *);
     void write(uint32_t);
 private:
     volatile uint32_t *handle;
 protected:
-    void init();
     void init(volatile uint32_t *);
     volatile uint8_t *blinkMask;
 };
@@ -25,11 +24,11 @@ class TimeDisplay : public SegDisplay
 {
 public:
     TimeDisplay(volatile uint32_t *);
-    void init(volatile uint32_t *);
     void setMinutes(uint8_t);
     void setTime(uint8_t, uint8_t);
     void setTime(TimeStamp *);
     void setBlinkMask(uint8_t);
+private:
     static uint8_t lookup[];
 };
 
