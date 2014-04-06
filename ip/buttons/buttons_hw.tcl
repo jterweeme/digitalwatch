@@ -2,13 +2,13 @@
 # | module slave_template
 # | 
 set_module_property DESCRIPTION "Parameterizable input/output component with an Avalon-MM slave port"
-set_module_property NAME slave_template
+set_module_property NAME buttons
 set_module_property VERSION 2.0
-set_module_property GROUP Templates
+set_module_property GROUP Jasper
 set_module_property AUTHOR JCJB
-set_module_property DISPLAY_NAME slave_template
+set_module_property DISPLAY_NAME buttons
 set_module_property TOP_LEVEL_HDL_FILE slave_template.v
-set_module_property TOP_LEVEL_HDL_MODULE slave_template
+set_module_property TOP_LEVEL_HDL_MODULE buttons9
 set_module_property INSTANTIATE_IN_SYSTEM_MODULE true
 set_module_property EDITABLE false
 set_module_property SIMULATION_MODEL_IN_VERILOG false

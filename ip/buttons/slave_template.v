@@ -54,7 +54,7 @@
 
 
 
-module slave_template (
+module buttons9 (
 	// signals to connect to an Avalon clock source interface
 	clk,
 	reset,
@@ -580,38 +580,38 @@ module slave_template (
 	endgenerate
 
 	// sixteen output registers which use byteenables to register each byte.  Disabling the write enable for output registers that were not needed.
-	register_with_bytelanes register_0 (clk,reset,slave_writedata,slave_write&address_decode[0]&user_dataout_reg_en,internal_byteenable,user_dataout_0);
+	register_with_bytelanes9 register_0 (clk,reset,slave_writedata,slave_write&address_decode[0]&user_dataout_reg_en,internal_byteenable,user_dataout_0);
 		defparam register_0.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_1 (clk,reset,slave_writedata,slave_write&address_decode[1]&user_dataout_reg_en,internal_byteenable,user_dataout_1);
-		defparam register_1.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_2 (clk,reset,slave_writedata,slave_write&address_decode[2]&user_dataout_reg_en,internal_byteenable,user_dataout_2);
-		defparam register_2.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_3 (clk,reset,slave_writedata,slave_write&address_decode[3]&user_dataout_reg_en,internal_byteenable,user_dataout_3);
-		defparam register_3.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_4 (clk,reset,slave_writedata,slave_write&address_decode[4]&user_dataout_reg_en,internal_byteenable,user_dataout_4);
-		defparam register_4.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_5 (clk,reset,slave_writedata,slave_write&address_decode[5]&user_dataout_reg_en,internal_byteenable,user_dataout_5);
-		defparam register_5.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_6 (clk,reset,slave_writedata,slave_write&address_decode[6]&user_dataout_reg_en,internal_byteenable,user_dataout_6);
-		defparam register_6.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_7 (clk,reset,slave_writedata,slave_write&address_decode[7]&user_dataout_reg_en,internal_byteenable,user_dataout_7);
-		defparam register_7.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_8 (clk,reset,slave_writedata,slave_write&address_decode[8]&user_dataout_reg_en,internal_byteenable,user_dataout_8);
-		defparam register_8.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_9 (clk,reset,slave_writedata,slave_write&address_decode[9]&user_dataout_reg_en,internal_byteenable,user_dataout_9);
-		defparam register_9.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_10 (clk,reset,slave_writedata,slave_write&address_decode[10]&user_dataout_reg_en,internal_byteenable,user_dataout_10);
-		defparam register_10.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_11 (clk,reset,slave_writedata,slave_write&address_decode[11]&user_dataout_reg_en,internal_byteenable,user_dataout_11);
-		defparam register_11.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_12 (clk,reset,slave_writedata,slave_write&address_decode[12]&user_dataout_reg_en,internal_byteenable,user_dataout_12);
-		defparam register_12.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_13 (clk,reset,slave_writedata,slave_write&address_decode[13]&user_dataout_reg_en,internal_byteenable,user_dataout_13);
-		defparam register_13.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_14 (clk,reset,slave_writedata,slave_write&address_decode[14]&user_dataout_reg_en,internal_byteenable,user_dataout_14);
-		defparam register_14.DATA_WIDTH = DATA_WIDTH;
-	register_with_bytelanes register_15 (clk,reset,slave_writedata,slave_write&address_decode[15]&user_dataout_reg_en,internal_byteenable,user_dataout_15);
-		defparam register_15.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_1 (clk,reset,slave_writedata,slave_write&address_decode[1]&user_dataout_reg_en,internal_byteenable,user_dataout_1);
+//		defparam register_1.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_2 (clk,reset,slave_writedata,slave_write&address_decode[2]&user_dataout_reg_en,internal_byteenable,user_dataout_2);
+//		defparam register_2.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_3 (clk,reset,slave_writedata,slave_write&address_decode[3]&user_dataout_reg_en,internal_byteenable,user_dataout_3);
+//		defparam register_3.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_4 (clk,reset,slave_writedata,slave_write&address_decode[4]&user_dataout_reg_en,internal_byteenable,user_dataout_4);
+//		defparam register_4.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_5 (clk,reset,slave_writedata,slave_write&address_decode[5]&user_dataout_reg_en,internal_byteenable,user_dataout_5);
+//		defparam register_5.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_6 (clk,reset,slave_writedata,slave_write&address_decode[6]&user_dataout_reg_en,internal_byteenable,user_dataout_6);
+//		defparam register_6.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_7 (clk,reset,slave_writedata,slave_write&address_decode[7]&user_dataout_reg_en,internal_byteenable,user_dataout_7);
+//		defparam register_7.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_8 (clk,reset,slave_writedata,slave_write&address_decode[8]&user_dataout_reg_en,internal_byteenable,user_dataout_8);
+//		defparam register_8.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_9 (clk,reset,slave_writedata,slave_write&address_decode[9]&user_dataout_reg_en,internal_byteenable,user_dataout_9);
+//		defparam register_9.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_10 (clk,reset,slave_writedata,slave_write&address_decode[10]&user_dataout_reg_en,internal_byteenable,user_dataout_10);
+//		defparam register_10.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_11 (clk,reset,slave_writedata,slave_write&address_decode[11]&user_dataout_reg_en,internal_byteenable,user_dataout_11);
+//		defparam register_11.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_12 (clk,reset,slave_writedata,slave_write&address_decode[12]&user_dataout_reg_en,internal_byteenable,user_dataout_12);
+//		defparam register_12.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_13 (clk,reset,slave_writedata,slave_write&address_decode[13]&user_dataout_reg_en,internal_byteenable,user_dataout_13);
+//		defparam register_13.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_14 (clk,reset,slave_writedata,slave_write&address_decode[14]&user_dataout_reg_en,internal_byteenable,user_dataout_14);
+//		defparam register_14.DATA_WIDTH = DATA_WIDTH;
+//	register_with_bytelanes9 register_15 (clk,reset,slave_writedata,slave_write&address_decode[15]&user_dataout_reg_en,internal_byteenable,user_dataout_15);
+//		defparam register_15.DATA_WIDTH = DATA_WIDTH;
 
 
 	// registered slave_readdata mux for all the return values, if an input register is disabled then a zero will be passed in
@@ -743,7 +743,7 @@ endmodule
 
 
 // helper module to simplify having a register of variable width and containing independent byte lanes
-module register_with_bytelanes (
+module register_with_bytelanes9 (
 	clk,
 	reset,
 	

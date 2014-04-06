@@ -129,6 +129,10 @@ set_location_assignment PIN_36 -to slave_template_0_user_interface_1[1]
 set_location_assignment PIN_35 -to slave_template_0_user_interface_1[0]
 set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_global_assignment -name TCL_SCRIPT_FILE ip/buttons/buttons_hw.tcl
+set_global_assignment -name SOURCE_FILE ip/buttons/slave_template_macros.h
+set_global_assignment -name VERILOG_FILE ip/buttons/slave_template.v
+set_global_assignment -name VERILOG_FILE ip/buttons/interrupt_logic.v
 set_global_assignment -name VHDL_FILE ip/sram/sram.vhd
 set_global_assignment -name VERILOG_FILE ip/sram/sram.v
 set_global_assignment -name VERILOG_FILE ip/segment/segment.v
