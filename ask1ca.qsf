@@ -129,6 +129,9 @@ set_location_assignment PIN_36 -to slave_template_0_user_interface_1[1]
 set_location_assignment PIN_35 -to slave_template_0_user_interface_1[0]
 set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_global_assignment -name VHDL_FILE ip/sram/sram.vhd
+set_global_assignment -name VERILOG_FILE ip/sram/sram.v
+set_global_assignment -name VERILOG_FILE ip/segment/segment.v
 set_global_assignment -name VHDL_FILE ip/myrtc/myrtc.vhd
 set_global_assignment -name BDF_FILE ip/leds2/dinges.bdf
 set_global_assignment -name VHDL_FILE ip/leds2/leds2.vhd

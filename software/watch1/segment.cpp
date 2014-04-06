@@ -12,9 +12,9 @@ SegDisplay::SegDisplay()
     init();
 }
 
-TimeDisplay::TimeDisplay()
+TimeDisplay::TimeDisplay(volatile uint32_t *addr)
 {
-    init();
+    init(addr);
 }
 
 uint8_t TimeDisplay::lookup[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
@@ -29,9 +29,9 @@ void TimeDisplay::setBlinkMask(uint8_t mask)
     *blinkMask = mask;
 }
 
-void TimeDisplay::init()
+void TimeDisplay::init(volatile uint32_t *addr)
 {
-    SegDisplay::init();
+    SegDisplay::init(addr);
     setBlinkMask(0);
 }
 
@@ -59,6 +59,12 @@ void SegDisplay::init()
 {
     handle = (volatile uint32_t *)SLAVE_TEMPLATE_0_BASE;
     blinkMask = (volatile uint8_t *)SLAVE_TEMPLATE_0_BASE + 8;
+}
+
+void SegDisplay::init(volatile uint32_t *addr)
+{
+    handle = addr;
+    blinkMask = (volatile uint8_t *)(handle + 8);
 }
 
 void SegDisplay::write(uint32_t data)
