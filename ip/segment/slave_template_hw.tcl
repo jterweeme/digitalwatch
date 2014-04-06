@@ -6,7 +6,7 @@ set_module_property NAME slave_template
 set_module_property VERSION 1.0
 set_module_property GROUP Jasper
 set_module_property AUTHOR JCJB
-set_module_property DISPLAY_NAME slave_template
+set_module_property DISPLAY_NAME segment
 set_module_property TOP_LEVEL_HDL_FILE segment.v
 set_module_property TOP_LEVEL_HDL_MODULE slave_template
 set_module_property INSTANTIATE_IN_SYSTEM_MODULE true
