@@ -2,7 +2,7 @@
 
 NAAM = klok1
 BOARD = ask1ca
-CHAIN = ask1ca_as
+CHAIN = ask1ca_jtag
 
 all: $(BOARD).pof
 

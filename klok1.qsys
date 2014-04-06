@@ -148,11 +148,11 @@
          type = "String";
       }
    }
-   element ds1302_clk.s1
+   element buttons.s1
    {
       datum baseAddress
       {
-         value = "270496";
+         value = "270512";
          type = "String";
       }
    }
@@ -164,11 +164,11 @@
          type = "String";
       }
    }
-   element buttons.s1
+   element ds1302_io.s1
    {
       datum baseAddress
       {
-         value = "270512";
+         value = "270336";
          type = "String";
       }
    }
@@ -180,11 +180,11 @@
          type = "String";
       }
    }
-   element ds1302_io.s1
+   element ds1302_clk.s1
    {
       datum baseAddress
       {
-         value = "270336";
+         value = "270496";
          type = "String";
       }
    }
@@ -196,19 +196,19 @@
          type = "int";
       }
    }
-   element myrtc_0.slave
-   {
-      datum baseAddress
-      {
-         value = "270432";
-         type = "String";
-      }
-   }
    element leds_0.slave
    {
       datum baseAddress
       {
          value = "270448";
+         type = "String";
+      }
+   }
+   element myrtc_0.slave
+   {
+      datum baseAddress
+      {
+         value = "270432";
          type = "String";
       }
    }
@@ -259,7 +259,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1396824850731" />
+ <parameter name="timeStamp" value="1396826235550" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />

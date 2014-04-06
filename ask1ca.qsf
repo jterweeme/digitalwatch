@@ -91,9 +91,6 @@ set_location_assignment PIN_28 -to leds_0_conduit_end_export[3]
 set_location_assignment PIN_27 -to leds_0_conduit_end_export[2]
 set_location_assignment PIN_11 -to leds_0_conduit_end_export[1]
 set_location_assignment PIN_10 -to leds_0_conduit_end_export[0]
-set_location_assignment PIN_5 -to buttons_external_connection_export[2]
-set_location_assignment PIN_6 -to buttons_external_connection_export[1]
-set_location_assignment PIN_7 -to buttons_external_connection_export[0]
 
 set_location_assignment PIN_119 -to vga_0_conduit_end_b
 set_location_assignment PIN_121 -to vga_0_conduit_end_g
@@ -163,3 +160,6 @@ set_global_assignment -name CDF_FILE ask1ca_as.cdf
 set_global_assignment -name CDF_FILE ask1ca_jtag.cdf
 set_global_assignment -name QSYS_FILE klok1.qsys
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_location_assignment PIN_5 -to buttons_external_connection_export[2]
+set_location_assignment PIN_6 -to buttons_external_connection_export[1]
+set_location_assignment PIN_7 -to buttons_external_connection_export[0]
