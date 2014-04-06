@@ -157,7 +157,7 @@ void Watch::init()
     debugger = Uart::getInstance();
     timer = Timer::getInstance();
     leds = new Leds();
-    segDisplay = new TimeDisplay((volatile uint32_t *)SLAVE_TEMPLATE_0_BASE);
+    segDisplay = new TimeDisplay((volatile uint32_t *)SEGDISPLAY_BASE);
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
     debugger->puts("Initializing Digital Watch...\r\n");

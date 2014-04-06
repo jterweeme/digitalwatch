@@ -4,7 +4,6 @@
 
 #include "segment.h"
 #include <stdint.h>
-#include <system.h>
 #include "ds1302.h"
 
 SegDisplay::SegDisplay(volatile uint32_t *addr)

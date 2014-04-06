@@ -16,7 +16,6 @@ public:
     void setBlinkMask(uint8_t);
 private:
     volatile uint32_t *handle;
-protected:
     void init(volatile uint32_t *);
     volatile uint8_t *blinkMask;
 };

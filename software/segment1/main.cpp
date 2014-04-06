@@ -19,7 +19,7 @@ SegDisplay::SegDisplay()
 
 void SegDisplay::init()
 {
-    handle = (volatile uint8_t *)SLAVE_TEMPLATE_0_BASE;
+    handle = (volatile uint8_t *)SEGDISPLAY_BASE;
 }
 
 void SegDisplay::write(uint32_t data)

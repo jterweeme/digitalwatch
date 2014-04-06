@@ -48,7 +48,8 @@
 --
 +SegDisplay(addr: volatile uint32_t *)
 +write(uint32_t): void
-+init(addr: volatile uint32_t *): void</panel_attributes>
+- init(addr: volatile uint32_t *): void
++setBlinkMask(mask: uint8_t): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -118,7 +119,8 @@ _+isr(context: void *): void_
 --
 +TimeDisplay(addr: volatile uint32_t *): void
 +setMinutes(): void
-+setTime(ts: TimeStamp *): void</panel_attributes>
++setTime(ts: TimeStamp *): void
++setTime(uren: uint8_t, minuten: uint8_t): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -461,9 +463,9 @@ _-isr(context: void): void_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1113</x>
-      <y>658</y>
+      <y>672</y>
       <w>147</w>
-      <h>91</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>*DisplayTimeMode*
 --
@@ -475,12 +477,12 @@ _-isr(context: void): void_
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>1043</x>
-      <y>672</y>
+      <y>693</y>
       <w>83</w>
-      <h>55</h>
+      <h>34</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>21;42;70;21</additional_attributes>
+    <additional_attributes>21;21;70;21</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
