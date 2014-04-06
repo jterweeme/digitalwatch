@@ -23,7 +23,7 @@ void TimeDisplay::setMinutes(uint8_t min)
     write(lookup[0] | (lookup[0] << 8));
 }
 
-void TimeDisplay::setBlinkMask(uint8_t mask)
+void SegDisplay::setBlinkMask(uint8_t mask)
 {
     *blinkMask = mask;
 }
@@ -51,7 +51,7 @@ void TimeDisplay::setTime(TimeStamp *ts)
 void SegDisplay::init(volatile uint32_t *addr)
 {
     handle = addr;
-    blinkMask = (volatile uint8_t *)(handle + 8);
+    blinkMask = (volatile uint8_t *)handle + 8;
 }
 
 void SegDisplay::write(uint32_t data)

@@ -13,6 +13,7 @@ class SegDisplay
 public:
     SegDisplay(volatile uint32_t *);
     void write(uint32_t);
+    void setBlinkMask(uint8_t);
 private:
     volatile uint32_t *handle;
 protected:
@@ -27,7 +28,6 @@ public:
     void setMinutes(uint8_t);
     void setTime(uint8_t, uint8_t);
     void setTime(TimeStamp *);
-    void setBlinkMask(uint8_t);
 private:
     static uint8_t lookup[];
 };

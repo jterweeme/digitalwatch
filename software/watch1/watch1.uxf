@@ -38,15 +38,17 @@
     <coordinates>
       <x>1197</x>
       <y>532</y>
-      <w>98</w>
+      <w>189</w>
       <h>105</h>
     </coordinates>
     <panel_attributes>*SegDisplay*
 --
+- handle: volatile uint32_t *
+- blinkMask: volatile uint8_t *
 --
-+SegDisplay()
-+write(): void
-+init(): void</panel_attributes>
++SegDisplay(addr: volatile uint32_t *)
++write(uint32_t): void
++init(addr: volatile uint32_t *): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -112,11 +114,11 @@ _+isr(context: void *): void_
     </coordinates>
     <panel_attributes>*TimeDisplay*
 --
+- lookup: static uint8_t[]
 --
 +TimeDisplay(addr: volatile uint32_t *): void
-+init(addr: volatile uint32_t *): void
 +setMinutes(): void
-+setTime(): void</panel_attributes>
++setTime(ts: TimeStamp *): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
