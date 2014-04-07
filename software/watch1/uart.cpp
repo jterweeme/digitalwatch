@@ -33,7 +33,9 @@ void JtagUart::putc(const char c)
 void JtagUart::puts(const char *s)
 {
     while (*s)
+    {
         putc(*s++);
+    }
 }
 
 Uart::Uart()
@@ -62,7 +64,9 @@ void Uart::isr(void *context)
 void Uart::puts(const char *s)
 {
     while (*s)
+    {
         putc(*s++);
+    }
 }
 
 

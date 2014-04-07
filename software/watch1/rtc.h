@@ -67,21 +67,20 @@ public:
     RTC() {}
     virtual void update() = 0;
     virtual TimeStamp *getTimeStamp() = 0;
-    virtual void increaseHours() {}
-    virtual void increaseMinutes() {}
+    virtual void incrementHours() {}
+    virtual void incrementMinutes() {}
 };
 
 class FallBackRTC : public RTC
 {
 private:
-    FallBackRTC();
-    void init();
+    FallBackRTC() {}
     ds1302_struct rtc;
 public:
     static FallBackRTC *getInstance();
     void update();
-    void increaseMinutes();
-    void increaseHours();
+    void incrementMinutes();
+    void incrementHours();
     TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
 };
 
@@ -112,8 +111,8 @@ private:
 public:
     TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
     static DS1302 *getInstance();
-    void increaseMinutes();
-    void increaseHours();
+    void incrementMinutes();
+    void incrementHours();
     void update();
 };
 

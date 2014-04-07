@@ -91,14 +91,14 @@ TimeDisplay *Watch::getTimeDisplay()
 void IncrementHoursMode::increase()
 {
     RTC *rtc = watch->getRTC();
-    rtc->increaseHours();
+    rtc->incrementHours();
     watch->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
 void IncrementMinutesMode::increase()
 {
     RTC *rtc = watch->getRTC();
-    rtc->increaseMinutes();
+    rtc->incrementMinutes();
     watch->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 

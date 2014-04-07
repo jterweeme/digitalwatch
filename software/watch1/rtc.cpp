@@ -16,11 +16,6 @@ DS1302::DS1302()
     init();
 }
 
-FallBackRTC::FallBackRTC()
-{
-    init();
-}
-
 uint8_t TimeStamp::getHour10()
 {
     return ds.h24.Hour10;
@@ -54,11 +49,6 @@ void DS1302::update()
 
     stop();
 
-}
-
-void FallBackRTC::init()
-{
-    rtc.h24.Hour10 = 1;
 }
 
 void DS1302::write(int address, uint8_t data)
@@ -122,7 +112,7 @@ void DS1302::burstWrite(uint8_t *p)
     stop();
 }
 
-void DS1302::increaseHours()
+void DS1302::incrementHours()
 {
     if (rtc.h24.Hour10 >= 2 && rtc.h24.Hour >= 3)
     {
@@ -138,7 +128,7 @@ void DS1302::increaseHours()
     burstWrite((uint8_t *)&rtc);
 }
 
-void DS1302::increaseMinutes()
+void DS1302::incrementMinutes()
 {
     if (++rtc.Minutes > 9)
     {
@@ -221,7 +211,7 @@ FallBackRTC *FallBackRTC::getInstance()
     return &instance;
 }
 
-void FallBackRTC::increaseMinutes()
+void FallBackRTC::incrementMinutes()
 {
     if (++rtc.Minutes > 9)
     {
@@ -234,7 +224,7 @@ void FallBackRTC::increaseMinutes()
     }
 }
 
-void FallBackRTC::increaseHours()
+void FallBackRTC::incrementHours()
 {
     if (rtc.h24.Hour10 >= 2 && rtc.h24.Hour >= 3)
     {
