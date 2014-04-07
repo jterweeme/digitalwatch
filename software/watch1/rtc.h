@@ -80,6 +80,8 @@ private:
 public:
     static FallBackRTC *getInstance();
     void update();
+    void increaseMinutes();
+    void increaseHours();
     TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
 };
 

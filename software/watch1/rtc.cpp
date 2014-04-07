@@ -221,6 +221,34 @@ FallBackRTC *FallBackRTC::getInstance()
     return &instance;
 }
 
+void FallBackRTC::increaseMinutes()
+{
+    if (++rtc.Minutes > 9)
+    {
+        rtc.Minutes = 0;
+
+        if (++rtc.Minutes10 > 5)
+        {
+            rtc.Minutes10 = 0;
+        }
+    }
+}
+
+void FallBackRTC::increaseHours()
+{
+    if (rtc.h24.Hour10 >= 2 && rtc.h24.Hour >= 3)
+    {
+        rtc.h24.Hour10 = 0;
+        rtc.h24.Hour = 0;
+    }
+    else if (rtc.h24.Hour++ >= 9)
+    {
+        rtc.h24.Hour = 0;
+        rtc.h24.Hour10++;
+    }
+}
+
+
 void FallBackRTC::update()
 {
     if (rtc.Seconds++ >= 9)
@@ -228,7 +256,7 @@ void FallBackRTC::update()
         rtc.Seconds10++;
     }   else return;
 
-    if (rtc.Seconds10 > 9)
+    if (rtc.Seconds10 > 5)
     {   rtc.Seconds10 = 0;
         rtc.Minutes++;
     }   else return;
