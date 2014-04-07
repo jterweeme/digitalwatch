@@ -131,7 +131,9 @@ void Watch::nextMode()
     delete mode2;
 
     if (++mode > INCREMENT_MINUTES_MODE)
+    {
         mode = DISPLAY_TIME_MODE;
+    }
 
     switch (mode)
     {

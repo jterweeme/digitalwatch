@@ -48,7 +48,9 @@ void DS1302::update()
     uint8_t *p = (uint8_t *)&rtc;
 
     for (int i = 0; i < 8; i++)
+    {
         *p++ = toggleRead();
+    }
 
     stop();
 
@@ -113,7 +115,9 @@ void DS1302::burstWrite(uint8_t *p)
     toggleWrite(CLOCK_BURST_WRITE, false);
     
     for (int i = 0; i < 8; i++)
+    {
         toggleWrite(*p++, false);
+    }
 
     stop();
 }
@@ -141,7 +145,9 @@ void DS1302::increaseMinutes()
         rtc.Minutes = 0;
 
         if (++rtc.Minutes10 > 5)
+        {
             rtc.Minutes10 = 0;
+        }
     }
 
     burstWrite((uint8_t *)&rtc);
@@ -177,7 +183,9 @@ RTC *RTCFactory::createRTC()
     Uart::getInstance()->puts(testStamp->toString());
 
     if (testStamp->getHour10() > 2)
+    {
         return FallBackRTC::getInstance();
+    }
 
     return DS1302::getInstance();
 }
@@ -215,6 +223,35 @@ FallBackRTC *FallBackRTC::getInstance()
 
 void FallBackRTC::update()
 {
-    
+    if (rtc.Seconds++ >= 9)
+    {   rtc.Seconds = 0;
+        rtc.Seconds10++;
+    }   else return;
+
+    if (rtc.Seconds10 > 9)
+    {   rtc.Seconds10 = 0;
+        rtc.Minutes++;
+    }   else return;
+
+    if (rtc.Minutes > 9)
+    {   rtc.Minutes = 0;
+        rtc.Minutes10++;
+    }   else return;
+
+    if (rtc.Minutes10 > 5)
+    {   rtc.Minutes10 = 0;;
+        rtc.h24.Hour++;
+    }   else return;
+
+    if (rtc.h24.Hour > 9)
+    {   rtc.h24.Hour = 0;;
+        rtc.h24.Hour10++;
+    }   else return;
+
+    if (rtc.h24.Hour10 == 2 && rtc.h24.Hour > 3)
+    {
+        rtc.h24.Hour10 = rtc.h24.Hour = 0;
+    }
+
 }
 

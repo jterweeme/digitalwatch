@@ -12,7 +12,7 @@ main.hex: main.flash
 main.flash: main.elf
 	elf2flash --epcs --after=../../$(BOARD).flash --input=$< --output=$@
 
-main.elf: main.o uart.o timer.o segment.o ds1302.o buttons.o
+main.elf: main.o uart.o timer.o segment.o rtc.o buttons.o
 	nios2-elf-g++ -o main.elf -T'../bsp//linker.x' $(MACHINE) -L ../bsp $^
 
 main.o: main.cpp main.h
@@ -27,8 +27,8 @@ timer.o: timer.cpp timer.h
 segment.o: segment.cpp
 	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc segment.cpp
 
-ds1302.o: ds1302.cpp rtc.h
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc ds1302.cpp
+rtc.o: rtc.cpp rtc.h
+	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc rtc.cpp
 
 buttons.o: buttons.cpp buttons.h observer.h
 	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc buttons.cpp
