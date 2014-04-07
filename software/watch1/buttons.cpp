@@ -49,11 +49,15 @@ void Buttons::update()
     {
     case BUTTON_S4:
         if (s4)
+        {
             s4->update();
+        }
         return;
     case BUTTON_S5:
         if (s5)
+        {
             s5->update();
+        }
         return;
     }
 }

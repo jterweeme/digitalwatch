@@ -140,27 +140,19 @@
          type = "String";
       }
    }
-   element ds1302_reset.s1
-   {
-      datum baseAddress
-      {
-         value = "270480";
-         type = "String";
-      }
-   }
-   element buttons.s1
-   {
-      datum baseAddress
-      {
-         value = "270512";
-         type = "String";
-      }
-   }
    element uart_0.s1
    {
       datum baseAddress
       {
          value = "270400";
+         type = "String";
+      }
+   }
+   element ds1302_reset.s1
+   {
+      datum baseAddress
+      {
+         value = "270480";
          type = "String";
       }
    }
@@ -172,6 +164,14 @@
          type = "String";
       }
    }
+   element ds1302_clk.s1
+   {
+      datum baseAddress
+      {
+         value = "270496";
+         type = "String";
+      }
+   }
    element timer_0.s1
    {
       datum baseAddress
@@ -180,11 +180,11 @@
          type = "String";
       }
    }
-   element ds1302_clk.s1
+   element buttons.s1
    {
       datum baseAddress
       {
-         value = "270496";
+         value = "270512";
          type = "String";
       }
    }
@@ -196,19 +196,19 @@
          type = "int";
       }
    }
-   element leds_0.slave
-   {
-      datum baseAddress
-      {
-         value = "270448";
-         type = "String";
-      }
-   }
    element myrtc_0.slave
    {
       datum baseAddress
       {
          value = "270432";
+         type = "String";
+      }
+   }
+   element leds_0.slave
+   {
+      datum baseAddress
+      {
+         value = "270448";
          type = "String";
       }
    }
@@ -259,7 +259,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1396826235550" />
+ <parameter name="timeStamp" value="1396829305452" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -651,13 +651,6 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
-   kind="interrupt"
-   version="13.0"
-   start="nios2_qsys_0.d_irq"
-   end="buttons.irq">
-  <parameter name="irqNumber" value="1" />
- </connection>
- <connection
    kind="clock"
    version="13.0"
    start="clk_0.clk"
@@ -867,6 +860,13 @@
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00042060" />
   <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="13.0"
+   start="nios2_qsys_0.d_irq"
+   end="buttons.irq">
+  <parameter name="irqNumber" value="1" />
  </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
