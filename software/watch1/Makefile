@@ -27,7 +27,7 @@ timer.o: timer.cpp timer.h
 segment.o: segment.cpp
 	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc segment.cpp
 
-ds1302.o: ds1302.cpp ds1302.h
+ds1302.o: ds1302.cpp rtc.h
 	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc ds1302.cpp
 
 buttons.o: buttons.cpp buttons.h observer.h

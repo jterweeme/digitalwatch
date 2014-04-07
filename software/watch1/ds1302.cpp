@@ -4,7 +4,7 @@
 
 #define SYSTEM_BUS_WIDTH 32
 
-#include "ds1302.h"
+#include "rtc.h"
 #include "uart.h"
 #include <stdio.h>
 #include <unistd.h>

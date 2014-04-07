@@ -6,7 +6,7 @@
 #define _SEGMENT_H_
 
 #include <stdint.h>
-#include "ds1302.h"
+#include "rtc.h"
 
 class SegDisplay
 {

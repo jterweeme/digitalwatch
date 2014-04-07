@@ -20,7 +20,6 @@ whilst being set.
 #include <io.h>
 #include <sys/alt_irq.h>
 #include "main.h"
-#include "ds1302.h"
 #include "buttons.h"
 
 Watch::Watch()

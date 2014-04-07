@@ -10,7 +10,7 @@
 #include "uart.h"
 #include "main.h"
 #include <io.h>
-#include "ds1302.h"
+#include "rtc.h"
 
 Timer::Timer()
 {

@@ -9,6 +9,7 @@
 #include "timer.h"
 #include "segment.h"
 #include "buttons.h"
+#include "rtc.h"
 
 class Watch;
 

@@ -5,10 +5,9 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity myrtc is
-    port (clk, reset, slave_write: in std_logic;
+    port (clk, reset: in std_logic;
           slave_address: in std_logic_vector(3 downto 0);
-          slave_writedata: in std_logic_vector(7 downto 0);
-          user_dataout_0: out std_logic_vector(7 downto 0));
+          slave_readdata: out std_logic_vector(7 downto 0));
 end myrtc;
 
 architecture behavior of myrtc is
@@ -23,7 +22,7 @@ begin
         end if;
     end process;
 
-    user_dataout_0 <= std_logic_vector(cnt(31 downto 24));
+    slave_readdata <= std_logic_vector(cnt(31 downto 24));
     
 --    process (reset) begin
 --        if reset = '1' then

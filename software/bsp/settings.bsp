@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Apr 7, 2014 2:12:39 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1396829559062</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Apr 8, 2014 12:20:37 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1396909237098</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../klok1.sopcinfo</SopcDesignFile>
@@ -887,6 +887,12 @@
                 <Group xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         </Setting>
         <MemoryMap>
+                <slaveDescriptor>pio_0</slaveDescriptor>
+                <addressRange>0x00000000 - 0x0000000F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>sram_0</slaveDescriptor>
                 <addressRange>0x00020000 - 0x0003FFFF</addressRange>
                 <addressSpan>131072</addressSpan>
@@ -917,7 +923,7 @@
                 <attributes>printable</attributes>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>myrtc_0_slave</slaveDescriptor>
+                <slaveDescriptor>myrtc_0</slaveDescriptor>
                 <addressRange>0x00042060 - 0x0004206F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
@@ -957,12 +963,6 @@
                 <addressRange>0x000420C0 - 0x000420C7</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>myrtc_0_avalon_slave_0</slaveDescriptor>
-                <addressRange>0x000420C8 - 0x000420C8</addressRange>
-                <addressSpan>1</addressSpan>
-                <attributes/>
         </MemoryMap>
         <LinkerSection>
                 <sectionName>.text</sectionName>
