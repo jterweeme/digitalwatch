@@ -6,10 +6,8 @@
 
 #include "buttons.h"
 #include <system.h>
-#include <stdio.h>
 #include <io.h>
 #include <sys/alt_irq.h>
-#include <stdint.h>
 
 Buttons::Buttons()
 {

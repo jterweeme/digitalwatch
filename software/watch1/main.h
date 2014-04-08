@@ -11,8 +11,6 @@
 #include "buttons.h"
 #include "rtc.h"
 
-class Watch;
-
 class Leds
 {
 public:
@@ -22,69 +20,17 @@ private:
     volatile uint8_t *handle;
 };
 
-class Alarm
-{
-public:
-    Alarm();
-};
-
 /* State Pattern */
 class AbstractMode
 {
 public:
-    AbstractMode() {};
     virtual void increase() {};
     virtual void timerTick() {};
-};
-
-class DisplayTimeMode : public AbstractMode
-{
-public:
-    DisplayTimeMode() {};
-    DisplayTimeMode(Watch *);
-    void timerTick();
-private:
-    Watch *watch;
-};
-
-class IncrementHoursMode : public AbstractMode
-{
-public:
-    IncrementHoursMode();
-    IncrementHoursMode(Watch *);
-    void increase();
-private:
-    Watch *watch;
-};
-
-class IncrementMinutesMode : public AbstractMode
-{
-public:
-    IncrementMinutesMode();
-    IncrementMinutesMode(Watch *);
-    void increase();
-private:
-    Watch *watch;
-};
-
-class ButtonS4Action : public Observer
-{
-public:
-    ButtonS4Action();
-    void update();
-};
-
-class ButtonS5Action : public Observer
-{
-public:
-    ButtonS5Action();
-    void update();
 };
 
 class Watch
 {
 public:
-    static Watch *getInstance();
     TimeDisplay *getTimeDisplay();
     Leds *getLeds();
     RTC *getRTC();
@@ -93,9 +39,8 @@ public:
     void nextMode();
     void increment();
     void timerTick();
-private:
-    Watch();
     void init();
+private:
     Uart *uart;
     Leds *leds;
     Buttons *buttons;

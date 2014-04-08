@@ -22,9 +22,68 @@ whilst being set.
 #include "main.h"
 #include "buttons.h"
 
-Watch::Watch()
+class DisplayTimeMode : public AbstractMode
 {
-    init();
+public:
+    DisplayTimeMode(Watch *);
+    void timerTick();
+private:
+    Watch *watch;
+};
+
+class IncrementHoursMode : public AbstractMode
+{
+public:
+    IncrementHoursMode(Watch *);
+    void increase();
+private:
+    Watch *watch;
+};
+
+class IncrementMinutesMode : public AbstractMode
+{
+public:
+    IncrementMinutesMode(Watch *);
+    void increase();
+private:
+    Watch *watch;
+};
+
+class TimerTick : public Observer
+{
+private:
+    Watch *watch;
+public:
+    TimerTick(Watch *watch) { this->watch = watch; }
+    void update();
+};
+
+class ButtonS4Action : public Observer
+{
+private:
+    Watch *watch;
+public:
+    ButtonS4Action(Watch *);
+    void update();
+};
+
+class ButtonS5Action : public Observer
+{
+private:
+    Watch *watch;
+public:
+    ButtonS5Action(Watch *);
+    void update();
+};
+
+ButtonS4Action::ButtonS4Action(Watch *watch)
+{
+    this->watch = watch;
+}
+
+ButtonS5Action::ButtonS5Action(Watch *watch)
+{
+    this->watch = watch;
 }
 
 Leds::Leds()
@@ -37,22 +96,14 @@ void Leds::write(uint8_t data)
     *handle = data;
 }
 
-ButtonS4Action::ButtonS4Action()
-{
-}
-
-ButtonS5Action::ButtonS5Action()
-{
-}
-
 void ButtonS4Action::update()
 {
-    Watch::getInstance()->nextMode();
+    watch->nextMode();
 }
 
 void ButtonS5Action::update()
 {
-    Watch::getInstance()->increment();
+    watch->increment();
 }
 
 Leds *Watch::getLeds()
@@ -77,7 +128,6 @@ IncrementMinutesMode::IncrementMinutesMode(Watch *watch)
     this->watch = watch;
     watch->getLeds()->write(~4);
     watch->getTimeDisplay()->setBlinkMask(3);
-   
 }
 
 IncrementHoursMode::IncrementHoursMode(Watch *watch)
@@ -87,21 +137,14 @@ IncrementHoursMode::IncrementHoursMode(Watch *watch)
     watch->getTimeDisplay()->setBlinkMask(0x0c);
 }
 
-IncrementHoursMode::IncrementHoursMode()
-{
-    watch->getLeds()->write(~2);
-    watch->getTimeDisplay()->setBlinkMask(0x0c);
-}
-
-IncrementMinutesMode::IncrementMinutesMode()
-{
-    watch->getLeds()->write(~4);
-    watch->getTimeDisplay()->setBlinkMask(3);
-}
-
 TimeDisplay *Watch::getTimeDisplay()
 {
     return segDisplay;
+}
+
+void TimerTick::update()
+{
+    watch->timerTick();
 }
 
 void IncrementHoursMode::increase()
@@ -136,6 +179,16 @@ void Watch::timerTick()
 {
     mode2->timerTick();
 }
+
+/*
+Quick and dirty implementatie van Singleton
+*/
+Timer *Timer::getInstance()
+{
+    static Timer instance;
+    return &instance;
+}
+
 
 Terminal *Watch::getDebugger()
 {
@@ -181,9 +234,9 @@ void Watch::init()
     RTCFactory rtcFactory;
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();
-    buttons->setObserver(new ButtonS4Action(), 4);
-    buttons->setObserver(new ButtonS5Action(), 5);
-    timer->setObserver(new TimerTick());
+    buttons->setObserver(new ButtonS4Action(this), 4);
+    buttons->setObserver(new ButtonS5Action(this), 5);
+    timer->setObserver(new TimerTick(this));
 }
 
 void Watch::increment()
@@ -191,18 +244,14 @@ void Watch::increment()
     mode2->increase();
 }
 
-Watch *Watch::getInstance()
-{
-    static Watch instance;
-    return &instance;
-}
-
 int main()
 {
-    Watch::getInstance();
+    Watch watch;
+    watch.init();
 
     while (true)
     {
+        // wachten op interrupts
     }
 
     return 0;

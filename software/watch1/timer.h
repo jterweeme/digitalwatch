@@ -22,12 +22,5 @@ private:
     Observer *rh;
 };
 
-class TimerTick : public Observer
-{
-public:
-    TimerTick();
-    void update();
-};
-
 #endif
 
