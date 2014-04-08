@@ -10,29 +10,10 @@
 #include <io.h>
 #include <sys/alt_irq.h>
 #include <stdint.h>
-#include "main.h"
 
 Buttons::Buttons()
 {
     init();
-}
-
-ButtonS4Action::ButtonS4Action()
-{
-}
-
-ButtonS5Action::ButtonS5Action()
-{
-}
-
-void ButtonS4Action::update()
-{
-    Watch::getInstance()->nextMode();
-}
-
-void ButtonS5Action::update()
-{
-    Watch::getInstance()->increase();
 }
 
 void Buttons::init()
@@ -48,13 +29,13 @@ void Buttons::update()
     switch (btn)
     {
     case BUTTON_S4:
-        if (s4)
+        if (s4)         // i.v.m. null-pointer
         {
             s4->update();
         }
         return;
     case BUTTON_S5:
-        if (s5)
+        if (s5)         // i.v.m. null-pointer
         {
             s5->update();
         }
@@ -62,7 +43,11 @@ void Buttons::update()
     }
 }
 
-void Buttons::addObserver(Observer *obs, int n)
+/*
+Er zijn drie buttons beschikbaar
+Elk van de drie buttons heeft een enkele Observer
+*/
+void Buttons::setObserver(Observer *obs, int n)
 {
     switch (n)
     {

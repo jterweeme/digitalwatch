@@ -67,6 +67,20 @@ private:
     Watch *watch;
 };
 
+class ButtonS4Action : public Observer
+{
+public:
+    ButtonS4Action();
+    void update();
+};
+
+class ButtonS5Action : public Observer
+{
+public:
+    ButtonS5Action();
+    void update();
+};
+
 class Watch
 {
 public:
@@ -77,7 +91,7 @@ public:
     Uart *getUart();
     Terminal *getDebugger();
     void nextMode();
-    void increase();
+    void increment();
     void timerTick();
 private:
     Watch();

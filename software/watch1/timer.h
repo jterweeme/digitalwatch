@@ -14,7 +14,7 @@ class Timer
 {
 public:
     static Timer *getInstance();
-    void addObserver(Observer *);
+    void setObserver(Observer *);
 private:
     Timer();
     void update();

@@ -26,7 +26,10 @@ void TimerTick::update()
     Watch::getInstance()->timerTick();
 }
 
-void Timer::addObserver(Observer *obs)
+/*
+We houden het simpel: slechts een enkele observer
+*/
+void Timer::setObserver(Observer *obs)
 {
     rh = obs;
 }
@@ -39,9 +42,12 @@ void Timer::update()
 void Timer::isr(void *context)
 {
     Timer::getInstance()->update();
-    IOWR(TIMER_0_BASE, 0, 0);
+    IOWR(TIMER_0_BASE, 0, 0);   // reset interrupt
 }
 
+/*
+Quick and dirty implementatie van Singleton
+*/
 Timer *Timer::getInstance()
 {
     static Timer instance;

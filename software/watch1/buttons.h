@@ -12,7 +12,7 @@ class Buttons
 {
 public:
     static Buttons *getInstance();
-    void addObserver(Observer *, int);
+    void setObserver(Observer *, int);
 private:
     Buttons();
     void update();
@@ -23,20 +23,6 @@ private:
     Observer *s6;
     static const uint8_t BUTTON_S4 = 3;
     static const uint8_t BUTTON_S5 = 5;
-};
-
-class ButtonS4Action : public Observer
-{
-public:
-    ButtonS4Action();
-    void update();
-};
-
-class ButtonS5Action : public Observer
-{
-public:
-    ButtonS5Action();
-    void update();
 };
 
 #endif

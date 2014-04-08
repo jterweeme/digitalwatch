@@ -37,6 +37,24 @@ void Leds::write(uint8_t data)
     *handle = data;
 }
 
+ButtonS4Action::ButtonS4Action()
+{
+}
+
+ButtonS5Action::ButtonS5Action()
+{
+}
+
+void ButtonS4Action::update()
+{
+    Watch::getInstance()->nextMode();
+}
+
+void ButtonS5Action::update()
+{
+    Watch::getInstance()->increment();
+}
+
 Leds *Watch::getLeds()
 {
     return leds;
@@ -71,14 +89,12 @@ IncrementHoursMode::IncrementHoursMode(Watch *watch)
 
 IncrementHoursMode::IncrementHoursMode()
 {
-    Watch *watch = Watch::getInstance();
     watch->getLeds()->write(~2);
     watch->getTimeDisplay()->setBlinkMask(0x0c);
 }
 
 IncrementMinutesMode::IncrementMinutesMode()
 {
-    Watch *watch = Watch::getInstance();
     watch->getLeds()->write(~4);
     watch->getTimeDisplay()->setBlinkMask(3);
 }
@@ -165,12 +181,12 @@ void Watch::init()
     RTCFactory rtcFactory;
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();
-    buttons->addObserver(new ButtonS4Action(), 4);
-    buttons->addObserver(new ButtonS5Action(), 5);
-    timer->addObserver(new TimerTick());
+    buttons->setObserver(new ButtonS4Action(), 4);
+    buttons->setObserver(new ButtonS5Action(), 5);
+    timer->setObserver(new TimerTick());
 }
 
-void Watch::increase()
+void Watch::increment()
 {
     mode2->increase();
 }
