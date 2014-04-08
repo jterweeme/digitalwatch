@@ -34,12 +34,16 @@ private:
     volatile uint8_t * handle;
 };
 
+class Watch;
+
 /* State Pattern */
 class AbstractMode
 {
 public:
     virtual void increase() {}
     virtual void timerTick() {}
+protected:
+    Watch *context;
 };
 
 /*
@@ -77,8 +81,6 @@ class DisplayTimeMode : public AbstractMode
 public:
     DisplayTimeMode(Watch *);
     void timerTick();
-private:
-    Watch *watch;
 };
 
 class IncrementHoursMode : public AbstractMode
@@ -86,8 +88,6 @@ class IncrementHoursMode : public AbstractMode
 public:
     IncrementHoursMode(Watch *);
     void increase();
-private:
-    Watch *watch;
 };
 
 class IncrementMinutesMode : public AbstractMode
@@ -95,8 +95,6 @@ class IncrementMinutesMode : public AbstractMode
 public:
     IncrementMinutesMode(Watch *);
     void increase();
-private:
-    Watch *watch;
 };
 
 class TimerTick : public Observer
@@ -166,25 +164,25 @@ RTC *Watch::getRTC()
     return rtc;
 }
 
-DisplayTimeMode::DisplayTimeMode(Watch *watch)
+DisplayTimeMode::DisplayTimeMode(Watch *context)
 {
-    this->watch = watch;
-    watch->getLeds()->write(~1);
-    watch->getTimeDisplay()->setBlinkMask(0);
+    this->context = context;
+    context->getLeds()->write(~1);
+    context->getTimeDisplay()->setBlinkMask(0);
 }
 
-IncrementMinutesMode::IncrementMinutesMode(Watch *watch)
+IncrementMinutesMode::IncrementMinutesMode(Watch *context)
 {
-    this->watch = watch;
-    watch->getLeds()->write(~4);
-    watch->getTimeDisplay()->setBlinkMask(3);
+    this->context = context;
+    context->getLeds()->write(~4);
+    context->getTimeDisplay()->setBlinkMask(3);
 }
 
-IncrementHoursMode::IncrementHoursMode(Watch *watch)
+IncrementHoursMode::IncrementHoursMode(Watch *context)
 {
-    this->watch = watch;
-    watch->getLeds()->write(~2);
-    watch->getTimeDisplay()->setBlinkMask(0x0c);
+    this->context = context;
+    context->getLeds()->write(~2);
+    context->getTimeDisplay()->setBlinkMask(0x0c);
 }
 
 TimeDisplay *Watch::getTimeDisplay()
@@ -199,16 +197,16 @@ void TimerTick::update()
 
 void IncrementHoursMode::increase()
 {
-    RTC *rtc = watch->getRTC();
+    RTC *rtc = context->getRTC();
     rtc->incrementHours();
-    watch->getTimeDisplay()->setTime(rtc->getTimeStamp());
+    context->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
 void IncrementMinutesMode::increase()
 {
-    RTC *rtc = watch->getRTC();
+    RTC *rtc = context->getRTC();
     rtc->incrementMinutes();
-    watch->getTimeDisplay()->setTime(rtc->getTimeStamp());
+    context->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
 Uart *Watch::getUart()
@@ -218,11 +216,11 @@ Uart *Watch::getUart()
 
 void DisplayTimeMode::timerTick()
 {
-    RTC *rtc = watch->getRTC();
+    RTC *rtc = context->getRTC();
     rtc->update();
     TimeStamp *ts = rtc->getTimeStamp();
-    watch->getUart()->puts(ts->toString());
-    watch->getTimeDisplay()->setTime(ts);
+    context->getUart()->puts(ts->toString());
+    context->getTimeDisplay()->setTime(ts);
 }
 
 void Watch::timerTick()

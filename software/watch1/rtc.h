@@ -64,7 +64,6 @@ public:
 class RTC
 {
 public:
-    RTC() {}
     virtual void update() = 0;
     virtual TimeStamp *getTimeStamp() = 0;
     virtual void incrementHours() {}
@@ -74,7 +73,6 @@ public:
 class FallBackRTC : public RTC
 {
 private:
-    FallBackRTC() {}
     ds1302_struct rtc;
 public:
     static FallBackRTC *getInstance();
@@ -119,8 +117,7 @@ public:
 class RTCFactory
 {
 public:
-    RTCFactory() {};
-    static RTC *createRTC();
+    static RTC *createRTC();    // kan ook in statische context aangeroepen worden
 };
 #endif
 
