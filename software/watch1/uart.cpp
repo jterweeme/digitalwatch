@@ -11,6 +11,9 @@ JtagUart::JtagUart()
     init();
 }
 
+/*
+Quick and dirty implementatie van Singleton pattern
+*/
 JtagUart *JtagUart::getInstance()
 {
     static JtagUart instance;
@@ -38,6 +41,9 @@ void JtagUart::puts(const char *s)
     }
 }
 
+/*
+Quick and dirty implementatie van Singleton pattern
+*/
 Uart::Uart()
 {
     uart = (volatile uint32_t *)UART_0_BASE;

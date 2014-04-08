@@ -42,6 +42,9 @@ public:
     virtual void timerTick() {}
 };
 
+/*
+Hoofdklasse, nu niet meer Singleton
+*/
 class Watch
 {
 public:
@@ -136,7 +139,6 @@ ButtonS5Action::ButtonS5Action(Watch *watch)
 Leds::Leds(volatile uint8_t * const base)
 {
     handle = base;
-    //handle = (volatile uint8_t *)LEDS_0_BASE;
 }
 
 void Leds::write(uint8_t data)

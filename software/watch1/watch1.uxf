@@ -20,7 +20,6 @@
 - rtc: RTC
 --
 - Watch(): void
-+getInstance(): Watch
 +getTimeDisplay(): TimeDisplay
 +getLeds(): Leds
 +getRTC(): RTC
@@ -29,7 +28,7 @@
 +nextMode(): void
 +increase(): void
 +timerTick(): void
-- init(): void
++init(): void
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -39,7 +38,7 @@
       <x>1197</x>
       <y>532</y>
       <w>189</w>
-      <h>105</h>
+      <h>91</h>
     </coordinates>
     <panel_attributes>*SegDisplay*
 --
@@ -55,8 +54,8 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>693</x>
-      <y>322</y>
+      <x>497</x>
+      <y>476</y>
       <w>140</w>
       <h>91</h>
     </coordinates>
@@ -74,8 +73,8 @@ _+getInstance(): Uart_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>462</x>
-      <y>504</y>
+      <x>448</x>
+      <y>707</y>
       <w>161</w>
       <h>84</h>
     </coordinates>
@@ -92,16 +91,16 @@ _+isr(context: void *): void_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>875</x>
-      <y>308</y>
-      <w>154</w>
-      <h>91</h>
+      <x>924</x>
+      <y>448</y>
+      <w>224</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>*Leds*
 --
--handle: volatile uint8_t *
+- handle: volatile uint8_t *
 --
-+Leds(): void
++Leds(base: volatile uint8_t * const): void
 +write(data: uint8_t): void</panel_attributes>
     <additional_attributes/>
   </element>
@@ -109,9 +108,9 @@ _+isr(context: void *): void_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>924</x>
-      <y>497</y>
+      <y>532</y>
       <w>224</w>
-      <h>133</h>
+      <h>91</h>
     </coordinates>
     <panel_attributes>*TimeDisplay*
 --
@@ -138,7 +137,7 @@ _+isr(context: void *): void_
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>854</x>
-      <y>525</y>
+      <y>560</y>
       <w>83</w>
       <h>34</h>
     </coordinates>
@@ -148,24 +147,24 @@ _+isr(context: void *): void_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>602</x>
-      <y>525</y>
-      <w>97</w>
-      <h>34</h>
+      <x>588</x>
+      <y>651</y>
+      <w>111</w>
+      <h>111</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>84;21;21;21</additional_attributes>
+    <additional_attributes>98;21;21;98</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>742</x>
-      <y>392</y>
-      <w>34</w>
-      <h>69</h>
+      <x>616</x>
+      <y>497</y>
+      <w>83</w>
+      <h>34</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>21;56;21;21</additional_attributes>
+    <additional_attributes>70;21;21;21</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -240,13 +239,13 @@ _-isr(context: void): void_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>616</x>
-      <y>371</y>
-      <w>90</w>
-      <h>34</h>
+      <x>546</x>
+      <y>406</y>
+      <w>34</w>
+      <h>83</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>77;21;21;21</additional_attributes>
+    <additional_attributes>21;70;21;21</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -262,13 +261,13 @@ _-isr(context: void): void_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>840</x>
-      <y>378</y>
-      <w>62</w>
-      <h>83</h>
+      <x>854</x>
+      <y>455</y>
+      <w>83</w>
+      <h>34</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>21;70;49;21</additional_attributes>
+    <additional_attributes>21;21;70;21</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -570,7 +569,7 @@ _-isr(context: void): void_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>826</x>
+      <x>777</x>
       <y>182</y>
       <w>34</w>
       <h>279</h>
@@ -628,9 +627,9 @@ _-isr(context: void): void_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>854</x>
-      <y>238</y>
-      <w>119</w>
+      <x>833</x>
+      <y>273</y>
+      <w>133</w>
       <h>49</h>
     </coordinates>
     <panel_attributes>*RTCFactory*
@@ -645,12 +644,12 @@ _+createRTC(): RTC_
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>833</x>
-      <y>266</y>
-      <w>48</w>
-      <h>195</h>
+      <y>301</y>
+      <w>34</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>35;21;21;182</additional_attributes>
+    <additional_attributes>21;21;21;147</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -658,10 +657,10 @@ _+createRTC(): RTC_
       <x>840</x>
       <y>182</y>
       <w>34</w>
-      <h>69</h>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>21;21;21;56</additional_attributes>
+    <additional_attributes>21;21;21;91</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -673,7 +672,8 @@ _+createRTC(): RTC_
     </coordinates>
     <panel_attributes>*Terminal*
 --
---</panel_attributes>
+--
++puts(s: const char *): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -686,5 +686,27 @@ _+createRTC(): RTC_
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>21;21;63;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>371</x>
+      <y>476</y>
+      <w>139</w>
+      <h>146</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>21;133;126;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>924</x>
+      <y>182</y>
+      <w>34</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>21;21;21;91</additional_attributes>
   </element>
 </diagram>
