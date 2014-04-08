@@ -6,12 +6,12 @@
 #include <stdint.h>
 #include "rtc.h"
 
-SegDisplay::SegDisplay(volatile uint32_t *addr)
+SegDisplay::SegDisplay(volatile uint32_t * const addr)
 {
     init(addr);
 }
 
-TimeDisplay::TimeDisplay(volatile uint32_t *addr) : SegDisplay(addr)
+TimeDisplay::TimeDisplay(volatile uint32_t * const addr) : SegDisplay(addr)
 {
 }
 
@@ -47,7 +47,7 @@ void TimeDisplay::setTime(TimeStamp *ts)
     write(a | b << 8 | c << 16 | d << 24);
 }
 
-void SegDisplay::init(volatile uint32_t *addr)
+void SegDisplay::init(volatile uint32_t * const addr)
 {
     handle = addr;
     blinkMask = (volatile uint8_t *)handle + 8;

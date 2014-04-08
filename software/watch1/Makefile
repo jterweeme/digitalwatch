@@ -15,8 +15,8 @@ main.flash: main.elf
 main.elf: main.o uart.o timer.o segment.o rtc.o buttons.o
 	nios2-elf-g++ -o main.elf -T'../bsp//linker.x' $(MACHINE) -L ../bsp $^
 
-main.o: main.cpp main.h
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc main.cpp
+main.o: main.cpp
+	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc $<
 
 uart.o: uart.cpp uart.h
 	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc uart.cpp

@@ -28,18 +28,18 @@ whilst being set.
 class Leds
 {
 public:
-    Leds();
+    Leds(volatile uint8_t * const);
     void write(uint8_t);
 private:
-    volatile uint8_t *handle;
+    volatile uint8_t * handle;
 };
 
 /* State Pattern */
 class AbstractMode
 {
 public:
-    virtual void increase() {};
-    virtual void timerTick() {};
+    virtual void increase() {}
+    virtual void timerTick() {}
 };
 
 class Watch
@@ -133,9 +133,10 @@ ButtonS5Action::ButtonS5Action(Watch *watch)
     this->watch = watch;
 }
 
-Leds::Leds()
+Leds::Leds(volatile uint8_t * const base)
 {
-    handle = (volatile uint8_t *)LEDS_0_BASE;
+    handle = base;
+    //handle = (volatile uint8_t *)LEDS_0_BASE;
 }
 
 void Leds::write(uint8_t data)
@@ -273,7 +274,7 @@ void Watch::init()
     uart = Uart::getInstance();
     debugger = Uart::getInstance();
     timer = Timer::getInstance();
-    leds = new Leds();
+    leds = new Leds((volatile uint8_t * const)LEDS_0_BASE);
     segDisplay = new TimeDisplay((volatile uint32_t *)SEGDISPLAY_BASE);
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
