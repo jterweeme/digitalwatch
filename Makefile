@@ -23,7 +23,7 @@ urjtag:
 	jtag ask1ca_urjtag.cmd
 
 clean:
-	rm -Rvf db incremental_db *.rpt *.summary *.smsg *.sof *.pof *.sopcinfo *.pin *.svf *.done *.jam *.jbc *.ttf *.map *.jdi *.flash
+	rm -Rvf db incremental_db *.rpt *.summary *.smsg *.sof *.pof *.sopcinfo *.pin *.svf *.done *.jam *.jbc *.ttf *.map *.jdi *.flash *.qws
 	make -C software clean
 
 
