@@ -52,16 +52,6 @@ input clk, reset, slave_read, slave_write, slave_byteenable;
 
     assign internal_byteenable = 1'b1;
 
-/*
-generate
-if (DATA_WIDTH == 8) begin
-assign internal_byteenable = 1'b1;
-end else begin
-assign internal_byteenable = slave_byteenable;
-end
-endgenerate
-*/
-
     always @(posedge clk or posedge reset) begin
         cnt <= (reset == 1) ? 0 : cnt + 1;
     end
