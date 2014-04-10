@@ -56,6 +56,7 @@ void SegDisplay::init(volatile uint32_t * const addr)
 void SegDisplay::write(uint32_t data)
 {
     *handle = data;
+    handle[1] = 0xffffffff;
 }
 
 
