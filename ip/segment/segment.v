@@ -50,6 +50,9 @@ input clk, reset, slave_read, slave_write, slave_byteenable;
     reg [26:0] cnt;
     reg [7:0] blinkmask_r, en_r, segdata_r;
 
+    assign internal_byteenable = 1'b1;
+
+/*
 generate
 if (DATA_WIDTH == 8) begin
 assign internal_byteenable = 1'b1;
@@ -57,6 +60,7 @@ end else begin
 assign internal_byteenable = slave_byteenable;
 end
 endgenerate
+*/
 
     always @(posedge clk or posedge reset) begin
         cnt <= (reset == 1) ? 0 : cnt + 1;
