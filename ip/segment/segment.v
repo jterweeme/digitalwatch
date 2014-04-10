@@ -104,42 +104,42 @@ input clk, reset, slave_read, slave_write, slave_byteenable;
 
     assign user_dataout_0 = segdata_r;
     assign user_dataout_1 = en_r;
-assign address_decode[0] = (slave_address == 4'b0000) & slave_write;
-assign address_decode[1] = (slave_address == 4'b0001) & slave_write;
-assign address_decode[2] = (slave_address == 4'b0010) & slave_write;
-assign address_decode[3] = (slave_address == 4'b0011) & slave_write;
-assign address_decode[4] = (slave_address == 4'b0100) & slave_write;
-assign address_decode[5] = (slave_address == 4'b0101) & slave_write;
-assign address_decode[6] = (slave_address == 4'b0110) & slave_write;
-assign address_decode[7] = (slave_address == 4'b0111) & slave_write;
-assign address_decode[8] = (slave_address == 4'b1000) & slave_write;
-assign address_bank_decode[0] = (address_decode_d1[3:0] != 0)? 1'b1 : 1'b0;
-assign address_bank_decode[1] = (address_decode_d1[7:4] != 0)? 1'b1 : 1'b0;
-assign address_bank_decode[2] = (address_decode_d1[11:8] != 0)? 1'b1 : 1'b0;
-assign address_bank_decode[3] = (address_decode_d1[15:12] != 0)? 1'b1 : 1'b0;
+    assign address_decode[0] = (slave_address == 4'b0000) & slave_write;
+    assign address_decode[1] = (slave_address == 4'b0001) & slave_write;
+    assign address_decode[2] = (slave_address == 4'b0010) & slave_write;
+    assign address_decode[3] = (slave_address == 4'b0011) & slave_write;
+    assign address_decode[4] = (slave_address == 4'b0100) & slave_write;
+    assign address_decode[5] = (slave_address == 4'b0101) & slave_write;
+    assign address_decode[6] = (slave_address == 4'b0110) & slave_write;
+    assign address_decode[7] = (slave_address == 4'b0111) & slave_write;
+    assign address_decode[8] = (slave_address == 4'b1000) & slave_write;
+    assign address_bank_decode[0] = (address_decode_d1[3:0] != 0)? 1'b1 : 1'b0;
+    assign address_bank_decode[1] = (address_decode_d1[7:4] != 0)? 1'b1 : 1'b0;
+    assign address_bank_decode[2] = (address_decode_d1[11:8] != 0)? 1'b1 : 1'b0;
+    assign address_bank_decode[3] = (address_decode_d1[15:12] != 0)? 1'b1 : 1'b0;
 
 always @ (posedge clk or posedge reset) begin
-if (reset == 1) begin
-slave_read_d1 <= 0;
-slave_read_d2 <= 0;
-slave_write_d1 <= 0;
-address_decode_d1 <= 0;
-address_bank_decode_d1 <= 0;
-internal_byteenable_d1 <= 0;
-end else begin
-slave_read_d1 <= slave_read;
-slave_read_d2 <= slave_read_d1;
-slave_write_d1 <= slave_write;
-internal_byteenable_d1 <= internal_byteenable;
+    if (reset == 1) begin
+        slave_read_d1 <= 0;
+        slave_read_d2 <= 0;
+        slave_write_d1 <= 0;
+        address_decode_d1 <= 0;
+        address_bank_decode_d1 <= 0;
+        internal_byteenable_d1 <= 0;
+    end else begin
+        slave_read_d1 <= slave_read;
+        slave_read_d2 <= slave_read_d1;
+        slave_write_d1 <= slave_write;
+        internal_byteenable_d1 <= internal_byteenable;
 
-if((slave_read == 1) | (slave_write == 1)) begin
-address_decode_d1 <= address_decode;
-end
+        if((slave_read == 1) | (slave_write == 1)) begin
+            address_decode_d1 <= address_decode;
+        end
 
-if(slave_read_d1 == 1) begin
-address_bank_decode_d1 <= address_bank_decode;
-end
-end
+        if(slave_read_d1 == 1) begin
+            address_bank_decode_d1 <= address_bank_decode;
+        end
+    end
 end
 
 register_with_bytelanes register_0 (clk,reset,slave_writedata,slave_write&address_decode[0],internal_byteenable,user_dataout_d0);
@@ -173,9 +173,9 @@ begin: register_bytelane_generation
 always @ (posedge clk or posedge reset)
 begin
 if (reset == 1)
-data_out[(LANE*8)+7:(LANE*8)] <= 0;
+    data_out[(LANE*8)+7:(LANE*8)] <= 0;
 else if((byte_enables[LANE] == 1) & (write == 1))
-data_out[(LANE*8)+7:(LANE*8)] <= data_in[(LANE*8)+7:(LANE*8)];
+    data_out[(LANE*8)+7:(LANE*8)] <= data_in[(LANE*8)+7:(LANE*8)];
 end
 end
 endgenerate
