@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Apr 10, 2014 11:53:23 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1397166803691</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Apr 11, 2014 12:09:42 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1397167782397</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../klok1.sopcinfo</SopcDesignFile>

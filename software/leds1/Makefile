@@ -8,6 +8,9 @@ all:
 	elf2flash --epcs --after=../../$(BOARD).flash --input=main.elf --output=main.flash
 	nios2-elf-objcopy -I srec -O ihex main.flash main.hex
 
+clean:
+	rm -Rvf *.o *.elf
+
 download:
 	nios2-download -g main.elf
 
