@@ -107,7 +107,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1401535574381" />
+ <parameter name="timeStamp" value="1401545234242" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -296,6 +296,8 @@
   <parameter name="clockRate" value="50000000" />
  </module>
  <module kind="vga2" version="1.0" enabled="1" name="vga2_0">
+  <parameter name="CLOCK_OUTPUT" value="1" />
+  <parameter name="BITS_PER_COLOR" value="8" />
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <connection
