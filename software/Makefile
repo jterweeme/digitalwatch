@@ -7,6 +7,7 @@ all:
 	make -C watch1
 
 clean:
-	rm -Rvf bsp/drivers bsp/HAL bsp/Makefile bsp/*.mk bsp/*.html
+	rm -Rvf bsp/drivers bsp/HAL bsp/Makefile bsp/*.mk bsp/*.html bsp/*.h
+	rm -Rvf bsp/*.c
 	make -C watch1 clean
 
