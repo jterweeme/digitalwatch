@@ -2,7 +2,7 @@
 
 NAAM = klok1
 BOARD = ask1ca
-CHAIN = ask1ca_jtag
+CHAIN = $(BOARD)_jtag
 
 all: $(BOARD).pof
 
@@ -23,7 +23,8 @@ urjtag:
 	jtag ask1ca_urjtag.cmd
 
 clean:
-	rm -Rvf db incremental_db *.rpt *.summary *.smsg *.sof *.pof *.sopcinfo *.pin *.svf *.done *.jam *.jbc *.ttf *.map *.jdi *.flash *.qws *.rbf
+	rm -Rvf db incremental_db *.rpt *.summary *.smsg *.sof *.pof *.sopcinfo *.pin 
+	rm -Rvf *.ttf *.map *.jdi *.flash *.qws *.rbf *.jbc *.svf *.done *.jam 
 	make -C software clean
 
 

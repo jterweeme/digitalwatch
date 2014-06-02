@@ -8,6 +8,6 @@ all:
 
 clean:
 	rm -Rvf bsp/drivers bsp/HAL bsp/Makefile bsp/*.mk bsp/*.html bsp/*.h
-	rm -Rvf bsp/*.c
+	rm -Rvf bsp/*.c bsp/*.a  bsp/*.x bsp/obj bsp/*.gdb
 	make -C watch1 clean
 

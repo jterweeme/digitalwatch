@@ -20,6 +20,7 @@ add_fileset_file display.vhd VHDL PATH display.vhd
 add_fileset_file vga2.v VERILOG PATH vga2.v TOP_LEVEL_FILE
 add_parameter CLOCK_OUTPUT INTEGER 1 "Clock Output"
 add_parameter BITS_PER_COLOR INTEGER 8 "Bits per color"
+set_parameter_property BITS_PER_COLOR AFFECTS_PORT_WIDTHS true
 add_interface clock clock end
 set_interface_property clock clockRate 0
 set_interface_property clock ENABLED true
