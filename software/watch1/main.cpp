@@ -24,10 +24,10 @@ whilst being set.
 class Leds
 {
 public:
-    Leds(volatile uint8_t * const);
+    Leds(volatile uint8_t * const base) { this->handle = base; }
     void write(uint8_t);
 private:
-    volatile uint8_t * handle;
+    volatile uint8_t *handle;
 };
 
 class Watch;
@@ -99,7 +99,7 @@ private:
     Watch *watch;
 public:
     TimerTick(Watch *watch) { this->watch = watch; }
-    void update();
+    void update() { watch->timerTick(); }
 };
 
 class ButtonS4Action : public Observer
@@ -107,8 +107,8 @@ class ButtonS4Action : public Observer
 private:
     Watch *watch;
 public:
-    ButtonS4Action(Watch *);
-    void update();
+    ButtonS4Action(Watch *watch) { this->watch = watch; }
+    void update() { watch->nextMode(); }
 };
 
 class ButtonS5Action : public Observer
@@ -116,38 +116,13 @@ class ButtonS5Action : public Observer
 private:
     Watch *watch;
 public:
-    ButtonS5Action(Watch *);
-    void update();
+    ButtonS5Action(Watch *watch) { this->watch = watch; }
+    void update() { watch->increment(); }
 };
-
-ButtonS4Action::ButtonS4Action(Watch *watch)
-{
-    this->watch = watch;
-}
-
-ButtonS5Action::ButtonS5Action(Watch *watch)
-{
-    this->watch = watch;
-}
-
-Leds::Leds(volatile uint8_t * const base)
-{
-    handle = base;
-}
 
 void Leds::write(uint8_t data)
 {
     *handle = data;
-}
-
-void ButtonS4Action::update()
-{
-    watch->nextMode();
-}
-
-void ButtonS5Action::update()
-{
-    watch->increment();
 }
 
 Leds *Watch::getLeds()
@@ -184,11 +159,6 @@ IncrementHoursMode::IncrementHoursMode(Watch *context)
 TimeDisplay *Watch::getTimeDisplay()
 {
     return segDisplay;
-}
-
-void TimerTick::update()
-{
-    watch->timerTick();
 }
 
 void IncrementHoursMode::increase()
@@ -244,9 +214,7 @@ void Watch::nextMode()
     delete mode2;
 
     if (++mode > INCREMENT_MINUTES_MODE)
-    {
         mode = DISPLAY_TIME_MODE;
-    }
 
     switch (mode)
     {
