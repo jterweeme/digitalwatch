@@ -11,13 +11,13 @@ pressed again the watch returns to display time mode. Time is not kept
 whilst being set.
 */
 
-#define SYSTEM_BUS_WIDTH 32
+//#define SYSTEM_BUS_WIDTH 32
 
 #include <system.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <io.h>
+//#include <io.h>
 #include <sys/alt_irq.h>
 #include "buttons.h"
 #include "uart.h"

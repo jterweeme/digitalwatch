@@ -12,16 +12,15 @@ module vga2(
     coe_blue,
     coe_clk25
 );
+    parameter BITS_PER_COLOR = 1;
     input csi_clk50;
     input csi_reset_n;
     output coe_hsync;
     output coe_vsync;
-    output [7:0] coe_red;
-    output [7:0] coe_green;
-    output [7:0] coe_blue;
+    output [BITS_PER_COLOR - 1:0] coe_red;
+    output [BITS_PER_COLOR - 1:0] coe_green;
+    output [BITS_PER_COLOR - 1:0] coe_blue;
     output reg coe_clk25;
-
-    parameter BITS_PER_COLOR = 7;
     wire r, g, b;
     
     generate
@@ -30,9 +29,9 @@ module vga2(
             assign coe_green = {g, g, g, g, g, g, g, g};
             assign coe_blue = {b, b, b, b, b, b, b, b};
         end else begin
-            assign coe_red = {g, g, g, g, g, g, g, g};
-            assign coe_green = {b, b, b, b, b, b, b, b};
-            assign coe_blue = {r, r, r, r, r, r, r, r};
+            assign coe_red = r;
+            assign coe_green = g;
+            assign coe_blue = b;
         end
     endgenerate
 

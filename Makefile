@@ -20,7 +20,7 @@ download:
 	quartus_pgm $(CHAIN).cdf
 
 urjtag:
-	jtag ask1ca_urjtag.cmd
+	jtag $(BOARD)_urjtag.cmd
 
 clean:
 	rm -Rvf db incremental_db *.rpt *.summary *.smsg *.sof *.pof *.sopcinfo *.pin 

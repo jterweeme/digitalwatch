@@ -48,7 +48,7 @@
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "7";
          type = "int";
       }
    }
@@ -56,7 +56,7 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "6";
          type = "int";
       }
    }
@@ -64,7 +64,7 @@
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "8";
          type = "int";
       }
    }
@@ -80,7 +80,7 @@
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "12";
          type = "int";
       }
    }
@@ -96,7 +96,7 @@
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "9";
          type = "int";
       }
    }
@@ -104,7 +104,7 @@
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "11";
          type = "int";
       }
    }
@@ -112,7 +112,7 @@
    {
       datum _sortIndex
       {
-         value = "15";
+         value = "14";
          type = "int";
       }
    }
@@ -128,7 +128,7 @@
    {
       datum _sortIndex
       {
-         value = "14";
+         value = "13";
          type = "int";
       }
    }
@@ -156,14 +156,6 @@
          type = "String";
       }
    }
-   element timer_0.s1
-   {
-      datum baseAddress
-      {
-         value = "270368";
-         type = "String";
-      }
-   }
    element buttons.s1
    {
       datum baseAddress
@@ -188,20 +180,20 @@
          type = "String";
       }
    }
+   element timer_0.s1
+   {
+      datum baseAddress
+      {
+         value = "270368";
+         type = "String";
+      }
+   }
    element segdisplay
    {
       datum _sortIndex
       {
-         value = "11";
+         value = "10";
          type = "int";
-      }
-   }
-   element myrtc_0.slave
-   {
-      datum baseAddress
-      {
-         value = "270432";
-         type = "String";
       }
    }
    element leds_0.slave
@@ -209,6 +201,14 @@
       datum baseAddress
       {
          value = "270448";
+         type = "String";
+      }
+   }
+   element myrtc_0.slave
+   {
+      datum baseAddress
+      {
+         value = "270432";
          type = "String";
       }
    }
@@ -224,7 +224,7 @@
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "5";
          type = "int";
       }
    }
@@ -240,7 +240,7 @@
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "15";
          type = "int";
       }
    }
@@ -259,7 +259,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1396908693436" />
+ <parameter name="timeStamp" value="1401706742432" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -277,11 +277,6 @@
  <interface
    name="sram_conduit_end"
    internal="sram_0.conduit_end"
-   type="conduit"
-   dir="end" />
- <interface
-   name="vga_0_conduit_end"
-   internal="vga_0.conduit_end"
    type="conduit"
    dir="end" />
  <interface
@@ -312,6 +307,11 @@
  <interface
    name="pio_0_external_connection"
    internal="pio_0.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="vga_0_conduit_end"
+   internal="vga_0.conduit_end"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk_0">
@@ -482,9 +482,6 @@
  <module kind="sram" version="1.0" enabled="1" name="sram_0">
   <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="50000000" />
  </module>
- <module kind="vga" version="1.0" enabled="1" name="vga_0">
-  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
- </module>
  <module
    kind="altera_avalon_timer"
    version="13.0.1.99.2"
@@ -609,7 +606,14 @@
   <parameter name="width" value="8" />
   <parameter name="clockRate" value="50000000" />
  </module>
- <module kind="myrtc" version="1.0" enabled="1" name="myrtc_0" />
+ <module kind="myrtc" version="1.0" enabled="1" name="myrtc_0">
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
+ </module>
+ <module kind="vga2" version="1.0" enabled="1" name="vga_0">
+  <parameter name="CLOCK_OUTPUT" value="0" />
+  <parameter name="BITS_PER_COLOR" value="1" />
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
+ </module>
  <connection
    kind="avalon"
    version="13.0"
@@ -699,7 +703,6 @@
   <parameter name="baseAddress" value="0x00020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
- <connection kind="clock" version="13.0" start="clk_0.clk" end="vga_0.clock" />
  <connection kind="clock" version="13.0" start="clk_0.clk" end="timer_0.clk" />
  <connection
    kind="reset"
@@ -891,6 +894,7 @@
   <parameter name="baseAddress" value="0x00042060" />
   <parameter name="defaultConnection" value="false" />
  </connection>
+ <connection kind="clock" version="13.0" start="clk_0.clk" end="vga_0.clock" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>

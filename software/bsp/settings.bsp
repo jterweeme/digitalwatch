@@ -2,11 +2,11 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Jun 2, 2014 12:52:59 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1401706379027</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Jun 2, 2014 9:00:44 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1401735644967</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
-        <SopcDesignFile>../../klok1.sopcinfo</SopcDesignFile>
+        <SopcDesignFile>../../ask1ca.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
         <Cpu>nios2_qsys_0</Cpu>
         <SchemaVersion>1.9</SchemaVersion>

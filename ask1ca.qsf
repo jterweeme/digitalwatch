@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY Cyclone
 set_global_assignment -name DEVICE EP1C3T144C8
-set_global_assignment -name TOP_LEVEL_ENTITY klok1
+set_global_assignment -name TOP_LEVEL_ENTITY ask1ca
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:16:17  FEBRUARY 24, 2014"
 set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
@@ -158,7 +158,7 @@ set_global_assignment -name VHDL_FILE ip/vga/display.vhd
 set_global_assignment -name SOURCE_FILE ask1ca_urjtag.cmd
 set_global_assignment -name CDF_FILE ask1ca_as.cdf
 set_global_assignment -name CDF_FILE ask1ca_jtag.cdf
-set_global_assignment -name QSYS_FILE klok1.qsys
+set_global_assignment -name QSYS_FILE ask1ca.qsys
 set_location_assignment PIN_5 -to buttons_external_connection_export[2]
 set_location_assignment PIN_6 -to buttons_external_connection_export[1]
 set_location_assignment PIN_7 -to buttons_external_connection_export[0]
