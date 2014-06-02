@@ -4,12 +4,7 @@
 
 #include "uart.h"
 #include <stdint.h>
-#include <system.h>
-
-JtagUart::JtagUart()
-{
-    init();
-}
+#include <system.h>     // moet nog weg
 
 /*
 Quick and dirty implementatie van Singleton pattern
@@ -20,11 +15,6 @@ JtagUart *JtagUart::getInstance()
     return &instance;
 }
 
-void JtagUart::init()
-{
-    handle = (volatile uint32_t *)JTAG_UART_0_BASE;
-}
-
 void JtagUart::putc(const char c)
 {
     while ((handle[2] & (1<<6)) == 0) {
@@ -33,21 +23,9 @@ void JtagUart::putc(const char c)
     handle[1] = c;
 }
 
-void JtagUart::puts(const char *s)
-{
-    while (*s)
-    {
-        putc(*s++);
-    }
-}
-
 /*
 Quick and dirty implementatie van Singleton pattern
 */
-Uart::Uart()
-{
-    uart = (volatile uint32_t *)UART_0_BASE;
-}
 
 Uart *Uart::getInstance()
 {
@@ -61,18 +39,6 @@ void Uart::putc(const char c)
     }
 
     uart[1] = c;
-}
-
-void Uart::isr(void *context)
-{
-}
-
-void Uart::puts(const char *s)
-{
-    while (*s)
-    {
-        putc(*s++);
-    }
 }
 
 

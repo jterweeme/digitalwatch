@@ -2,43 +2,39 @@
 2014 Jasper ter Weeme
 */
 
-#define SYSTEM_BUS_WIDTH 32
-
-#include "buttons.h"
-#include <system.h>
-#include <io.h>
+#include "misc.h"
+#include <system.h>         // moet nog weg
 #include <sys/alt_irq.h>
 
-Buttons::Buttons()
+void Buttons::init(volatile void *base)
 {
-    init();
-}
-
-void Buttons::init()
-{
-    IOWR(BUTTONS_BASE, 2, 0xf);
+    this->base = base;
+    this->base32 = (volatile uint32_t *)base;
+    base32[2] = 0xf;
     alt_ic_isr_register(BUTTONS_IRQ_INTERRUPT_CONTROLLER_ID, BUTTONS_IRQ, isr, 0, 0);
 }
 
 void Buttons::update()
 {
-    uint8_t btn = IORD(BUTTONS_BASE, 0);
-    
-    switch (btn)
+    switch (base32[0])
     {
     case BUTTON_S4:
         if (s4)         // i.v.m. null-pointer
         {
             s4->update();
         }
+
         return;
     case BUTTON_S5:
         if (s5)         // i.v.m. null-pointer
         {
             s5->update();
         }
+
         return;
     }
+
+    base32[3] = 0;
 }
 
 /*
@@ -67,9 +63,4 @@ Buttons *Buttons::getInstance()
     return &instance;
 }
 
-void Buttons::isr(void *context)
-{
-    Buttons::getInstance()->update();
-    IOWR(BUTTONS_BASE, 3, 0);
-}
 

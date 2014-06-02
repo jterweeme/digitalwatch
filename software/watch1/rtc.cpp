@@ -2,14 +2,11 @@
 2014 Jasper ter Weeme
 */
 
-#define SYSTEM_BUS_WIDTH 32
-
 #include "rtc.h"
 #include "uart.h"
 #include <stdio.h>
 #include <unistd.h>
-#include <system.h>
-#include <io.h>
+#include <system.h>     // moet nog weg
 
 void DS1302::update()
 {
@@ -122,7 +119,7 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 
         if (release && i == 7)
         {
-            IOWR(DS1302_IO_BASE, 1, 0);
+            io_handle[1] = 0;
         }
         else
         {
@@ -136,6 +133,11 @@ RTC *RTCFactory::createRTC()
 {
     Uart::getInstance()->puts("RTC Factory\r\n");
     DS1302 *test = DS1302::getInstance();
+
+    test->init((volatile uint32_t *)DS1302_IO_BASE,
+            (volatile uint8_t *)DS1302_CLK_BASE,
+            (volatile uint8_t *)DS1302_RESET_BASE);
+
     test->update();
     TimeStamp *testStamp = test->getTimeStamp();
     Uart::getInstance()->puts(testStamp->toString());
@@ -146,11 +148,11 @@ RTC *RTCFactory::createRTC()
     return DS1302::getInstance();
 }
 
-void DS1302::init()
+void DS1302::init(volatile uint32_t *io, volatile uint8_t *clk, volatile uint8_t *rst)
 {
-    io_handle = (volatile bool *)DS1302_IO_BASE;
-    clk_handle = (volatile bool *)DS1302_CLK_BASE;
-    reset_handle = (volatile bool *)DS1302_RESET_BASE;
+    io_handle = io;
+    clk_handle = clk;
+    reset_handle = rst;
     write(DS1302::ENABLE, 0);
     write(DS1302::TRICKLE, 0);
 }
@@ -159,7 +161,7 @@ void DS1302::start()
 {
     *reset_handle = 0;
     *clk_handle = 0;
-    IOWR(DS1302_IO_BASE, 1, 1);
+    io_handle[1] = 1;
     *reset_handle = 1;
     ::usleep(4);
 }

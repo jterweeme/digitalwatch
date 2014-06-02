@@ -86,11 +86,10 @@ class DS1302 : public RTC
 {
 private:
     void write(int, uint8_t);
-    void init();
-    DS1302() { init(); }
-    volatile bool *io_handle;
-    volatile bool *reset_handle;
-    volatile bool *clk_handle;
+    volatile void *base;
+    volatile uint32_t *io_handle;
+    volatile uint8_t *reset_handle;
+    volatile uint8_t *clk_handle;
     static const uint8_t SECONDS = 0x80;
     static const uint8_t MINUTES = 0x82;
     static const uint8_t HOURS = 0x84;
@@ -109,6 +108,7 @@ private:
 public:
     TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
     static DS1302 *getInstance();
+    void init(volatile uint32_t *io, volatile uint8_t *clk, volatile uint8_t *rst);
     void incrementMinutes();
     void incrementHours();
     void update();

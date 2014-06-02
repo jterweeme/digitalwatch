@@ -1,6 +1,11 @@
 BOARD = ask1ca
 MACHINE := -msmallc -msys-crt0='../bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp
 
+%.o:
+	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc $<
+
+.PHONY: all
+
 all: main.hex watch1.png
 
 watch1.png: watch1.uxf
@@ -16,22 +21,11 @@ main.elf: main.o uart.o timer.o segment.o rtc.o buttons.o
 	nios2-elf-g++ -o main.elf -T'../bsp//linker.x' $(MACHINE) -L ../bsp $^
 
 main.o: main.cpp
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc $<
-
 uart.o: uart.cpp uart.h
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc uart.cpp
-
-timer.o: timer.cpp timer.h
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc timer.cpp
-
+timer.o: timer.cpp misc.h
 segment.o: segment.cpp
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc segment.cpp
-
 rtc.o: rtc.cpp rtc.h
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc rtc.cpp
-
-buttons.o: buttons.cpp buttons.h observer.h
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc buttons.cpp
+buttons.o: buttons.cpp misc.h
 
 download: main.elf
 	nios2-download -g $<

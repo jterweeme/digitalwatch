@@ -11,17 +11,13 @@ pressed again the watch returns to display time mode. Time is not kept
 whilst being set.
 */
 
-//#define SYSTEM_BUS_WIDTH 32
-
 #include <system.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
-//#include <io.h>
 #include <sys/alt_irq.h>
-#include "buttons.h"
 #include "uart.h"
-#include "timer.h"
+#include "misc.h"
 #include "segment.h"
 #include "rtc.h"
 
@@ -274,6 +270,7 @@ void Watch::init()
     uart = Uart::getInstance();
     debugger = Uart::getInstance();
     timer = Timer::getInstance();
+    timer->init((volatile void *)TIMER_0_BASE);
     leds = new Leds((volatile uint8_t * const)LEDS_0_BASE);
     segDisplay = new TimeDisplay((volatile uint32_t *)SEGDISPLAY_BASE);
     mode = DISPLAY_TIME_MODE;
@@ -282,6 +279,7 @@ void Watch::init()
     RTCFactory rtcFactory;
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();
+    buttons->init((volatile void *)BUTTONS_BASE);
     buttons->setObserver(new ButtonS4Action(this), 4);
     buttons->setObserver(new ButtonS5Action(this), 5);
     timer->setObserver(new TimerTick(this));
