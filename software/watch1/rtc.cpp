@@ -11,31 +11,6 @@
 #include <system.h>
 #include <io.h>
 
-DS1302::DS1302()
-{
-    init();
-}
-
-uint8_t TimeStamp::getHour10()
-{
-    return ds.h24.Hour10;
-}
-
-uint8_t TimeStamp::getHour()
-{
-    return ds.h24.Hour;
-}
-
-uint8_t TimeStamp::getMinutes10()
-{
-    return ds.Minutes10;
-}
-
-uint8_t TimeStamp::getMinutes()
-{
-    return ds.Minutes;
-}
-
 void DS1302::update()
 {
     start();
@@ -43,12 +18,9 @@ void DS1302::update()
     uint8_t *p = (uint8_t *)&rtc;
 
     for (int i = 0; i < 8; i++)
-    {
         *p++ = toggleRead();
-    }
 
     stop();
-
 }
 
 void DS1302::write(int address, uint8_t data)
@@ -105,9 +77,7 @@ void DS1302::burstWrite(uint8_t *p)
     toggleWrite(CLOCK_BURST_WRITE, false);
     
     for (int i = 0; i < 8; i++)
-    {
         toggleWrite(*p++, false);
-    }
 
     stop();
 }
@@ -135,9 +105,7 @@ void DS1302::incrementMinutes()
         rtc.Minutes = 0;
 
         if (++rtc.Minutes10 > 5)
-        {
             rtc.Minutes10 = 0;
-        }
     }
 
     burstWrite((uint8_t *)&rtc);
@@ -173,9 +141,7 @@ RTC *RTCFactory::createRTC()
     Uart::getInstance()->puts(testStamp->toString());
 
     if (testStamp->getHour10() > 2)
-    {
         return FallBackRTC::getInstance();
-    }
 
     return DS1302::getInstance();
 }
@@ -185,7 +151,6 @@ void DS1302::init()
     io_handle = (volatile bool *)DS1302_IO_BASE;
     clk_handle = (volatile bool *)DS1302_CLK_BASE;
     reset_handle = (volatile bool *)DS1302_RESET_BASE;
-
     write(DS1302::ENABLE, 0);
     write(DS1302::TRICKLE, 0);
 }
@@ -197,11 +162,6 @@ void DS1302::start()
     IOWR(DS1302_IO_BASE, 1, 1);
     *reset_handle = 1;
     ::usleep(4);
-}
-
-int DS1302::digitalLees(int n)
-{
-    return 0;
 }
 
 FallBackRTC *FallBackRTC::getInstance()
@@ -218,9 +178,7 @@ void FallBackRTC::incrementMinutes()
         rtc.Minutes = 0;
 
         if (++rtc.Minutes10 > 5)
-        {
             rtc.Minutes10 = 0;
-        }
     }
 }
 
@@ -267,9 +225,7 @@ void FallBackRTC::update()
     }   else return;
 
     if (rtc.h24.Hour10 == 2 && rtc.h24.Hour > 3)
-    {
         rtc.h24.Hour10 = rtc.h24.Hour = 0;
-    }
 
 }
 

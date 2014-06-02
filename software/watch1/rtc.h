@@ -55,10 +55,10 @@ public:
     TimeStamp(ds1302_struct ds) { this->ds = ds; }
     ds1302_struct *getDS() { return &ds; }
     const char *toString();
-    uint8_t getHour10();
-    uint8_t getHour();
-    uint8_t getMinutes10();
-    uint8_t getMinutes();
+    uint8_t getHour10() { return ds.h24.Hour10; }
+    uint8_t getHour() { return ds.h24.Hour; }
+    uint8_t getMinutes10() { return ds.Minutes10; }
+    uint8_t getMinutes() { return ds.Minutes; }
 };
 
 class RTC
@@ -86,8 +86,8 @@ class DS1302 : public RTC
 {
 private:
     void write(int, uint8_t);
-    DS1302();
     void init();
+    DS1302() { init(); }
     volatile bool *io_handle;
     volatile bool *reset_handle;
     volatile bool *clk_handle;
@@ -101,7 +101,7 @@ private:
     static const uint8_t CLOCK_BURST_READ = 0xbf;
     void stop();
     void start();
-    int digitalLees(int n);
+    int digitalLees(int n) { return 0; }
     uint8_t toggleRead();
     void toggleWrite(uint8_t data, uint8_t release);
     ds1302_struct rtc;
