@@ -2,9 +2,8 @@
 2014 Jasper ter Weeme
 */
 
-#include "segment.h"
+#include "misc.h"
 #include <stdint.h>
-#include "rtc.h"
 
 SegDisplay::SegDisplay(volatile uint32_t * const addr)
 {

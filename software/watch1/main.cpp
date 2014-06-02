@@ -18,7 +18,6 @@ whilst being set.
 #include <sys/alt_irq.h>
 #include "uart.h"
 #include "misc.h"
-#include "segment.h"
 #include "rtc.h"
 
 class Leds
@@ -239,15 +238,22 @@ void Watch::init()
     debugger = Uart::getInstance();
     timer = Timer::getInstance();
     timer->init((volatile void *)TIMER_0_BASE);
+#ifdef LEDS_0_BASE
     leds = new Leds((volatile uint8_t * const)LEDS_0_BASE);
+#endif
+
+#ifdef SEGDISPLAY_BASE
     segDisplay = new TimeDisplay((volatile uint32_t *)SEGDISPLAY_BASE);
+#endif
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
     debugger->puts("Initializing Digital Watch...\r\n");
     RTCFactory rtcFactory;
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();
+#ifdef BUTTONS_BASE
     buttons->init((volatile void *)BUTTONS_BASE);
+#endif
     buttons->setObserver(new ButtonS4Action(this), 4);
     buttons->setObserver(new ButtonS5Action(this), 5);
     timer->setObserver(new TimerTick(this));
