@@ -42,7 +42,7 @@ const char *TimeStamp::toString()
 
 void DS1302::stop()
 {
-    *reset_handle = 0;
+    reset_handle[0] = 0;
     ::usleep(4);
 }
 
@@ -58,11 +58,11 @@ uint8_t DS1302::toggleRead()
 
     for (int i = 0; i <= 7; i++)
     {
-        *clk_handle = 1;
+        clk_handle[0] = 1;
         ::usleep(1);
-        *clk_handle = 0;
+        clk_handle[0] = 0;
         ::usleep(1);
-        *io_handle ? data |= (1<<i) : data &= ~(1<<i);
+        io_handle[0] ? data |= (1<<i) : data &= ~(1<<i);
     }
 
     return data;
@@ -112,9 +112,9 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 {
     for (int i = 0; i <= 7; i++)
     {
-        *io_handle = (data >> i) & 1;
+        io_handle[0] = (data >> i) & 1;
         ::usleep(1);
-        *clk_handle = 1;
+        clk_handle[0] = 1;
         ::usleep(1);
 
         if (release && i == 7)
@@ -123,7 +123,7 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
         }
         else
         {
-            *clk_handle = 0;
+            clk_handle[0] = 0;
             ::usleep(1);
         }
     }
@@ -159,10 +159,10 @@ void DS1302::init(volatile uint32_t *io, volatile uint8_t *clk, volatile uint8_t
 
 void DS1302::start()
 {
-    *reset_handle = 0;
-    *clk_handle = 0;
-    io_handle[1] = 1;
-    *reset_handle = 1;
+    reset_handle[0] = 0;
+    clk_handle[0] = 0;
+    io_handle[1] = 0xff;
+    reset_handle[0] = 1;
     ::usleep(4);
 }
 

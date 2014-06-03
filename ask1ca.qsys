@@ -132,6 +132,22 @@
          type = "String";
       }
    }
+   element ds1302_io.s1
+   {
+      datum baseAddress
+      {
+         value = "270336";
+         type = "String";
+      }
+   }
+   element buttons.s1
+   {
+      datum baseAddress
+      {
+         value = "270512";
+         type = "String";
+      }
+   }
    element ds1302_reset.s1
    {
       datum baseAddress
@@ -148,27 +164,11 @@
          type = "String";
       }
    }
-   element ds1302_io.s1
-   {
-      datum baseAddress
-      {
-         value = "270336";
-         type = "String";
-      }
-   }
    element timer_0.s1
    {
       datum baseAddress
       {
          value = "270368";
-         type = "String";
-      }
-   }
-   element buttons.s1
-   {
-      datum baseAddress
-      {
-         value = "270512";
          type = "String";
       }
    }
@@ -251,7 +251,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1401743357924" />
+ <parameter name="timeStamp" value="1401835412494" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -499,7 +499,7 @@
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="1" />
+  <parameter name="width" value="3" />
   <parameter name="clockRate" value="50000000" />
  </module>
  <module

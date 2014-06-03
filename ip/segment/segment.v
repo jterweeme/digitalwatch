@@ -1,29 +1,22 @@
 module slave_template (
-clk,
-reset,
-slave_address,
-slave_read,
-slave_write,
-slave_readdata,
-slave_writedata,
-slave_byteenable,
-user_dataout_0,
-user_dataout_1,
-user_chipselect,
-user_byteenable,
-user_write,
-user_read
+    input clk,
+    input reset,
+    input [3:0] slave_address,
+    input slave_read,
+    input slave_write,
+    output reg [7:0] slave_readdata,
+    input [7:0] slave_writedata,
+    input slave_byteenable,
+    output wire [7:0] user_dataout_0,
+    output wire [7:0] user_dataout_1,
+    output wire [15:0] user_chipselect,
+    output wire user_byteenable,
+    output wire user_write,
+    output wire user_read
 );
 
 parameter DATA_WIDTH = 8;
 parameter ENABLE_SYNC_SIGNALS = 0;
-input clk, reset, slave_read, slave_write, slave_byteenable;
-    input [3:0] slave_address;
-    output reg [7:0] slave_readdata;
-    input [7:0] slave_writedata;
-    output wire [7:0] user_dataout_0, user_dataout_1;
-    output wire [15:0] user_chipselect;
-    output wire user_byteenable, user_write, user_read;
 
     wire [7:0] user_dataout_d0, user_dataout_d1, user_dataout_d2, user_dataout_d3, user_dataout_d4,
             user_dataout_d5, user_dataout_d6, user_dataout_d7, user_dataout_d8;
