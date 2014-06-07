@@ -7,7 +7,7 @@ int main()
     //volatile uint32_t *segs = (volatile uint32_t *)SEGDISPLAY_BASE;
     leds[0] = 0xff;
     //leds[0] |= (1<<4);
-    leds[0] &= ~(1<<1);
+    leds[0] &= ~(1<<7);
     //segs[0] = 0x8e8c5e7c;
     //segs[1] = 0x8e8c5e7c;
 
