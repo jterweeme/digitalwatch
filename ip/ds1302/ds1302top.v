@@ -4,7 +4,7 @@ module ds1302top(
     input csi_reset_n,
     input avs_s1_read,
     input avs_s1_write,
-    output [7:0] avs_s1_readdata,
+    output reg [7:0] avs_s1_readdata,
     input [7:0] avs_s1_writedata,
     output reg coe_clk,
     output reg coe_reset,
@@ -17,6 +17,8 @@ module ds1302top(
         end else if (avs_s1_write) begin
             coe_clk <= avs_s1_writedata[0:0];
             coe_reset <= avs_s1_writedata[1:1];
+        end else if (avs_s1_read) begin
+            avs_s1_readdata[1:0] <= {coe_clk, coe_reset};
         end
     end
 
