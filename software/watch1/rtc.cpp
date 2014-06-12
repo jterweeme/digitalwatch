@@ -153,16 +153,16 @@ void DS1302::init(volatile uint32_t *io, volatile uint8_t *clk, volatile uint8_t
     io_handle = io;
     clk_handle = clk;
     reset_handle = rst;
-    write(DS1302::ENABLE, 0);
-    write(DS1302::TRICKLE, 0);
+    write(ENABLE, 0);
+    write(TRICKLE, 0);
 }
 
 void DS1302::start()
 {
-    reset_handle[0] &= ~(1<<1);
-    clk_handle[0] &= ~(1<<0);
-    io_handle[1] = 0xff;
-    reset_handle[0] |= (1<<1);
+    reset_handle[0] = 0;
+    clk_handle[0] = 0;
+    io_handle[1] = 1;
+    reset_handle[0] = 1;
     ::usleep(4);
 }
 
