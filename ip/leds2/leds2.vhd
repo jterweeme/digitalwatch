@@ -1,24 +1,26 @@
--- 2014 Jasper ter Weeme
+/*
+2014 Jasper ter Weeme
+*/
 
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+module leds(
+    input csi_clk,
+    input csi_reset,
+    input [3:0] avs_s1_address,
+    input avs_s1_read,
+    output reg [7:0] avs_s1_readdata,
+    input avs_s1_write,
+    input [7:0] avs_s1_writedata,
+    output reg [7:0] user_dataout_0);
 
-entity leds2 is
-    port (csi_clk, csi_reset, slave_write: in std_logic;
-          slave_address: in std_logic_vector(3 downto 0);
-          slave_writedata: in std_logic_vector(7 downto 0);
-          user_dataout_0: out std_logic_vector(7 downto 0));
-end leds2;
+    always @(posedge csi_clk or posedge csi_reset) begin
+        if (csi_reset)
+            user_dataout_0[7:0] <= 8'b0;
+        else if (avs_s1_write)
+            user_dataout_0[7:0] <= avs_s1_writedata[7:0];
+        else if (avs_s1_read)
+            avs_s1_readdata[7:0] <= user_dataout_0[7:0];
+    end
+endmodule
 
-architecture behavior of leds2 is
-begin
-    ledjes: process(csi_clk, csi_reset) begin
-        if csi_reset = '1' then
-            user_dataout_0 <= (others => '0');
-        elsif slave_write = '1' and rising_edge(csi_clk) then
-            user_dataout_0 <= slave_writedata;
-        end if;
-    end process;
-end behavior;
+
 

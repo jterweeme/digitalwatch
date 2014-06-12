@@ -86,8 +86,6 @@ set_interface_property conduit_end SVD_ADDRESS_GROUP ""
 
 add_interface_port conduit_end SRAM_DQ export Bidir 8
 add_interface_port conduit_end SRAM_ADDR export Output 17
-#add_interface_port conduit_end SRAM_UB_n export Output 1
-#add_interface_port conduit_end SRAM_LB_n export Output 1
 add_interface_port conduit_end SRAM_WE_n export Output 1
 add_interface_port conduit_end SRAM_CE_n export Output 1
 add_interface_port conduit_end SRAM_OE_n export Output 1

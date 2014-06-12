@@ -136,8 +136,6 @@ set_global_assignment -name SOURCE_FILE software/watch1/observer.h
 set_global_assignment -name SOURCE_FILE software/watch1/main.h
 set_global_assignment -name CUSP_FILE software/watch1/main.cpp
 set_global_assignment -name SOURCE_FILE software/watch1/ds1302.h
-set_global_assignment -name CUSP_FILE software/watch1/ds1302.cpp
-set_global_assignment -name CUSP_FILE software/watch1/cmdline.cpp
 set_global_assignment -name SOURCE_FILE software/watch1/buttons.h
 set_global_assignment -name CUSP_FILE software/watch1/buttons.cpp
 set_global_assignment -name VERILOG_FILE ip/vga/vga.v
