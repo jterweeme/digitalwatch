@@ -1,4 +1,5 @@
 package require -exact qsys 13.1
+package require cmdline
 
 
 set_module_property DESCRIPTION ""
