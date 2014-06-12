@@ -135,8 +135,8 @@ RTC *RTCFactory::createRTC()
     DS1302 *test = DS1302::getInstance();
 
     test->init((volatile uint32_t *)DS1302_IO_BASE,
-            (volatile uint8_t *)DS1302_BASE,
-            (volatile uint8_t *)DS1302_BASE);
+            (volatile uint8_t *)DS1302_CLK_BASE,
+            (volatile uint8_t *)DS1302_RESET_BASE);
 
     test->update();
     TimeStamp *testStamp = test->getTimeStamp();
