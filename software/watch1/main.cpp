@@ -26,7 +26,7 @@ private:
     volatile uint8_t * const handle;
 public:
     Leds(volatile uint8_t * const base) : handle(base) { }
-    void write(uint8_t data) { *handle = data; }
+    void write(const uint8_t data) { *handle = data; }
 };
 
 class Watch;
@@ -34,56 +34,12 @@ class Watch;
 /* State Pattern */
 class AbstractMode
 {
-public:
-    virtual void increase() {}
-    virtual void timerTick() {}
 protected:
     Watch *context;
-};
-
-/*
-Hoofdklasse, nu niet meer Singleton
-*/
-class Watch
-{
-private:
-    Uart *uart;
-    Leds leds;
-    Buttons *buttons;
-    TimeDisplay *segDisplay;
-    Timer *timer;
-    RTC *rtc;
-    Terminal *debugger;
-    static const uint8_t DISPLAY_TIME_MODE = 1;
-    static const uint8_t INCREMENT_HOURS_MODE = 2;
-    static const uint8_t INCREMENT_MINUTES_MODE = 3;
-    uint8_t mode;
-    AbstractMode *mode2;
 public:
-    Watch() :
-#ifdef LEDS_BASE
-        leds((volatile uint8_t *)LEDS_BASE)
-#else
-        leds((volatile uint8_t *)0)
-#endif
-    { }
-
-    TimeDisplay *getTimeDisplay() { return segDisplay; }
-    Leds *getLeds() { return &leds; }
-    RTC *getRTC() { return rtc; }
-    Uart *getUart() { return uart; }
-    Terminal *getDebugger() { return debugger; }
-    void nextMode();
-    void increment() { mode2->increase(); }
-    void timerTick() { mode2->timerTick(); }
-    void init();
-};
-
-class DisplayTimeMode : public AbstractMode
-{
-public:
-    DisplayTimeMode(Watch *);
-    void timerTick();
+    AbstractMode(Watch *context) : context(context) { }
+    virtual void increase() {}
+    virtual void timerTick() {}
 };
 
 class IncrementHoursMode : public AbstractMode
@@ -100,12 +56,49 @@ public:
     void increase();
 };
 
+class DisplayTimeMode : public AbstractMode
+{
+public:
+    DisplayTimeMode(Watch *);
+    void timerTick();
+};
+/*
+Hoofdklasse, nu niet meer Singleton
+*/
+class Watch
+{
+private:
+    Uart *uart;
+    Leds leds;
+    Buttons *buttons;
+    TimeDisplay segDisplay;
+    Timer *timer;
+    RTC *rtc;
+    Terminal *debugger;
+    static const uint8_t DISPLAY_TIME_MODE = 1;
+    static const uint8_t INCREMENT_HOURS_MODE = 2;
+    static const uint8_t INCREMENT_MINUTES_MODE = 3;
+    uint8_t mode;
+    AbstractMode *mode2;
+public:
+    Watch();
+    TimeDisplay *getTimeDisplay() { return &segDisplay; }
+    Leds *getLeds() { return &leds; }
+    RTC *getRTC() { return rtc; }
+    Uart *getUart() { return uart; }
+    Terminal *getDebugger() { return debugger; }
+    void nextMode();
+    void increment() { mode2->increase(); }
+    void timerTick() { mode2->timerTick(); }
+    void init();
+};
+
 class TimerTick : public Observer
 {
 private:
     Watch *watch;
 public:
-    TimerTick(Watch *watch) { this->watch = watch; }
+    TimerTick(Watch *watch) : watch(watch) { }
     void update() { watch->timerTick(); }
 };
 
@@ -114,7 +107,7 @@ class ButtonS4Action : public Observer
 private:
     Watch *watch;
 public:
-    ButtonS4Action(Watch *watch) { this->watch = watch; }
+    ButtonS4Action(Watch *watch) : watch(watch) { }
     void update() { watch->nextMode(); }
 };
 
@@ -123,27 +116,37 @@ class ButtonS5Action : public Observer
 private:
     Watch *watch;
 public:
-    ButtonS5Action(Watch *watch) { this->watch = watch; }
+    ButtonS5Action(Watch *watch) : watch(watch) { }
     void update() { watch->increment(); }
 };
 
-DisplayTimeMode::DisplayTimeMode(Watch *context)
+Watch::Watch() :
+#ifdef LEDS_BASE
+    leds((volatile uint8_t * const)LEDS_BASE),
+#else
+    leds((volatile uint8_t *const)0),
+#endif
+
+#ifdef SEGDISPLAY_BASE
+    segDisplay((volatile uint32_t *)SEGDISPLAY_BASE)
+#endif
 {
-    this->context = context;
+}
+
+DisplayTimeMode::DisplayTimeMode(Watch *context) : AbstractMode(context)
+{
     context->getLeds()->write(~1);
     context->getTimeDisplay()->setBlinkMask(0);
 }
 
-IncrementMinutesMode::IncrementMinutesMode(Watch *context)
+IncrementMinutesMode::IncrementMinutesMode(Watch *context) : AbstractMode(context)
 {
-    this->context = context;
     context->getLeds()->write(~4);
     context->getTimeDisplay()->setBlinkMask(3);
 }
 
-IncrementHoursMode::IncrementHoursMode(Watch *context)
+IncrementHoursMode::IncrementHoursMode(Watch *context) : AbstractMode(context)
 {
-    this->context = context;
     context->getLeds()->write(~2);
     context->getTimeDisplay()->setBlinkMask(0x0c);
 }
@@ -210,9 +213,6 @@ void Watch::init()
     debugger = Uart::getInstance();
     timer = Timer::getInstance();
     timer->init((volatile void *)TIMER_0_BASE);
-#ifdef SEGDISPLAY_BASE
-    segDisplay = new TimeDisplay((volatile uint32_t *)SEGDISPLAY_BASE);
-#endif
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
     debugger->puts("Initializing Digital Watch...\r\n");

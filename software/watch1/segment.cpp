@@ -7,37 +7,27 @@
 
 uint8_t TimeDisplay::lookup[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
 
-void TimeDisplay::setMinutes(uint8_t min)
+void TimeDisplay::setTime(const uint8_t uur, const uint8_t min)
 {
-    write(lookup[0] | (lookup[0] << 8));
-}
-
-void SegDisplay::setBlinkMask(uint8_t mask)
-{
-    *blinkMask = mask;
-}
-
-void TimeDisplay::setTime(uint8_t uur, uint8_t min)
-{
-    uint8_t d = lookup[uur / 10];
+    const uint8_t d = lookup[uur / 10];
     uint8_t c = lookup[uur % 10];
     c &= ~0x80;     // dot
-    uint8_t b = lookup[min / 10];
-    uint8_t a = lookup[min % 10];
+    const uint8_t b = lookup[min / 10];
+    const uint8_t a = lookup[min % 10];
     write(a | b << 8 | c << 16 | d << 24);
 }
 
 void TimeDisplay::setTime(TimeStamp *ts)
 {
-    uint8_t d = lookup[ts->getHour10()];
+    const uint8_t d = lookup[ts->getHour10()];
     uint8_t c = lookup[ts->getHour()];
     c &= ~0x80;
-    uint8_t b = lookup[ts->getMinutes10()];
-    uint8_t a = lookup[ts->getMinutes()];
+    const uint8_t b = lookup[ts->getMinutes10()];
+    const uint8_t a = lookup[ts->getMinutes()];
     write(a | b << 8 | c << 16 | d << 24);
 }
 
-void SegDisplay::write(uint32_t data)
+void SegDisplay::write(const uint32_t data)
 {
     *handle = data;
     handle[1] = 0xffffffff;

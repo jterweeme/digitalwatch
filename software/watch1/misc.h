@@ -51,7 +51,7 @@ class TimeStamp
 private:
     ds1302_struct ds;
 public:
-    TimeStamp(ds1302_struct ds) { this->ds = ds; }
+    TimeStamp(ds1302_struct ds) : ds(ds) { }
     ds1302_struct *getDS() { return &ds; }
     const char *toString();
     uint8_t getHour10() { return ds.h24.Hour10; }
@@ -114,15 +114,15 @@ public:
         blinkMask((volatile uint8_t * const)base + 8)
     { }
 
-    void write(uint32_t);
-    void setBlinkMask(uint8_t);
+    void write(const uint32_t data);
+    void setBlinkMask(const uint8_t mask) { *blinkMask = mask; }
 };
 
 class TimeDisplay : public SegDisplay
 {
 public:
     TimeDisplay(volatile uint32_t * const addr) : SegDisplay(addr) { }
-    void setMinutes(uint8_t);
+    void setMinutes(const uint8_t min) { write(lookup[0] | (lookup[0] << 8)); }
     void setTime(uint8_t, uint8_t);
     void setTime(TimeStamp *);
 private:
