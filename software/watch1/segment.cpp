@@ -5,15 +5,6 @@
 #include "misc.h"
 #include <stdint.h>
 
-SegDisplay::SegDisplay(volatile uint32_t * const addr)
-{
-    init(addr);
-}
-
-TimeDisplay::TimeDisplay(volatile uint32_t * const addr) : SegDisplay(addr)
-{
-}
-
 uint8_t TimeDisplay::lookup[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
 
 void TimeDisplay::setMinutes(uint8_t min)
@@ -44,12 +35,6 @@ void TimeDisplay::setTime(TimeStamp *ts)
     uint8_t b = lookup[ts->getMinutes10()];
     uint8_t a = lookup[ts->getMinutes()];
     write(a | b << 8 | c << 16 | d << 24);
-}
-
-void SegDisplay::init(volatile uint32_t * const addr)
-{
-    handle = addr;
-    blinkMask = (volatile uint8_t *)handle + 8;
 }
 
 void SegDisplay::write(uint32_t data)

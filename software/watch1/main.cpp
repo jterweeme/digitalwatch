@@ -22,11 +22,10 @@ whilst being set.
 
 class Leds
 {
-
 private:
-    volatile uint8_t *handle;
+    volatile uint8_t * const handle;
 public:
-    Leds(volatile uint8_t * const base) { this->handle = base; }
+    Leds(volatile uint8_t * const base) : handle(base) { }
     void write(uint8_t data) { *handle = data; }
 };
 
@@ -49,7 +48,7 @@ class Watch
 {
 private:
     Uart *uart;
-    Leds *leds;
+    Leds leds;
     Buttons *buttons;
     TimeDisplay *segDisplay;
     Timer *timer;
@@ -61,14 +60,22 @@ private:
     uint8_t mode;
     AbstractMode *mode2;
 public:
+    Watch() :
+#ifdef LEDS_BASE
+        leds((volatile uint8_t *)LEDS_BASE)
+#else
+        leds((volatile uint8_t *)0)
+#endif
+    { }
+
     TimeDisplay *getTimeDisplay() { return segDisplay; }
-    Leds *getLeds() { return leds; }
+    Leds *getLeds() { return &leds; }
     RTC *getRTC() { return rtc; }
-    Uart *getUart();
-    Terminal *getDebugger();
+    Uart *getUart() { return uart; }
+    Terminal *getDebugger() { return debugger; }
     void nextMode();
-    void increment();
-    void timerTick();
+    void increment() { mode2->increase(); }
+    void timerTick() { mode2->timerTick(); }
     void init();
 };
 
@@ -155,11 +162,6 @@ void IncrementMinutesMode::increase()
     context->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
-Uart *Watch::getUart()
-{
-    return uart;
-}
-
 void DisplayTimeMode::timerTick()
 {
     RTC *rtc = context->getRTC();
@@ -169,11 +171,6 @@ void DisplayTimeMode::timerTick()
     context->getTimeDisplay()->setTime(ts);
 }
 
-void Watch::timerTick()
-{
-    mode2->timerTick();
-}
-
 /*
 Quick and dirty implementatie van Singleton
 */
@@ -181,12 +178,6 @@ Timer *Timer::getInstance()
 {
     static Timer instance;
     return &instance;
-}
-
-
-Terminal *Watch::getDebugger()
-{
-    return debugger;
 }
 
 void Watch::nextMode()
@@ -208,7 +199,7 @@ void Watch::nextMode()
             mode2 = new IncrementMinutesMode(this);
             break;
         default:
-            leds->write(0xff);
+            leds.write(0xff);
             break;
     }
 }
@@ -219,10 +210,6 @@ void Watch::init()
     debugger = Uart::getInstance();
     timer = Timer::getInstance();
     timer->init((volatile void *)TIMER_0_BASE);
-#ifdef LEDS_BASE
-    leds = new Leds((volatile uint8_t * const)LEDS_BASE);
-#endif
-
 #ifdef SEGDISPLAY_BASE
     segDisplay = new TimeDisplay((volatile uint32_t *)SEGDISPLAY_BASE);
 #endif
@@ -238,11 +225,6 @@ void Watch::init()
     buttons->setObserver(new ButtonS4Action(this), 4);
     buttons->setObserver(new ButtonS5Action(this), 5);
     timer->setObserver(new TimerTick(this));
-}
-
-void Watch::increment()
-{
-    mode2->increase();
 }
 
 int main()

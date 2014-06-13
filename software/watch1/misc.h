@@ -82,7 +82,7 @@ private:
 public:
     static Timer *getInstance();
     void setObserver(Observer *obs) { rh = obs; }
-    void init(volatile void *base);
+    void init(volatile void * const base);
 };
 
 class Buttons
@@ -90,7 +90,7 @@ class Buttons
 public:
     static Buttons *getInstance();
     void setObserver(Observer *, int);
-    void init(volatile void *base);
+    void init(volatile void * const base);
 private:
     volatile void *base;
     volatile uint32_t *base32;
@@ -105,20 +105,23 @@ private:
 
 class SegDisplay
 {
+private:
+    volatile uint32_t * const handle;
+    volatile uint8_t * const blinkMask;
 public:
-    SegDisplay(volatile uint32_t * const);
+    SegDisplay(volatile uint32_t * const base) :
+        handle(base),
+        blinkMask((volatile uint8_t * const)base + 8)
+    { }
+
     void write(uint32_t);
     void setBlinkMask(uint8_t);
-private:
-    volatile uint32_t *handle;
-    void init(volatile uint32_t * const);
-    volatile uint8_t *blinkMask;
 };
 
 class TimeDisplay : public SegDisplay
 {
 public:
-    TimeDisplay(volatile uint32_t * const);
+    TimeDisplay(volatile uint32_t * const addr) : SegDisplay(addr) { }
     void setMinutes(uint8_t);
     void setTime(uint8_t, uint8_t);
     void setTime(TimeStamp *);
