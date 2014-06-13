@@ -2,7 +2,7 @@
 2014 Jasper ter Weeme
 */
 
-module leds(
+module bytewrite1top(
     input csi_clk,
     input csi_reset,
     input [3:0] avs_s1_address,

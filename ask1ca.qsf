@@ -83,12 +83,14 @@ set_location_assignment PIN_83 -to sram_conduit_end_WE_n
 set_location_assignment PIN_109 -to sram_conduit_end_OE_n
 set_location_assignment PIN_141 -to uart_0_external_connection_rxd
 set_location_assignment PIN_142 -to uart_0_external_connection_txd
-set_location_assignment PIN_31 -to leds_0_conduit_end_export[4]
-set_location_assignment PIN_28 -to leds_0_conduit_end_export[3]
-set_location_assignment PIN_27 -to leds_0_conduit_end_export[2]
-set_location_assignment PIN_11 -to leds_0_conduit_end_export[1]
-set_location_assignment PIN_10 -to leds_0_conduit_end_export[0]
-
+set_location_assignment PIN_31 -to leds_export[4]
+set_location_assignment PIN_28 -to leds_export[3]
+set_location_assignment PIN_27 -to leds_export[2]
+set_location_assignment PIN_11 -to leds_export[1]
+set_location_assignment PIN_10 -to leds_export[0]
+set_location_assignment PIN_34 -to leds_export[7]
+set_location_assignment PIN_33 -to leds_export[6]
+set_location_assignment PIN_32 -to leds_export[5]
 
 
 set_global_assignment -name GENERATE_TTF_FILE ON
@@ -146,11 +148,9 @@ set_location_assignment PIN_5 -to buttons_external_connection_export[2]
 set_location_assignment PIN_6 -to buttons_external_connection_export[1]
 set_location_assignment PIN_7 -to buttons_external_connection_export[0]
 
-set_location_assignment PIN_34 -to leds_0_conduit_end_export[7]
-set_location_assignment PIN_33 -to leds_0_conduit_end_export[6]
-set_location_assignment PIN_32 -to leds_0_conduit_end_export[5]
+
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 
 set_location_assignment PIN_57 -to ds1302_reset_external_connection_export
 set_location_assignment PIN_58 -to ds1302_io_external_connection_export
-set_location_assignment PIN_59 -to ds1302_clk_external_connection_export
+set_location_assignment PIN_59 -to ds1302_clk2_export

@@ -22,11 +22,12 @@ whilst being set.
 
 class Leds
 {
-public:
-    Leds(volatile uint8_t * const base) { this->handle = base; }
-    void write(uint8_t);
+
 private:
     volatile uint8_t *handle;
+public:
+    Leds(volatile uint8_t * const base) { this->handle = base; }
+    void write(uint8_t data) { *handle = data; }
 };
 
 class Watch;
@@ -46,16 +47,6 @@ Hoofdklasse, nu niet meer Singleton
 */
 class Watch
 {
-public:
-    TimeDisplay *getTimeDisplay();
-    Leds *getLeds();
-    RTC *getRTC();
-    Uart *getUart();
-    Terminal *getDebugger();
-    void nextMode();
-    void increment();
-    void timerTick();
-    void init();
 private:
     Uart *uart;
     Leds *leds;
@@ -69,6 +60,16 @@ private:
     static const uint8_t INCREMENT_MINUTES_MODE = 3;
     uint8_t mode;
     AbstractMode *mode2;
+public:
+    TimeDisplay *getTimeDisplay() { return segDisplay; }
+    Leds *getLeds() { return leds; }
+    RTC *getRTC() { return rtc; }
+    Uart *getUart();
+    Terminal *getDebugger();
+    void nextMode();
+    void increment();
+    void timerTick();
+    void init();
 };
 
 class DisplayTimeMode : public AbstractMode
@@ -119,21 +120,6 @@ public:
     void update() { watch->increment(); }
 };
 
-void Leds::write(uint8_t data)
-{
-    *handle = data;
-}
-
-Leds *Watch::getLeds()
-{
-    return leds;
-}
-
-RTC *Watch::getRTC()
-{
-    return rtc;
-}
-
 DisplayTimeMode::DisplayTimeMode(Watch *context)
 {
     this->context = context;
@@ -153,11 +139,6 @@ IncrementHoursMode::IncrementHoursMode(Watch *context)
     this->context = context;
     context->getLeds()->write(~2);
     context->getTimeDisplay()->setBlinkMask(0x0c);
-}
-
-TimeDisplay *Watch::getTimeDisplay()
-{
-    return segDisplay;
 }
 
 void IncrementHoursMode::increase()
@@ -238,8 +219,8 @@ void Watch::init()
     debugger = Uart::getInstance();
     timer = Timer::getInstance();
     timer->init((volatile void *)TIMER_0_BASE);
-#ifdef LEDS_0_BASE
-    leds = new Leds((volatile uint8_t * const)LEDS_0_BASE);
+#ifdef LEDS_BASE
+    leds = new Leds((volatile uint8_t * const)LEDS_BASE);
 #endif
 
 #ifdef SEGDISPLAY_BASE

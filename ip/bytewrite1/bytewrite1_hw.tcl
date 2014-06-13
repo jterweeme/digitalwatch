@@ -1,5 +1,7 @@
 package require -exact qsys 13.1
 
+source ../common.tcl
+
 proc klok {} {
     add_interface clock clock end
     set_interface_property clock clockRate 0
@@ -10,25 +12,9 @@ proc klok {} {
     add_interface_port clock csi_clk clk Input 1
 }
 
-set_module_property DESCRIPTION ""
-set_module_property NAME leds2
-set_module_property VERSION 1.0
-set_module_property INTERNAL false
-set_module_property OPAQUE_ADDRESS_MAP true
-set_module_property GROUP Jasper
-set_module_property AUTHOR ""
-set_module_property DISPLAY_NAME leds2
-set_module_property INSTANTIATE_IN_SYSTEM_MODULE true
-set_module_property EDITABLE true
-set_module_property ANALYZE_HDL AUTO
-set_module_property REPORT_TO_TALKBACK false
-set_module_property ALLOW_GREYBOX_GENERATION false
+mymodule bytewrite1 bytewrite1top
 
-
-add_fileset QUARTUS_SYNTH QUARTUS_SYNTH "" ""
-set_fileset_property QUARTUS_SYNTH TOP_LEVEL leds
-set_fileset_property QUARTUS_SYNTH ENABLE_RELATIVE_INCLUDE_PATHS false
-add_fileset_file leds2.v VERILOG PATH leds2.v TOP_LEVEL_FILE
+add_fileset_file bytewrite1.v VERILOG PATH bytewrite1.v TOP_LEVEL_FILE
 
 klok
 
