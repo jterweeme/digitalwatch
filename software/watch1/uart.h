@@ -5,7 +5,6 @@
 #ifndef _UART_H_
 #define _UART_H_
 #include <stdint.h>
-#include <system.h>     // moet nog weg
 
 class Terminal
 {
@@ -13,33 +12,30 @@ public:
     virtual void puts(const char *) = 0;
 };
 
-// JTAG is Singleton en Observable
 class JtagUart : public Terminal
 {
-private:
-    volatile uint32_t *handle;
+    static JtagUart *instance;
+    volatile uint32_t * const base;
+    volatile uint32_t * const ctl;
 public:
-    static JtagUart *getInstance();
-    void init() { handle = (volatile uint32_t *)JTAG_UART_0_BASE; }
+    JtagUart(volatile uint32_t * const base) : base(base), ctl(base + 4) { instance = this; }
+    static JtagUart *getInstance() { return instance; }
     void putc(const char);
     void puts(const char *s) { while (*s) putc(*s++); }
-private:
-     JtagUart() { init(); }
 };
 
-// Uart is Singleton en Observable
 class Uart : public Terminal
 {
+    static Uart *instance;
+    volatile uint32_t * const base;
 public:
-    static Uart *getInstance();
+    Uart(volatile uint32_t * const base) : base(base) { instance = this; }
+    static void isr(void *context) { }
+    static Uart *getInstance() { return instance; }
     void putc(const char);
     void puts(const char *s) { while (*s) putc(*s++); }
-private:
-    volatile uint32_t *uart;
-    Uart() { uart = (volatile uint32_t *)UART_0_BASE; }
-    static void isr(void *context) { }
-
 };
+
 #endif
 
 

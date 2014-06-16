@@ -20,19 +20,19 @@
          type = "String";
       }
    }
-   element sram_0.avalon_slave
-   {
-      datum baseAddress
-      {
-         value = "131072";
-         type = "String";
-      }
-   }
    element ds1302_clk2.avalon_slave
    {
       datum baseAddress
       {
          value = "270536";
+         type = "String";
+      }
+   }
+   element sram_0.avalon_slave
+   {
+      datum baseAddress
+      {
+         value = "131072";
          type = "String";
       }
    }
@@ -52,19 +52,11 @@
          type = "int";
       }
    }
-   element ds1302_clk
-   {
-      datum _sortIndex
-      {
-         value = "7";
-         type = "int";
-      }
-   }
    element ds1302_clk2
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "12";
          type = "int";
       }
    }
@@ -80,7 +72,7 @@
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "7";
          type = "int";
       }
    }
@@ -96,7 +88,7 @@
    {
       datum _sortIndex
       {
-         value = "11";
+         value = "10";
          type = "int";
       }
    }
@@ -112,7 +104,7 @@
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "8";
          type = "int";
       }
    }
@@ -120,7 +112,7 @@
    {
       datum _sortIndex
       {
-         value = "14";
+         value = "13";
          type = "int";
       }
    }
@@ -128,7 +120,7 @@
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "11";
          type = "int";
       }
    }
@@ -148,59 +140,11 @@
          type = "String";
       }
    }
-   element buttons.s1
-   {
-      datum baseAddress
-      {
-         value = "270512";
-         type = "String";
-      }
-   }
    element ds1302_reset.s1
    {
       datum baseAddress
       {
          value = "270480";
-         type = "String";
-      }
-   }
-   element leds_0.s1
-   {
-      datum baseAddress
-      {
-         value = "270432";
-         type = "String";
-      }
-   }
-   element ds1302_clk.s1
-   {
-      datum baseAddress
-      {
-         value = "270496";
-         type = "String";
-      }
-   }
-   element timer_0.s1
-   {
-      datum baseAddress
-      {
-         value = "270368";
-         type = "String";
-      }
-   }
-   element ds1302_io.s1
-   {
-      datum baseAddress
-      {
-         value = "270336";
-         type = "String";
-      }
-   }
-   element leds.s1
-   {
-      datum baseAddress
-      {
-         value = "270432";
          type = "String";
       }
    }
@@ -212,11 +156,43 @@
          type = "String";
       }
    }
+   element ds1302_io.s1
+   {
+      datum baseAddress
+      {
+         value = "270336";
+         type = "String";
+      }
+   }
+   element buttons.s1
+   {
+      datum baseAddress
+      {
+         value = "270512";
+         type = "String";
+      }
+   }
+   element timer_0.s1
+   {
+      datum baseAddress
+      {
+         value = "270368";
+         type = "String";
+      }
+   }
+   element leds.s1
+   {
+      datum baseAddress
+      {
+         value = "270432";
+         type = "String";
+      }
+   }
    element segdisplay
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "9";
          type = "int";
       }
    }
@@ -267,7 +243,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1402670457055" />
+ <parameter name="timeStamp" value="1402941912598" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -290,11 +266,6 @@
  <interface
    name="ds1302_io_external_connection"
    internal="ds1302_io.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="ds1302_clk_external_connection"
-   internal="ds1302_clk.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -425,7 +396,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='epcs_flash_controller_0.epcs_control_port' start='0x41000' end='0x41800' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x41800' end='0x42000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='epcs_flash_controller_0.epcs_control_port' start='0x41000' end='0x41800' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x41800' end='0x42000' /><slave name='ds1302_io.s1' start='0x42000' end='0x42020' /><slave name='timer_0.s1' start='0x42020' end='0x42040' /><slave name='uart_0.s1' start='0x42040' end='0x42060' /><slave name='leds.s1' start='0x42060' end='0x42070' /><slave name='myrtc_0.slave' start='0x42070' end='0x42080' /><slave name='segdisplay.s0' start='0x42080' end='0x42090' /><slave name='ds1302_reset.s1' start='0x42090' end='0x420A0' /><slave name='ds1302_clk.s1' start='0x420A0' end='0x420B0' /><slave name='buttons.s1' start='0x420B0' end='0x420C0' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x420C0' end='0x420C8' /><slave name='ds1302_clk2.avalon_slave' start='0x420C8' end='0x420C9' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='epcs_flash_controller_0.epcs_control_port' start='0x41000' end='0x41800' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x41800' end='0x42000' /><slave name='ds1302_io.s1' start='0x42000' end='0x42020' /><slave name='timer_0.s1' start='0x42020' end='0x42040' /><slave name='uart_0.s1' start='0x42040' end='0x42060' /><slave name='leds.s1' start='0x42060' end='0x42070' /><slave name='myrtc_0.slave' start='0x42070' end='0x42080' /><slave name='segdisplay.s0' start='0x42080' end='0x42090' /><slave name='ds1302_reset.s1' start='0x42090' end='0x420A0' /><slave name='buttons.s1' start='0x420B0' end='0x420C0' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x420C0' end='0x420C8' /><slave name='ds1302_clk2.avalon_slave' start='0x420C8' end='0x420C9' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone" />
   <parameter name="internalIrqMaskSystemInfo" value="31" />
@@ -505,24 +476,6 @@
   <parameter name="bitModifyingOutReg" value="true" />
   <parameter name="captureEdge" value="false" />
   <parameter name="direction" value="Bidir" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="1" />
-  <parameter name="clockRate" value="50000000" />
- </module>
- <module
-   kind="altera_avalon_pio"
-   version="13.0.1.99.2"
-   enabled="1"
-   name="ds1302_clk">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="direction" value="Output" />
   <parameter name="edgeType" value="RISING" />
   <parameter name="generateIRQ" value="false" />
   <parameter name="irqType" value="LEVEL" />
@@ -717,21 +670,6 @@
    end="ds1302_io.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00042000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection kind="clock" version="13.0" start="clk_0.clk" end="ds1302_clk.clk" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="ds1302_clk.reset" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="nios2_qsys_0.data_master"
-   end="ds1302_clk.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x000420a0" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="clock" version="13.0" start="clk_0.clk" end="ds1302_reset.clk" />

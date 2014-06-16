@@ -13,7 +13,6 @@ whilst being set.
 
 #include <system.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <sys/alt_irq.h>
 #include "uart.h"
@@ -31,7 +30,6 @@ public:
 
 class Watch;
 
-/* State Pattern */
 class AbstractMode
 {
 protected:
@@ -62,13 +60,11 @@ public:
     DisplayTimeMode(Watch *);
     void timerTick();
 };
-/*
-Hoofdklasse, nu niet meer Singleton
-*/
+
 class Watch
 {
-private:
-    Uart *uart;
+    Uart uart;
+    JtagUart jtagUart;
     Leds leds;
     Buttons *buttons;
     TimeDisplay segDisplay;
@@ -85,7 +81,7 @@ public:
     TimeDisplay *getTimeDisplay() { return &segDisplay; }
     Leds *getLeds() { return &leds; }
     RTC *getRTC() { return rtc; }
-    Uart *getUart() { return uart; }
+    Uart *getUart() { return &uart; }
     Terminal *getDebugger() { return debugger; }
     void nextMode();
     void increment() { mode2->increase(); }
@@ -124,12 +120,14 @@ Watch::Watch() :
 #ifdef LEDS_BASE
     leds((volatile uint8_t * const)LEDS_BASE),
 #else
-    leds((volatile uint8_t *const)0),
+    leds((volatile uint8_t * const)0),
 #endif
 
 #ifdef SEGDISPLAY_BASE
-    segDisplay((volatile uint32_t *)SEGDISPLAY_BASE)
+    segDisplay((volatile uint32_t *)SEGDISPLAY_BASE),
 #endif
+    uart((volatile uint32_t * const)UART_0_BASE),
+    jtagUart((volatile uint32_t * const)JTAG_UART_0_BASE)
 {
 }
 
@@ -174,9 +172,6 @@ void DisplayTimeMode::timerTick()
     context->getTimeDisplay()->setTime(ts);
 }
 
-/*
-Quick and dirty implementatie van Singleton
-*/
 Timer *Timer::getInstance()
 {
     static Timer instance;
@@ -209,8 +204,7 @@ void Watch::nextMode()
 
 void Watch::init()
 {
-    uart = Uart::getInstance();
-    debugger = Uart::getInstance();
+    debugger = JtagUart::getInstance();
     timer = Timer::getInstance();
     timer->init((volatile void *)TIMER_0_BASE);
     mode = DISPLAY_TIME_MODE;
