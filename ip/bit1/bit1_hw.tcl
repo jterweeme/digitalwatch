@@ -61,5 +61,5 @@ set_interface_property      conduit_end ENABLED true
 set_interface_property      conduit_end EXPORT_OF ""
 set_interface_property      conduit_end PORT_NAME_MAP ""
 set_interface_property      conduit_end SVD_ADDRESS_GROUP ""
-add_interface_port          conduit_end coe_bit export Output 1
+add_interface_port          conduit_end coe_bit export Bidir 1
 

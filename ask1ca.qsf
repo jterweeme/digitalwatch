@@ -152,5 +152,6 @@ set_location_assignment PIN_7 -to buttons_external_connection_export[0]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 
 set_location_assignment PIN_57 -to ds1302_reset_external_connection_export
-set_location_assignment PIN_58 -to ds1302_io_external_connection_export
 set_location_assignment PIN_59 -to ds1302_clk2_export
+
+set_location_assignment PIN_58 -to ds1302_io_external_connection_export
