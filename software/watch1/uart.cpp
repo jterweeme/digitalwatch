@@ -4,7 +4,6 @@
 
 #include "uart.h"
 #include <stdint.h>
-#include <system.h>     // moet nog weg
 
 void JtagUart::putc(const char c)
 {

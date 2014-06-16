@@ -2,8 +2,8 @@
 2014 Jasper ter Weeme
 */
 
-#ifndef _OBSERVER_H_
-#define _OBSERVER_H_
+#ifndef _MISC_H_
+#define _MISC_H_
 #include <stdint.h>
 
 struct ds1302_struct
@@ -66,9 +66,6 @@ public:
     virtual void update() = 0;
 };
 
-/*
-Timer is Singleton en Observable
-*/
 class Timer
 {
 

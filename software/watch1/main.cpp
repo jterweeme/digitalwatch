@@ -30,6 +30,12 @@ public:
 
 class Watch;
 
+class IWatch
+{
+public:
+    virtual void timerTick() = 0;
+};
+
 class AbstractMode
 {
 protected:
@@ -61,7 +67,7 @@ public:
     void timerTick();
 };
 
-class Watch
+class Watch : public IWatch
 {
     Uart uart;
     JtagUart jtagUart;
@@ -92,9 +98,9 @@ public:
 class TimerTick : public Observer
 {
 private:
-    Watch *watch;
+    IWatch *watch;
 public:
-    TimerTick(Watch *watch) : watch(watch) { }
+    TimerTick(IWatch *watch) : watch(watch) { }
     void update() { watch->timerTick(); }
 };
 
