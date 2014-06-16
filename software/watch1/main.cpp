@@ -28,20 +28,24 @@ public:
     void write(const uint8_t data) { *handle = data; }
 };
 
-class Watch;
-
 class IWatch
 {
 public:
     virtual void timerTick() = 0;
+    virtual void nextMode() = 0;
+    virtual void increment() = 0;
+    virtual Leds *getLeds() = 0;
+    virtual Uart *getUart() = 0;
+    virtual RTC *getRTC() = 0;
+    virtual TimeDisplay *getTimeDisplay() = 0;
 };
 
 class AbstractMode
 {
 protected:
-    Watch *context;
+    IWatch *context;
 public:
-    AbstractMode(Watch *context) : context(context) { }
+    AbstractMode(IWatch *context) : context(context) { }
     virtual void increase() {}
     virtual void timerTick() {}
 };
@@ -49,21 +53,21 @@ public:
 class IncrementHoursMode : public AbstractMode
 {
 public:
-    IncrementHoursMode(Watch *);
+    IncrementHoursMode(IWatch *);
     void increase();
 };
 
 class IncrementMinutesMode : public AbstractMode
 {
 public:
-    IncrementMinutesMode(Watch *);
+    IncrementMinutesMode(IWatch *);
     void increase();
 };
 
 class DisplayTimeMode : public AbstractMode
 {
 public:
-    DisplayTimeMode(Watch *);
+    DisplayTimeMode(IWatch *);
     void timerTick();
 };
 
@@ -107,18 +111,18 @@ public:
 class ButtonS4Action : public Observer
 {
 private:
-    Watch *watch;
+    IWatch *watch;
 public:
-    ButtonS4Action(Watch *watch) : watch(watch) { }
+    ButtonS4Action(IWatch *watch) : watch(watch) { }
     void update() { watch->nextMode(); }
 };
 
 class ButtonS5Action : public Observer
 {
 private:
-    Watch *watch;
+    IWatch *watch;
 public:
-    ButtonS5Action(Watch *watch) : watch(watch) { }
+    ButtonS5Action(IWatch *watch) : watch(watch) { }
     void update() { watch->increment(); }
 };
 
@@ -137,19 +141,19 @@ Watch::Watch() :
 {
 }
 
-DisplayTimeMode::DisplayTimeMode(Watch *context) : AbstractMode(context)
+DisplayTimeMode::DisplayTimeMode(IWatch *context) : AbstractMode(context)
 {
     context->getLeds()->write(~1);
     context->getTimeDisplay()->setBlinkMask(0);
 }
 
-IncrementMinutesMode::IncrementMinutesMode(Watch *context) : AbstractMode(context)
+IncrementMinutesMode::IncrementMinutesMode(IWatch *context) : AbstractMode(context)
 {
     context->getLeds()->write(~4);
     context->getTimeDisplay()->setBlinkMask(3);
 }
 
-IncrementHoursMode::IncrementHoursMode(Watch *context) : AbstractMode(context)
+IncrementHoursMode::IncrementHoursMode(IWatch *context) : AbstractMode(context)
 {
     context->getLeds()->write(~2);
     context->getTimeDisplay()->setBlinkMask(0x0c);
