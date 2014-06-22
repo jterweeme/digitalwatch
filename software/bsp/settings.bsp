@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Jun 22, 2014 11:35:40 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1403472940617</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Jun 23, 2014 1:43:21 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1403480601682</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../ask1ca.sopcinfo</SopcDesignFile>
@@ -957,12 +957,6 @@
                 <addressRange>0x000420B0 - 0x000420B7</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>ds1302_clk2</slaveDescriptor>
-                <addressRange>0x000420B9 - 0x000420B9</addressRange>
-                <addressSpan>1</addressSpan>
-                <attributes/>
         </MemoryMap>
         <LinkerSection>
                 <sectionName>.text</sectionName>

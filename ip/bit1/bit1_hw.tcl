@@ -47,6 +47,7 @@ set_interface_property      s1 PORT_NAME_MAP ""
 set_interface_property      s1 SVD_ADDRESS_GROUP ""
 add_interface_port          s1 avs_s1_write write Input 1
 add_interface_port          s1 avs_s1_writedata writedata Input 8
+add_interface_port          s1 avs_s1_address address Input 4
 add_interface_port          s1 avs_s1_read read Input 1
 add_interface_port          s1 avs_s1_readdata readdata Output 8
 set_interface_assignment    s1 embeddedsw.configuration.isFlash 0
@@ -56,10 +57,10 @@ set_interface_assignment    s1 embeddedsw.configuration.isPrintableDevice 0
 
 add_interface               conduit_end conduit end
 set_interface_property      conduit_end associatedClock clock
-set_interface_property      conduit_end associatedReset ""
+set_interface_property      conduit_end associatedReset reset
 set_interface_property      conduit_end ENABLED true
 set_interface_property      conduit_end EXPORT_OF ""
 set_interface_property      conduit_end PORT_NAME_MAP ""
 set_interface_property      conduit_end SVD_ADDRESS_GROUP ""
-add_interface_port          conduit_end coe_bit export Bidir 1
+add_interface_port          conduit_end coe_bit export Output 1
 
