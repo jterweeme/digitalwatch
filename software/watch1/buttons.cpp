@@ -9,9 +9,11 @@
 void Buttons::init(volatile void *base)
 {
     this->base = base;
-    this->base32 = (volatile uint32_t *)base;
+    this->base32 = (uint32_t *)base;
     base32[2] = 0xf;
+#ifdef BUTTONS_IRQ
     alt_ic_isr_register(BUTTONS_IRQ_INTERRUPT_CONTROLLER_ID, BUTTONS_IRQ, isr, 0, 0);
+#endif
 }
 
 void Buttons::update()
@@ -20,16 +22,12 @@ void Buttons::update()
     {
     case BUTTON_S4:
         if (s4)         // i.v.m. null-pointer
-        {
             s4->update();
-        }
 
         return;
     case BUTTON_S5:
         if (s5)         // i.v.m. null-pointer
-        {
             s5->update();
-        }
 
         return;
     }

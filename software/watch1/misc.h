@@ -48,7 +48,6 @@ struct ds1302_struct
 
 class TimeStamp
 {
-private:
     ds1302_struct ds;
 public:
     TimeStamp(ds1302_struct ds) : ds(ds) { }
@@ -68,8 +67,6 @@ public:
 
 class Timer
 {
-
-private:
     Timer();
     Observer *rh;
     void update();
@@ -84,11 +81,6 @@ public:
 
 class Buttons
 {
-public:
-    static Buttons *getInstance();
-    void setObserver(Observer *, int);
-    void init(volatile void * const base);
-private:
     volatile void *base;
     volatile uint32_t *base32;
     void update();
@@ -98,34 +90,37 @@ private:
     Observer *s6;
     static const uint8_t BUTTON_S4 = 3;
     static const uint8_t BUTTON_S5 = 5;
+public:
+    static Buttons *getInstance();
+    void setObserver(Observer *, int);
+    void init(volatile void * const base);
 };
 
 class SegDisplay
 {
-private:
     volatile uint32_t * const handle;
     volatile uint8_t * const blinkMask;
 public:
+    void write(const uint32_t data);
+    void setBlinkMask(const uint8_t mask) { *blinkMask = mask; }
+    SegDisplay() : handle(0), blinkMask(0) { }
+
     SegDisplay(volatile uint32_t * const base) :
         handle(base),
         blinkMask((volatile uint8_t * const)base + 8)
     { }
-
-    void write(const uint32_t data);
-    void setBlinkMask(const uint8_t mask) { *blinkMask = mask; }
 };
 
 class TimeDisplay : public SegDisplay
 {
+    static uint8_t lookup[];
 public:
+    TimeDisplay() : SegDisplay() { }
     TimeDisplay(volatile uint32_t * const addr) : SegDisplay(addr) { }
     void setMinutes(const uint8_t min) { write(lookup[0] | (lookup[0] << 8)); }
     void setTime(uint8_t, uint8_t);
     void setTime(TimeStamp *);
-private:
-    static uint8_t lookup[];
 };
-
 
 #endif
 

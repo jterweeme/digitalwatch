@@ -2,7 +2,7 @@ BOARD = ask1ca
 MACHINE := -msmallc -msys-crt0='../bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp
 
 %.o:
-	nios2-elf-g++ -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc $<
+	nios2-elf-g++ -g -c -I../bsp -I../bsp/HAL/inc -I../bsp/drivers/inc $<
 
 .PHONY: all
 

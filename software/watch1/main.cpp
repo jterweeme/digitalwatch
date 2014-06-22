@@ -21,9 +21,9 @@ whilst being set.
 
 class Leds
 {
-private:
     volatile uint8_t * const handle;
 public:
+    Leds() : handle(0) { }
     Leds(volatile uint8_t * const base) : handle(base) { }
     void write(const uint8_t data) { *handle = data; }
 };
@@ -101,7 +101,6 @@ public:
 
 class TimerTick : public Observer
 {
-private:
     IWatch *watch;
 public:
     TimerTick(IWatch *watch) : watch(watch) { }
@@ -110,7 +109,6 @@ public:
 
 class ButtonS4Action : public Observer
 {
-private:
     IWatch *watch;
 public:
     ButtonS4Action(IWatch *watch) : watch(watch) { }
@@ -119,7 +117,6 @@ public:
 
 class ButtonS5Action : public Observer
 {
-private:
     IWatch *watch;
 public:
     ButtonS5Action(IWatch *watch) : watch(watch) { }
@@ -128,16 +125,14 @@ public:
 
 Watch::Watch() :
 #ifdef LEDS_BASE
-    leds((volatile uint8_t * const)LEDS_BASE),
-#else
-    leds((volatile uint8_t * const)0),
+    leds((uint8_t *)LEDS_BASE),
 #endif
 
 #ifdef SEGDISPLAY_BASE
-    segDisplay((volatile uint32_t *)SEGDISPLAY_BASE),
+    segDisplay((uint32_t *)SEGDISPLAY_BASE),
 #endif
-    uart((volatile uint32_t * const)UART_0_BASE),
-    jtagUart((volatile uint32_t * const)JTAG_UART_0_BASE)
+    uart((uint32_t *)UART_0_BASE),
+    jtagUart((uint32_t *)JTAG_UART_0_BASE)
 {
 }
 
@@ -216,7 +211,7 @@ void Watch::init()
 {
     debugger = JtagUart::getInstance();
     timer = Timer::getInstance();
-    timer->init((volatile void *)TIMER_0_BASE);
+    timer->init((void *)TIMER_0_BASE);
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
     debugger->puts("Initializing Digital Watch...\r\n");
@@ -224,7 +219,7 @@ void Watch::init()
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();
 #ifdef BUTTONS_BASE
-    buttons->init((volatile void *)BUTTONS_BASE);
+    buttons->init((void *)BUTTONS_BASE);
 #endif
     buttons->setObserver(new ButtonS4Action(this), 4);
     buttons->setObserver(new ButtonS5Action(this), 5);

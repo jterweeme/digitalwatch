@@ -42,7 +42,7 @@ const char *TimeStamp::toString()
 
 void DS1302::stop()
 {
-    reset_handle[0] &= ~(1<<1);
+    reset_handle[0] = 0;
     ::usleep(4);
 }
 
@@ -112,9 +112,9 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 {
     for (int i = 0; i <= 7; i++)
     {
-        io_handle[0] = (data >> i) & 1;
+        io_handle[0] = ((data >> i) & 1);
         ::usleep(1);
-        clk_handle[0] |= (1<<0);
+        clk_handle[0] = 1;
         ::usleep(1);
 
         if (release && i == 7)
@@ -123,7 +123,7 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
         }
         else
         {
-            clk_handle[0] &= ~(1<<0);
+            clk_handle[0] = 0;
             ::usleep(1);
         }
     }
@@ -134,9 +134,8 @@ RTC *RTCFactory::createRTC()
     Uart::getInstance()->puts("RTC Factory\r\n");
     DS1302 *test = DS1302::getInstance();
 
-    test->init((volatile uint32_t *)DS1302_IO_BASE,
-            (volatile uint8_t *)DS1302_CLK2_BASE,
-            (volatile uint8_t *)DS1302_RESET_BASE);
+    test->init((uint32_t *)DS1302_IO_BASE, (uint32_t *)DS1302_CLK_BASE,
+            (uint32_t *)DS1302_RESET_BASE);
 
     test->update();
     TimeStamp *testStamp = test->getTimeStamp();
@@ -148,7 +147,7 @@ RTC *RTCFactory::createRTC()
     return DS1302::getInstance();
 }
 
-void DS1302::init(volatile uint32_t *io, volatile uint8_t *clk, volatile uint8_t *rst)
+void DS1302::init(volatile uint32_t *io, volatile uint32_t *clk, volatile uint32_t *rst)
 {
     io_handle = io;
     clk_handle = clk;
