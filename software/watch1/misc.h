@@ -82,8 +82,8 @@ public:
 class Buttons
 {
     static Buttons *instance;
-    volatile void *base;
-    volatile uint32_t *base32;
+    volatile void * const base;
+    volatile uint32_t * const base32;
     void update();
     static void isr(void *context) { getInstance()->update(); }
     Observer *s4;
@@ -94,7 +94,7 @@ class Buttons
 public:
     static Buttons *getInstance() { return instance; }
     void setObserver(Observer *, int);
-    Buttons(volatile void * const base, unsigned ctl, unsigned irq);
+    Buttons(volatile void * const base, const unsigned ctl, const unsigned irq);
 };
 
 class SegDisplay

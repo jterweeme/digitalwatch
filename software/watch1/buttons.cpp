@@ -5,11 +5,12 @@
 #include "misc.h"
 #include <sys/alt_irq.h>
 
-Buttons::Buttons(volatile void * const base, unsigned ctl, unsigned irq)
+Buttons::Buttons(volatile void * const base, const unsigned ctl, const unsigned irq)
+  :
+    base(base),
+    base32((uint32_t *)base)
 {
     instance = this;
-    this->base = base;
-    this->base32 = (uint32_t *)base;
     base32[2] = 0xf;
 #ifdef BUTTONS_IRQ
     alt_ic_isr_register(ctl, irq, isr, 0, 0);
