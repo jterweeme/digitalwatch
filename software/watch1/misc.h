@@ -68,8 +68,8 @@ public:
 class Timer
 {
     Observer *rh;
-    volatile void *base;
-    volatile uint32_t *base32;
+    volatile void * const base;
+    volatile uint32_t * const base32;
     void update() { rh->update(); base32[0] = 0; }
     static Timer *instance;
 public:
