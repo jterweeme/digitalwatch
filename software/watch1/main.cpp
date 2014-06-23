@@ -78,7 +78,7 @@ class Watch : public IWatch
     Leds leds;
     Buttons buttons;
     TimeDisplay segDisplay;
-    Timer *timer;
+    Timer timer;
     RTC *rtc;
     Terminal *debugger;
     static const uint8_t DISPLAY_TIME_MODE = 1;
@@ -130,12 +130,11 @@ Watch::Watch() :
 #ifdef SEGDISPLAY_BASE
     segDisplay((uint32_t *)SEGDISPLAY_BASE),
 #endif
+    timer((void *)TIMER_0_BASE, TIMER_0_IRQ_INTERRUPT_CONTROLLER_ID, TIMER_0_IRQ),
     uart((uint32_t *)UART_0_BASE),
     jtagUart((uint32_t *)JTAG_UART_0_BASE)
 {
     debugger = JtagUart::getInstance();
-    timer = Timer::getInstance();
-    timer->init((void *)TIMER_0_BASE);
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
     debugger->puts("Initializing Digital Watch...\r\n");
@@ -146,7 +145,7 @@ Watch::Watch() :
     rtc = rtcFactory.createRTC();
     buttons.setObserver(new ButtonS4Action(this), 4);
     buttons.setObserver(new ButtonS5Action(this), 5);
-    timer->setObserver(new TimerTick(this));
+    timer.setObserver(new TimerTick(this));
 }
 
 DisplayTimeMode::DisplayTimeMode(IWatch *context) : AbstractMode(context)
@@ -190,12 +189,6 @@ void DisplayTimeMode::timerTick()
     context->getTimeDisplay()->setTime(ts);
 }
 
-Timer *Timer::getInstance()
-{
-    static Timer instance;
-    return &instance;
-}
-
 void Watch::nextMode()
 {
     delete mode2;
@@ -220,16 +213,16 @@ void Watch::nextMode()
     }
 }
 
-Timer::Timer()
+Timer::Timer(volatile void * const base, const unsigned ctl, const unsigned irq)
+  :
+    base(base),
+    base32((uint32_t *)base)
 {
+    instance = this;
     alt_ic_isr_register(TIMER_0_IRQ_INTERRUPT_CONTROLLER_ID, TIMER_0_IRQ, isr, 0, 0);
 }
 
-void Timer::init(volatile void *base)
-{
-    this->base = base;
-    this->base32 = (volatile uint32_t *)base;
-}
+Timer *Timer::instance;
 
 void JtagUart::putc(const char c)
 {

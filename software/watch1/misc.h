@@ -67,18 +67,17 @@ public:
 
 class Timer
 {
-    Timer();
     Observer *rh;
     volatile void *base;
     volatile uint32_t *base32;
     void update() { rh->update(); base32[0] = 0; }
+    static Timer *instance;
 public:
-    static Timer *getInstance();
+    Timer(volatile void * const base, const unsigned ctl, const unsigned irq);
+    static Timer *getInstance() { return instance; }
+    void setObserver(Observer *obs) { rh = obs; }
 private:
     static void isr(void *context) { getInstance()->update(); }
-public:
-    void setObserver(Observer *obs) { rh = obs; }
-    void init(volatile void * const base);
 };
 
 class Buttons
