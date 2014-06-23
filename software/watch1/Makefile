@@ -29,5 +29,5 @@ download: main.elf
 	nios2-download -g $<
 
 clean:
-	rm -v *.o *.elf *.hex *.flash *.png *.bak
+	rm -Rvf *.o *.elf *.hex *.flash *.png *.bak
 

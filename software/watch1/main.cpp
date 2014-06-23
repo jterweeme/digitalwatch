@@ -13,7 +13,6 @@ whilst being set.
 
 #include <system.h>
 #include <stdint.h>
-#include <unistd.h>
 #include <sys/alt_irq.h>
 #include "uart.h"
 #include "misc.h"
@@ -46,6 +45,7 @@ protected:
     IWatch *context;
 public:
     AbstractMode(IWatch *context) : context(context) { }
+    virtual void init() { }
     virtual void increase() {}
     virtual void timerTick() {}
 };
@@ -54,21 +54,27 @@ class IncrementHoursMode : public AbstractMode
 {
 public:
     IncrementHoursMode(IWatch *);
+    void init();
     void increase();
+    static const uint8_t ID = 2;
 };
 
 class IncrementMinutesMode : public AbstractMode
 {
 public:
     IncrementMinutesMode(IWatch *);
+    void init();
     void increase();
+    static const uint8_t ID = 3;
 };
 
 class DisplayTimeMode : public AbstractMode
 {
 public:
     DisplayTimeMode(IWatch *);
+    void init();
     void timerTick();
+    static const uint8_t ID = 1;
 };
 
 class Watch : public IWatch
@@ -81,9 +87,6 @@ class Watch : public IWatch
     Timer timer;
     RTC *rtc;
     Terminal *debugger;
-    static const uint8_t DISPLAY_TIME_MODE = 1;
-    static const uint8_t INCREMENT_HOURS_MODE = 2;
-    static const uint8_t INCREMENT_MINUTES_MODE = 3;
     uint8_t mode;
     AbstractMode *mode2;
 public:
@@ -135,8 +138,9 @@ Watch::Watch() :
     jtagUart((uint32_t *)JTAG_UART_0_BASE)
 {
     debugger = JtagUart::getInstance();
-    mode = DISPLAY_TIME_MODE;
+    mode = DisplayTimeMode::ID;
     mode2 = new DisplayTimeMode(this);
+    mode2->init();
     debugger->puts("Initializing Digital Watch...\r\n");
     volatile uint32_t * const clk = (uint32_t *)DS1302_CLK_BASE;
     volatile uint32_t * const io = (uint32_t *)DS1302_IO_BASE;
@@ -150,17 +154,29 @@ Watch::Watch() :
 
 DisplayTimeMode::DisplayTimeMode(IWatch *context) : AbstractMode(context)
 {
+}
+
+void DisplayTimeMode::init()
+{
     context->getLeds()->write(~1);
     context->getTimeDisplay()->setBlinkMask(0);
 }
 
 IncrementMinutesMode::IncrementMinutesMode(IWatch *context) : AbstractMode(context)
 {
+}
+
+void IncrementMinutesMode::init()
+{
     context->getLeds()->write(~4);
     context->getTimeDisplay()->setBlinkMask(3);
 }
 
 IncrementHoursMode::IncrementHoursMode(IWatch *context) : AbstractMode(context)
+{
+}
+
+void IncrementHoursMode::init()
 {
     context->getLeds()->write(~2);
     context->getTimeDisplay()->setBlinkMask(0x0c);
@@ -193,19 +209,22 @@ void Watch::nextMode()
 {
     delete mode2;
 
-    if (++mode > INCREMENT_MINUTES_MODE)
-        mode = DISPLAY_TIME_MODE;
+    if (++mode > IncrementMinutesMode::ID)
+        mode = DisplayTimeMode::ID;
 
     switch (mode)
     {
-        case DISPLAY_TIME_MODE:
+        case DisplayTimeMode::ID:
             mode2 = new DisplayTimeMode(this);
+            mode2->init();
             break;
-        case INCREMENT_HOURS_MODE:
+        case IncrementHoursMode::ID:
             mode2 = new IncrementHoursMode(this);
+            mode2->init();
             break;
-        case INCREMENT_MINUTES_MODE:
+        case IncrementMinutesMode::ID:
             mode2 = new IncrementMinutesMode(this);
+            mode2->init();
             break;
         default:
             leds.write(0xff);
