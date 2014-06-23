@@ -17,12 +17,10 @@ main.hex: main.flash
 main.flash: main.elf
 	elf2flash --epcs --after=../../$(BOARD).flash --input=$< --output=$@
 
-main.elf: main.o uart.o timer.o segment.o rtc.o buttons.o
+main.elf: main.o segment.o rtc.o buttons.o
 	nios2-elf-g++ -o main.elf -T'../bsp//linker.x' $(MACHINE) -L ../bsp $^
 
 main.o: main.cpp
-uart.o: uart.cpp uart.h
-timer.o: timer.cpp misc.h
 segment.o: segment.cpp
 rtc.o: rtc.cpp rtc.h
 buttons.o: buttons.cpp misc.h

@@ -220,6 +220,32 @@ void Watch::nextMode()
     }
 }
 
+Timer::Timer()
+{
+    alt_ic_isr_register(TIMER_0_IRQ_INTERRUPT_CONTROLLER_ID, TIMER_0_IRQ, isr, 0, 0);
+}
+
+void Timer::init(volatile void *base)
+{
+    this->base = base;
+    this->base32 = (volatile uint32_t *)base;
+}
+
+void JtagUart::putc(const char c)
+{
+    while (*ctl & 0xffff0000 == 0) { }
+    base[0] = c;
+}
+
+Uart *Uart::instance;
+JtagUart *JtagUart::instance;
+
+void Uart::putc(const char c)
+{
+    while ((base[2] & (1<<6)) == 0) { }
+    base[1] = c;
+}
+
 int main()
 {
     Watch watch;

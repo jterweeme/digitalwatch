@@ -69,12 +69,14 @@ class Timer
 {
     Timer();
     Observer *rh;
-    void update();
-    static void isr(void *context);
     volatile void *base;
     volatile uint32_t *base32;
+    void update() { rh->update(); base32[0] = 0; }
 public:
     static Timer *getInstance();
+private:
+    static void isr(void *context) { getInstance()->update(); }
+public:
     void setObserver(Observer *obs) { rh = obs; }
     void init(volatile void * const base);
 };
