@@ -121,7 +121,7 @@ public:
     TimeDisplay(volatile uint32_t * const addr) : SegDisplay(addr) { }
     void setMinutes(const uint8_t min) { write(lookup[0] | (lookup[0] << 8)); }
     void setTime(uint8_t, uint8_t);
-    void setTime(TimeStamp *);
+    void setTime(TimeStamp ts);
 };
 
 #endif

@@ -187,22 +187,22 @@ void IncrementHoursMode::increase()
 {
     RTC *rtc = context->getRTC();
     rtc->incrementHours();
-    context->getTimeDisplay()->setTime(rtc->getTimeStamp());
+    context->getTimeDisplay()->setTime(*rtc->getTimeStamp());
 }
 
 void IncrementMinutesMode::increase()
 {
     RTC *rtc = context->getRTC();
     rtc->incrementMinutes();
-    context->getTimeDisplay()->setTime(rtc->getTimeStamp());
+    context->getTimeDisplay()->setTime(*rtc->getTimeStamp());
 }
 
 void DisplayTimeMode::timerTick()
 {
     RTC *rtc = context->getRTC();
     rtc->update();
-    TimeStamp *ts = rtc->getTimeStamp();
-    context->getUart()->puts(ts->toString());
+    TimeStamp ts = *rtc->getTimeStamp();
+    context->getUart()->puts(ts.toString());
     context->getTimeDisplay()->setTime(ts);
 }
 
@@ -266,13 +266,13 @@ void TimeDisplay::setTime(const uint8_t uur, const uint8_t min)
     write(a | b << 8 | c << 16 | d << 24);
 }
 
-void TimeDisplay::setTime(TimeStamp *ts)
+void TimeDisplay::setTime(TimeStamp ts)
 {
-    const uint8_t d = lookup[ts->getHour10()];
-    uint8_t c = lookup[ts->getHour()];
+    const uint8_t d = lookup[ts.getHour10()];
+    uint8_t c = lookup[ts.getHour()];
     c &= ~0x80;
-    const uint8_t b = lookup[ts->getMinutes10()];
-    const uint8_t a = lookup[ts->getMinutes()];
+    const uint8_t b = lookup[ts.getMinutes10()];
+    const uint8_t a = lookup[ts.getMinutes()];
     write(a | b << 8 | c << 16 | d << 24);
 }
 
