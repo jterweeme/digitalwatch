@@ -78,33 +78,6 @@ public:
     void increase();
 };
 
-class Watch : public IWatch
-{
-    Uart uart;
-    JtagUart jtagUart;
-    Leds leds;
-    Buttons buttons;
-    TimeDisplay segDisplay;
-    Timer timer;
-    RTC *rtc;
-    Terminal *debugger;
-    uint8_t mode;
-    AbstractMode *mode2;
-    DisplayTimeMode dtm;
-    IncrementHoursMode ihm;
-    IncrementMinutesMode imm;
-public:
-    Watch();
-    TimeDisplay *getTimeDisplay() { return &segDisplay; }
-    Leds *getLeds() { return &leds; }
-    RTC *getRTC() { return rtc; }
-    Uart *getUart() { return &uart; }
-    Terminal *getDebugger() { return debugger; }
-    void nextMode();
-    void increment() { mode2->increase(); }
-    void timerTick() { mode2->timerTick(); }
-};
-
 class TimerTick : public Observer
 {
     IWatch *watch;
@@ -129,6 +102,36 @@ public:
     void update() { watch->increment(); }
 };
 
+class Watch : public IWatch
+{
+    Uart uart;
+    JtagUart jtagUart;
+    Leds leds;
+    Buttons buttons;
+    TimeDisplay segDisplay;
+    Timer timer;
+    RTC *rtc;
+    Terminal *debugger;
+    uint8_t mode;
+    AbstractMode *mode2;
+    DisplayTimeMode dtm;
+    IncrementHoursMode ihm;
+    IncrementMinutesMode imm;
+    TimerTick tt;
+    ButtonS4Action a4;
+    ButtonS5Action a5;
+public:
+    Watch();
+    TimeDisplay *getTimeDisplay() { return &segDisplay; }
+    Leds *getLeds() { return &leds; }
+    RTC *getRTC() { return rtc; }
+    Uart *getUart() { return &uart; }
+    Terminal *getDebugger() { return debugger; }
+    void nextMode();
+    void increment() { mode2->increase(); }
+    void timerTick() { mode2->timerTick(); }
+};
+
 Watch::Watch() :
 #ifdef LEDS_BASE
     leds((uint8_t *)LEDS_BASE),
@@ -142,7 +145,10 @@ Watch::Watch() :
     jtagUart((uint32_t *)JTAG_UART_0_BASE),
     dtm(this),
     ihm(this),
-    imm(this)
+    imm(this),
+    tt(this),
+    a4(this),
+    a5(this)
 {
     debugger = JtagUart::getInstance();
     mode = DisplayTimeMode::ID;
@@ -154,9 +160,9 @@ Watch::Watch() :
     volatile uint32_t * const rst = (uint32_t *)DS1302_RESET_BASE;
     RTCFactory rtcFactory(clk, io, rst);
     rtc = rtcFactory.createRTC();
-    buttons.setObserver(new ButtonS4Action(this), 4);
-    buttons.setObserver(new ButtonS5Action(this), 5);
-    timer.setObserver(new TimerTick(this));
+    buttons.setObserver(&a4, 4);
+    buttons.setObserver(&a5, 5);
+    timer.setObserver(&tt);
 }
 
 void DisplayTimeMode::init()

@@ -19,7 +19,6 @@ public:
 
 class FallBackRTC : public RTC
 {
-private:
     ds1302_struct rtc;
 public:
     static FallBackRTC *getInstance();
@@ -31,7 +30,6 @@ public:
 
 class DS1302 : public RTC
 {
-private:
     void write(int, uint8_t);
     volatile void *base;
     volatile uint32_t *io_handle;
