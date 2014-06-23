@@ -94,6 +94,8 @@ public:
     static Buttons *getInstance();
     void setObserver(Observer *, int);
     void init(volatile void * const base);
+    Buttons() { }
+    Buttons(volatile void * const base) { init(base); }
 };
 
 class SegDisplay

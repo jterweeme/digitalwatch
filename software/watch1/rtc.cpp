@@ -6,12 +6,11 @@
 #include "uart.h"
 #include <stdio.h>
 #include <unistd.h>
-#include <system.h>     // moet nog weg
 
 void DS1302::update()
 {
     start();
-    toggleWrite(DS1302::CLOCK_BURST_READ, true);
+    toggleWrite(CLOCK_BURST_READ, true);
     uint8_t *p = (uint8_t *)&rtc;
 
     for (int i = 0; i < 8; i++)
@@ -133,10 +132,7 @@ RTC *RTCFactory::createRTC()
 {
     Uart::getInstance()->puts("RTC Factory\r\n");
     DS1302 *test = DS1302::getInstance();
-
-    test->init((uint32_t *)DS1302_IO_BASE, (uint32_t *)DS1302_CLK_BASE,
-            (uint32_t *)DS1302_RESET_BASE);
-
+    test->init(ds1302_io, ds1302_clk, ds1302_rst);
     test->update();
     TimeStamp *testStamp = test->getTimeStamp();
     Uart::getInstance()->puts(testStamp->toString());
