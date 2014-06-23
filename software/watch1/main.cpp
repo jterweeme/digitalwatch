@@ -187,21 +187,21 @@ void IncrementHoursMode::increase()
 {
     RTC *rtc = context->getRTC();
     rtc->incrementHours();
-    context->getTimeDisplay()->setTime(*rtc->getTimeStamp());
+    context->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
 void IncrementMinutesMode::increase()
 {
     RTC *rtc = context->getRTC();
     rtc->incrementMinutes();
-    context->getTimeDisplay()->setTime(*rtc->getTimeStamp());
+    context->getTimeDisplay()->setTime(rtc->getTimeStamp());
 }
 
 void DisplayTimeMode::timerTick()
 {
     RTC *rtc = context->getRTC();
     rtc->update();
-    TimeStamp ts = *rtc->getTimeStamp();
+    TimeStamp ts = rtc->getTimeStamp();
     context->getUart()->puts(ts.toString());
     context->getTimeDisplay()->setTime(ts);
 }

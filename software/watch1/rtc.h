@@ -12,7 +12,7 @@ class RTC
 {
 public:
     virtual void update() = 0;
-    virtual TimeStamp *getTimeStamp() = 0;
+    virtual TimeStamp getTimeStamp() = 0;
     virtual void incrementHours() {}
     virtual void incrementMinutes() {}
 };
@@ -25,7 +25,7 @@ public:
     void update();
     void incrementMinutes();
     void incrementHours();
-    TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
+    TimeStamp getTimeStamp() { return TimeStamp(rtc); }
 };
 
 class DS1302 : public RTC
@@ -51,7 +51,7 @@ class DS1302 : public RTC
     ds1302_struct rtc;
     void burstWrite(uint8_t *);
 public:
-    TimeStamp *getTimeStamp() { return new TimeStamp(rtc); }
+    TimeStamp getTimeStamp() { return TimeStamp(rtc); }
     static DS1302 *getInstance();
     void init(volatile uint32_t *io, volatile uint32_t *clk, volatile uint32_t *rst);
     void incrementMinutes();

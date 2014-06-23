@@ -134,10 +134,10 @@ RTC *RTCFactory::createRTC()
     DS1302 *test = DS1302::getInstance();
     test->init(ds1302_io, ds1302_clk, ds1302_rst);
     test->update();
-    TimeStamp *testStamp = test->getTimeStamp();
-    Uart::getInstance()->puts(testStamp->toString());
+    TimeStamp testStamp = test->getTimeStamp();
+    Uart::getInstance()->puts(testStamp.toString());
 
-    if (testStamp->getHour10() > 2)
+    if (testStamp.getHour10() > 2)
         return FallBackRTC::getInstance();
 
     return DS1302::getInstance();
