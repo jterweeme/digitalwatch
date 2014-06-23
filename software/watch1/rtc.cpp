@@ -165,6 +165,16 @@ void DS1302::start()
     ::usleep(4);
 }
 
+RTCFactory::RTCFactory(volatile uint32_t * const ds1302_clk,
+    volatile uint32_t * const ds1302_io,
+    volatile uint32_t * const ds1302_rst)
+  :
+    ds1302_clk(ds1302_clk),
+    ds1302_io(ds1302_io),
+    ds1302_rst(ds1302_rst)
+{
+}
+
 FallBackRTC *FallBackRTC::getInstance()
 {
     Uart::getInstance()->puts("Get FallBackRTC instance\r\n");

@@ -63,8 +63,15 @@ public:
 
 class RTCFactory
 {
+    volatile uint32_t * const ds1302_clk;
+    volatile uint32_t * const ds1302_io;
+    volatile uint32_t * const ds1302_rst;
 public:
-    RTC *createRTC();    // kan ook in statische context aangeroepen worden
+    RTCFactory(volatile uint32_t * const ds1302_clk,
+            volatile uint32_t * const ds1302_io,
+            volatile uint32_t * const ds1302_rst);
+
+    RTC *createRTC();
 };
 #endif
 

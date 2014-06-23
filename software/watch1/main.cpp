@@ -134,6 +134,12 @@ Watch::Watch() :
     uart((uint32_t *)UART_0_BASE),
     jtagUart((uint32_t *)JTAG_UART_0_BASE)
 {
+    debugger = JtagUart::getInstance();
+    timer = Timer::getInstance();
+    timer->init((void *)TIMER_0_BASE);
+    mode = DISPLAY_TIME_MODE;
+    mode2 = new DisplayTimeMode(this);
+    debugger->puts("Initializing Digital Watch...\r\n");
 }
 
 DisplayTimeMode::DisplayTimeMode(IWatch *context) : AbstractMode(context)
@@ -209,13 +215,10 @@ void Watch::nextMode()
 
 void Watch::init()
 {
-    debugger = JtagUart::getInstance();
-    timer = Timer::getInstance();
-    timer->init((void *)TIMER_0_BASE);
-    mode = DISPLAY_TIME_MODE;
-    mode2 = new DisplayTimeMode(this);
-    debugger->puts("Initializing Digital Watch...\r\n");
-    RTCFactory rtcFactory;
+    volatile uint32_t * const clk = (uint32_t *)DS1302_CLK_BASE;
+    volatile uint32_t * const io = (uint32_t *)DS1302_IO_BASE;
+    volatile uint32_t * const rst = (uint32_t *)DS1302_RESET_BASE;
+    RTCFactory rtcFactory(clk, io, rst);
     rtc = rtcFactory.createRTC();
     buttons = Buttons::getInstance();
 #ifdef BUTTONS_BASE
