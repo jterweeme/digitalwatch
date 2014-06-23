@@ -3,18 +3,20 @@
 */
 
 #include "misc.h"
-#include <system.h>         // moet nog weg
 #include <sys/alt_irq.h>
 
-void Buttons::init(volatile void *base)
+Buttons::Buttons(volatile void * const base, unsigned ctl, unsigned irq)
 {
+    instance = this;
     this->base = base;
     this->base32 = (uint32_t *)base;
     base32[2] = 0xf;
 #ifdef BUTTONS_IRQ
-    alt_ic_isr_register(BUTTONS_IRQ_INTERRUPT_CONTROLLER_ID, BUTTONS_IRQ, isr, 0, 0);
+    alt_ic_isr_register(ctl, irq, isr, 0, 0);
 #endif
 }
+
+Buttons *Buttons::instance;
 
 void Buttons::update()
 {
@@ -53,12 +55,6 @@ void Buttons::setObserver(Observer *obs, int n)
         s6 = obs;
         return;
     }
-}
-
-Buttons *Buttons::getInstance()
-{
-    static Buttons instance;
-    return &instance;
 }
 
 

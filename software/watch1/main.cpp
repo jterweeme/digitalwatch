@@ -76,7 +76,7 @@ class Watch : public IWatch
     Uart uart;
     JtagUart jtagUart;
     Leds leds;
-    Buttons *buttons;
+    Buttons buttons;
     TimeDisplay segDisplay;
     Timer *timer;
     RTC *rtc;
@@ -96,7 +96,6 @@ public:
     void nextMode();
     void increment() { mode2->increase(); }
     void timerTick() { mode2->timerTick(); }
-    void init();
 };
 
 class TimerTick : public Observer
@@ -127,7 +126,7 @@ Watch::Watch() :
 #ifdef LEDS_BASE
     leds((uint8_t *)LEDS_BASE),
 #endif
-
+    buttons((void *)BUTTONS_BASE, BUTTONS_IRQ_INTERRUPT_CONTROLLER_ID, BUTTONS_IRQ),
 #ifdef SEGDISPLAY_BASE
     segDisplay((uint32_t *)SEGDISPLAY_BASE),
 #endif
@@ -140,6 +139,14 @@ Watch::Watch() :
     mode = DISPLAY_TIME_MODE;
     mode2 = new DisplayTimeMode(this);
     debugger->puts("Initializing Digital Watch...\r\n");
+    volatile uint32_t * const clk = (uint32_t *)DS1302_CLK_BASE;
+    volatile uint32_t * const io = (uint32_t *)DS1302_IO_BASE;
+    volatile uint32_t * const rst = (uint32_t *)DS1302_RESET_BASE;
+    RTCFactory rtcFactory(clk, io, rst);
+    rtc = rtcFactory.createRTC();
+    buttons.setObserver(new ButtonS4Action(this), 4);
+    buttons.setObserver(new ButtonS5Action(this), 5);
+    timer->setObserver(new TimerTick(this));
 }
 
 DisplayTimeMode::DisplayTimeMode(IWatch *context) : AbstractMode(context)
@@ -213,26 +220,9 @@ void Watch::nextMode()
     }
 }
 
-void Watch::init()
-{
-    volatile uint32_t * const clk = (uint32_t *)DS1302_CLK_BASE;
-    volatile uint32_t * const io = (uint32_t *)DS1302_IO_BASE;
-    volatile uint32_t * const rst = (uint32_t *)DS1302_RESET_BASE;
-    RTCFactory rtcFactory(clk, io, rst);
-    rtc = rtcFactory.createRTC();
-    buttons = Buttons::getInstance();
-#ifdef BUTTONS_BASE
-    buttons->init((void *)BUTTONS_BASE);
-#endif
-    buttons->setObserver(new ButtonS4Action(this), 4);
-    buttons->setObserver(new ButtonS5Action(this), 5);
-    timer->setObserver(new TimerTick(this));
-}
-
 int main()
 {
     Watch watch;
-    watch.init();
 
     while (true)
     {
