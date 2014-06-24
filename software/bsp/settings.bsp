@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Jun 24, 2014 6:02:31 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1403625751791</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Jun 24, 2014 6:46:07 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1403628367549</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../ask1ca.sopcinfo</SopcDesignFile>
@@ -899,62 +899,62 @@
                 <attributes>flash, memory, non-volatile</attributes>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>ds1302_io2</slaveDescriptor>
+                <slaveDescriptor>ds1302_io</slaveDescriptor>
                 <addressRange>0x00042000 - 0x0004201F</addressRange>
                 <addressSpan>32</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>timer_0</slaveDescriptor>
+                <slaveDescriptor>ds1302_io2</slaveDescriptor>
                 <addressRange>0x00042020 - 0x0004203F</addressRange>
+                <addressSpan>32</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>timer_0</slaveDescriptor>
+                <addressRange>0x00042040 - 0x0004205F</addressRange>
                 <addressSpan>32</addressSpan>
                 <attributes>timer</attributes>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>uart_0</slaveDescriptor>
-                <addressRange>0x00042040 - 0x0004205F</addressRange>
+                <addressRange>0x00042060 - 0x0004207F</addressRange>
                 <addressSpan>32</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>ds1302_io</slaveDescriptor>
-                <addressRange>0x00042060 - 0x0004206F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>ds1302_clk</slaveDescriptor>
-                <addressRange>0x00042070 - 0x0004207F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>leds</slaveDescriptor>
                 <addressRange>0x00042080 - 0x0004208F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>segdisplay</slaveDescriptor>
+                <slaveDescriptor>leds</slaveDescriptor>
                 <addressRange>0x00042090 - 0x0004209F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>ds1302_reset</slaveDescriptor>
+                <slaveDescriptor>segdisplay</slaveDescriptor>
                 <addressRange>0x000420A0 - 0x000420AF</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>buttons</slaveDescriptor>
+                <slaveDescriptor>ds1302_reset</slaveDescriptor>
                 <addressRange>0x000420B0 - 0x000420BF</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
+                <slaveDescriptor>buttons</slaveDescriptor>
+                <addressRange>0x000420C0 - 0x000420CF</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>jtag_uart_0</slaveDescriptor>
-                <addressRange>0x000420C0 - 0x000420C7</addressRange>
+                <addressRange>0x000420D0 - 0x000420D7</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>
