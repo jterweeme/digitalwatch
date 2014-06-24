@@ -8,6 +8,8 @@ module bit1top (
     input write_n,
     input [31:0] writedata,
     inout wire bidir_port,
+    output wire coe_clk,
+    output wire coe_reset,
     output reg [31:0] readdata
 );
     wire clk_en, data_in, read_mux_out, wr_strobe;
