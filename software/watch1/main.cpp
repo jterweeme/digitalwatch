@@ -11,12 +11,10 @@ pressed again the watch returns to display time mode. Time is not kept
 whilst being set.
 */
 
+#include "misc.h"
 #include <system.h>
 #include <stdint.h>
 #include <sys/alt_irq.h>
-#include "uart.h"
-#include "misc.h"
-#include "rtc.h"
 
 class Leds
 {

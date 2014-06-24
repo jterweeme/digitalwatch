@@ -17,11 +17,11 @@ main.hex: main.flash
 main.flash: main.elf
 	elf2flash --epcs --after=../../$(BOARD).flash --input=$< --output=$@
 
-main.elf: main.o rtc.o
+main.elf: main.o misc.o
 	nios2-elf-g++ -o main.elf -T'../bsp//linker.x' $(MACHINE) -L ../bsp $^
 
-main.o: main.cpp
-rtc.o: rtc.cpp rtc.h
+main.o: main.cpp misc.h
+misc.o: misc.cpp misc.h
 
 download: main.elf
 	nios2-download -g $<

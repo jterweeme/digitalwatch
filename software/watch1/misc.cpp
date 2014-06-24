@@ -2,8 +2,7 @@
 2014 Jasper ter Weeme
 */
 
-#include "rtc.h"
-#include "uart.h"
+#include "misc.h"
 #include <stdio.h>
 #include <unistd.h>
 
