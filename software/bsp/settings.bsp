@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Jun 24, 2014 11:23:09 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1403644989961</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Jun 25, 2014 12:26:36 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1403648796997</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../ask1ca.sopcinfo</SopcDesignFile>
@@ -912,31 +912,37 @@
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>leds</slaveDescriptor>
-                <addressRange>0x00042050 - 0x0004205F</addressRange>
+                <addressRange>0x00042040 - 0x0004204F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>segdisplay</slaveDescriptor>
-                <addressRange>0x00042060 - 0x0004206F</addressRange>
+                <addressRange>0x00042050 - 0x0004205F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>buttons</slaveDescriptor>
-                <addressRange>0x00042080 - 0x0004208F</addressRange>
+                <addressRange>0x00042060 - 0x0004206F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>ds1302_io</slaveDescriptor>
-                <addressRange>0x00042090 - 0x00042097</addressRange>
+                <slaveDescriptor>i2cbus_0</slaveDescriptor>
+                <addressRange>0x00042070 - 0x00042077</addressRange>
+                <addressSpan>8</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>ds1302</slaveDescriptor>
+                <addressRange>0x00042078 - 0x0004207F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>jtag_uart_0</slaveDescriptor>
-                <addressRange>0x00042098 - 0x0004209F</addressRange>
+                <addressRange>0x00042080 - 0x00042087</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>

@@ -154,8 +154,7 @@ Watch::Watch()
 {
     mode2->init();
     debugger->puts("Initializing Digital Watch...\r\n");
-    volatile void * const io = (void *)DS1302_IO_BASE;
-    RTCFactory rtcFactory(0, io, 0);
+    RTCFactory rtcFactory((void *)DS1302_BASE);
     rtc = rtcFactory.createRTC();
     buttons.setObserver(&a4, 4);
     buttons.setObserver(&a5, 5);

@@ -112,6 +112,15 @@ private:
     static void isr(void *context) { getInstance()->update(); }
 };
 
+class I2CBus
+{
+    volatile void * const base;
+    volatile uint8_t * const sda;
+    volatile uint8_t * const scl;
+public:
+    I2CBus(volatile void * const base);
+};
+
 class Buttons
 {
     static Buttons *instance;
@@ -180,7 +189,7 @@ public:
 class DS1302 : public RTC
 {
     void write(int, uint8_t);
-    volatile void * const io_base;
+    volatile void * const base;
     volatile uint8_t * const io_handle;
     volatile uint8_t * const io_direction;
     volatile uint8_t * const clk_handle;
@@ -210,14 +219,9 @@ public:
 
 class RTCFactory
 {
-    volatile void * const ds1302_clk;
-    volatile void * const ds1302_io;
-    volatile void * const ds1302_rst;
+    volatile void * const ds1302_base;
 public:
-    RTCFactory(volatile void * const ds1302_clk,
-            volatile void * const ds1302_io,
-            volatile void * const ds1302_rst);
-
+    RTCFactory(volatile void * const ds1302_base);
     RTC *createRTC();
 };
 

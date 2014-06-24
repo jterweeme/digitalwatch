@@ -1,27 +1,48 @@
+`timescale 1ns / 1ps
 
 module ds1302top(
-    input csi_clk,
-    input csi_reset_n,
-    input avs_s1_read,
-    input avs_s1_write,
-    output reg [7:0] avs_s1_readdata,
-    input [7:0] avs_s1_writedata,
+    input [2:0] address,
+    input chipselect,
+    input clk,
+    input reset_n,
+    input write_n,
+    input [7:0] writedata,
+    inout wire bidir_port,
     output reg coe_clk,
     output reg coe_reset,
-    inout reg coe_io);
+    output reg [7:0] readdata
+);
+    wire clk_en, data_in, read_mux_out, wr_strobe;
+    reg data_dir, data_out;
+    assign read_mux_out = ({1 {(address == 0)}} & data_in) | ({1 {(address == 1)}} & data_dir);
+    assign wr_strobe = chipselect && ~write_n;
+    assign bidir_port = data_dir ? data_out : 1'bZ;
+    assign data_in = bidir_port;
 
-    always @(posedge csi_clk or negedge csi_reset_n) begin
-        if (~csi_reset_n) begin
-            coe_clk <= 1'b1;
-            coe_reset <= 1'b1;
-        end else if (avs_s1_write) begin
-            coe_clk <= avs_s1_writedata[0:0];
-            coe_reset <= avs_s1_writedata[1:1];
-        end else if (avs_s1_read) begin
-            avs_s1_readdata[1:0] <= {coe_clk, coe_reset};
+    always @(posedge clk or negedge reset_n)
+        readdata <= ~reset_n ? 0 : {8'b0 | read_mux_out};
+
+    always @(posedge clk or negedge reset_n) begin
+        if (reset_n == 0) begin
+            data_out <= 0;
+            coe_clk <= 0;
+            coe_reset <= 0;
+        end else if (wr_strobe) begin
+            data_out <= address == 0 ? writedata : data_out;
+            coe_clk <= address == 2 ? writedata : coe_clk;
+            coe_reset <= address == 3 ? writedata : coe_reset;
         end
     end
 
+    always @(posedge clk or negedge reset_n) begin
+        if (reset_n == 0)
+            data_dir <= 0;
+        else if (chipselect && ~write_n && (address == 1))
+            data_dir <= writedata;
+    end
 endmodule
+
+
+
 
 

@@ -71,9 +71,17 @@ void DS1302::burstWrite(uint8_t *p)
     stop();
 }
 
+I2CBus::I2CBus(volatile void * const base)
+  :
+    base(base),
+    sda((uint8_t *)((uint8_t *)base + 1)),
+    scl((uint8_t *)((uint8_t *)base + 1))
+{
+}
+
 DS1302::DS1302(volatile void * const io)
   :
-    io_base(io),
+    base(io),
     io_handle((uint8_t *)io),
     io_direction((uint8_t *)((uint8_t *)io + 1)),
     clk_handle((uint8_t *)((uint8_t *)io + 2)),
@@ -136,7 +144,7 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 RTC *RTCFactory::createRTC()
 {
     Uart::getInstance()->puts("RTC Factory\r\n");
-    static DS1302 test(ds1302_io);
+    static DS1302 test(ds1302_base);
     test.update();
     TimeStamp testStamp = test.getTimeStamp();
     Uart::getInstance()->puts(testStamp.toString());
@@ -156,13 +164,9 @@ void DS1302::start()
     ::usleep(4);
 }
 
-RTCFactory::RTCFactory(volatile void * const ds1302_clk,
-    volatile void * const ds1302_io,
-    volatile void * const ds1302_rst)
+RTCFactory::RTCFactory(volatile void * const ds1302_base)
   :
-    ds1302_clk(ds1302_clk),
-    ds1302_io(ds1302_io),
-    ds1302_rst(ds1302_rst)
+    ds1302_base(ds1302_base)
 {
 }
 
