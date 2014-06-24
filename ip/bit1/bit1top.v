@@ -28,9 +28,8 @@ module bit1top (
     always @(posedge clk or negedge reset_n) begin
         if (reset_n == 0)
             data_out <= 0;
-        else if (clk_en)
-            if (wr_strobe)
-              data_out <= (address == 5)? data_out & ~writedata : (address == 4)? data_out | writedata : (address == 0)? writedata : data_out;
+        else if (clk_en && wr_strobe)
+            data_out <= (address == 5)? data_out & ~writedata : (address == 4)? data_out | writedata : (address == 0)? writedata : data_out;
     end
 
     always @(posedge clk or negedge reset_n) begin
