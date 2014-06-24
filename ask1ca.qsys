@@ -44,27 +44,11 @@
          type = "int";
       }
    }
-   element ds1302_clk
-   {
-      datum _sortIndex
-      {
-         value = "11";
-         type = "int";
-      }
-   }
    element ds1302_io
    {
       datum _sortIndex
       {
-         value = "12";
-         type = "int";
-      }
-   }
-   element ds1302_reset
-   {
-      datum _sortIndex
-      {
-         value = "6";
+         value = "10";
          type = "int";
       }
    }
@@ -80,7 +64,7 @@
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "8";
          type = "int";
       }
    }
@@ -96,7 +80,7 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "6";
          type = "int";
       }
    }
@@ -104,7 +88,7 @@
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "9";
          type = "int";
       }
    }
@@ -124,11 +108,19 @@
          type = "String";
       }
    }
-   element ds1302_clk.s1
+   element buttons.s1
    {
       datum baseAddress
       {
-         value = "270400";
+         value = "270464";
+         type = "String";
+      }
+   }
+   element uart_0.s1
+   {
+      datum baseAddress
+      {
+         value = "270368";
          type = "String";
       }
    }
@@ -148,22 +140,6 @@
          type = "String";
       }
    }
-   element buttons.s1
-   {
-      datum baseAddress
-      {
-         value = "270464";
-         type = "String";
-      }
-   }
-   element ds1302_reset.s1
-   {
-      datum baseAddress
-      {
-         value = "270448";
-         type = "String";
-      }
-   }
    element leds.s1
    {
       datum baseAddress
@@ -172,19 +148,11 @@
          type = "String";
       }
    }
-   element uart_0.s1
-   {
-      datum baseAddress
-      {
-         value = "270368";
-         type = "String";
-      }
-   }
    element segdisplay
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "7";
          type = "int";
       }
    }
@@ -227,7 +195,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1403638952076" />
+ <parameter name="timeStamp" value="1403644781088" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -248,21 +216,11 @@
    type="conduit"
    dir="end" />
  <interface
-   name="ds1302_reset_external_connection"
-   internal="ds1302_reset.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
    name="slave_template_0_user_interface"
    internal="segdisplay.user_interface"
    type="conduit"
    dir="end" />
  <interface name="leds" internal="leds.conduit_end" type="conduit" dir="end" />
- <interface
-   name="ds1302_clk"
-   internal="ds1302_clk.conduit_end"
-   type="conduit"
-   dir="end" />
  <interface
    name="ds1302_io"
    internal="ds1302_io.conduit_end"
@@ -380,7 +338,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='epcs_flash_controller_0.epcs_control_port' start='0x41000' end='0x41800' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x41800' end='0x42000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='epcs_flash_controller_0.epcs_control_port' start='0x41000' end='0x41800' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x41800' end='0x42000' /><slave name='timer_0.s1' start='0x42000' end='0x42020' /><slave name='uart_0.s1' start='0x42020' end='0x42040' /><slave name='ds1302_clk.s1' start='0x42040' end='0x42050' /><slave name='leds.s1' start='0x42050' end='0x42060' /><slave name='segdisplay.s0' start='0x42060' end='0x42070' /><slave name='ds1302_reset.s1' start='0x42070' end='0x42080' /><slave name='buttons.s1' start='0x42080' end='0x42090' /><slave name='ds1302_io.s1' start='0x42090' end='0x42098' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x42098' end='0x420A0' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sram_0.avalon_slave' start='0x20000' end='0x40000' /><slave name='epcs_flash_controller_0.epcs_control_port' start='0x41000' end='0x41800' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x41800' end='0x42000' /><slave name='timer_0.s1' start='0x42000' end='0x42020' /><slave name='uart_0.s1' start='0x42020' end='0x42040' /><slave name='leds.s1' start='0x42050' end='0x42060' /><slave name='segdisplay.s0' start='0x42060' end='0x42070' /><slave name='buttons.s1' start='0x42080' end='0x42090' /><slave name='ds1302_io.s1' start='0x42090' end='0x42098' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x42098' end='0x420A0' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone" />
   <parameter name="internalIrqMaskSystemInfo" value="31" />
@@ -452,24 +410,6 @@
   <parameter name="systemFrequency" value="50000000" />
  </module>
  <module
-   kind="altera_avalon_pio"
-   version="13.0.1.99.2"
-   enabled="1"
-   name="ds1302_reset">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="1" />
-  <parameter name="clockRate" value="50000000" />
- </module>
- <module
    kind="altera_avalon_jtag_uart"
    version="13.0.1.99.2"
    enabled="1"
@@ -504,9 +444,6 @@
   <parameter name="autoInitializationFileName">$${FILENAME}_epcs_flash_controller_0</parameter>
  </module>
  <module kind="bytewrite1" version="1.0" enabled="1" name="leds">
-  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
- </module>
- <module kind="bitout1" version="1.0" enabled="1" name="ds1302_clk">
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <module kind="bit1" version="1.0" enabled="1" name="ds1302_io">
@@ -623,21 +560,6 @@
    end="timer_0.irq">
   <parameter name="irqNumber" value="2" />
  </connection>
- <connection kind="clock" version="13.0" start="clk_0.clk" end="ds1302_reset.clk" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="ds1302_reset.reset" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="nios2_qsys_0.data_master"
-   end="ds1302_reset.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00042070" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection kind="clock" version="13.0" start="clk_0.clk" end="jtag_uart_0.clk" />
  <connection
    kind="reset"
@@ -730,21 +652,6 @@
    end="leds.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00042050" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection kind="clock" version="13.0" start="clk_0.clk" end="ds1302_clk.clock" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="ds1302_clk.reset" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="nios2_qsys_0.data_master"
-   end="ds1302_clk.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00042040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="clock" version="13.0" start="clk_0.clk" end="ds1302_io.clock" />

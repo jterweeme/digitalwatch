@@ -71,15 +71,13 @@ void DS1302::burstWrite(uint8_t *p)
     stop();
 }
 
-DS1302::DS1302(volatile void * const io, volatile void * const clk, volatile void * const rst)
+DS1302::DS1302(volatile void * const io)
   :
     io_base(io),
-    clk_base(clk),
-    rst_base(rst),
     io_handle((uint8_t *)io),
     io_direction((uint8_t *)((uint8_t *)io + 1)),
-    clk_handle((uint8_t *)clk),
-    reset_handle((uint8_t *)rst)
+    clk_handle((uint8_t *)((uint8_t *)io + 2)),
+    reset_handle((uint8_t *)((uint8_t *)io + 3))
 {
     write(ENABLE, 0);
     write(TRICKLE, 0);
@@ -138,7 +136,7 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 RTC *RTCFactory::createRTC()
 {
     Uart::getInstance()->puts("RTC Factory\r\n");
-    static DS1302 test(ds1302_io, ds1302_clk, ds1302_rst);
+    static DS1302 test(ds1302_io);
     test.update();
     TimeStamp testStamp = test.getTimeStamp();
     Uart::getInstance()->puts(testStamp.toString());

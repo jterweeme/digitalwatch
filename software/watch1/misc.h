@@ -181,8 +181,6 @@ class DS1302 : public RTC
 {
     void write(int, uint8_t);
     volatile void * const io_base;
-    volatile void * const clk_base;
-    volatile void * const rst_base;
     volatile uint8_t * const io_handle;
     volatile uint8_t * const io_direction;
     volatile uint8_t * const clk_handle;
@@ -203,7 +201,7 @@ class DS1302 : public RTC
     ds1302_struct rtc;
     void burstWrite(uint8_t *);
 public:
-    DS1302(volatile void * const io, volatile void * const clk, volatile void * const rst);
+    DS1302(volatile void * const io);
     TimeStamp getTimeStamp() { return TimeStamp(rtc); }
     void incrementMinutes();
     void incrementHours();
