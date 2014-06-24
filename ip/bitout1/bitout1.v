@@ -1,4 +1,4 @@
-module bit1top(
+module bitout1(
     input csi_clk,
     input csi_reset,
     input [1:0] avs_s1_address,

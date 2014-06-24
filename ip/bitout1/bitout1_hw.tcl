@@ -4,9 +4,9 @@ package require -exact qsys 13.1
 
 source ../common.tcl
 
-mymodule bit1 bit1top
+mymodule bitout1 bitout1
 
-add_fileset_file bit1top.v VERILOG PATH bit1top.v TOP_LEVEL_FILE
+add_fileset_file bitout1.v VERILOG PATH bitout1.v TOP_LEVEL_FILE
 
 add_interface               clock clock end
 set_interface_property      clock clockRate 0

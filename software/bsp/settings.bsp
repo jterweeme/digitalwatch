@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Jun 23, 2014 2:57:40 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1403528260792</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Jun 24, 2014 5:11:31 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1403622691932</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../ask1ca.sopcinfo</SopcDesignFile>
@@ -887,12 +887,6 @@
                 <Group xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         </Setting>
         <MemoryMap>
-                <slaveDescriptor>ds1302_clk</slaveDescriptor>
-                <addressRange>0x00000000 - 0x0000000F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>sram_0</slaveDescriptor>
                 <addressRange>0x00020000 - 0x0003FFFF</addressRange>
                 <addressSpan>131072</addressSpan>
@@ -923,13 +917,13 @@
                 <attributes>printable</attributes>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>leds</slaveDescriptor>
+                <slaveDescriptor>ds1302_clk</slaveDescriptor>
                 <addressRange>0x00042060 - 0x0004206F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>myrtc_0</slaveDescriptor>
+                <slaveDescriptor>leds</slaveDescriptor>
                 <addressRange>0x00042070 - 0x0004207F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
