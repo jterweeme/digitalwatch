@@ -48,7 +48,6 @@ set_interface_property      s1 SVD_ADDRESS_GROUP ""
 add_interface_port          s1 avs_s1_write write Input 1
 add_interface_port          s1 avs_s1_writedata writedata Input 32
 add_interface_port          s1 avs_s1_address address Input 2
-add_interface_port          s1 avs_s1_read read Input 1
 add_interface_port          s1 avs_s1_readdata readdata Output 32
 add_interface_port          s1 chipselect chipselect Input 1
 set_interface_assignment    s1 embeddedsw.configuration.isFlash 0
@@ -63,7 +62,7 @@ set_interface_property      conduit_end ENABLED true
 set_interface_property      conduit_end EXPORT_OF ""
 set_interface_property      conduit_end PORT_NAME_MAP ""
 set_interface_property      conduit_end SVD_ADDRESS_GROUP ""
-add_interface_port          conduit_end coe_bit export Output 1
+add_interface_port          conduit_end coe_bit export Bidir 1
 
 
 

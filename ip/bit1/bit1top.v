@@ -20,8 +20,8 @@ module bit1top(
         data_in) | ({1 {(avs_s1_address == 1)}} & data_dir);
 
     assign wr_strobe = chipselect && avs_s1_write;
-    assign bidir_port = data_dir ? data_out : 1'bZ;
-    assign data_in = bidir_port;
+    assign coe_bit = data_dir ? data_out : 1'bZ;
+    assign data_in = coe_bit;
 
     always @(posedge csi_clk or posedge csi_reset) begin
         if (csi_reset)

@@ -125,11 +125,12 @@ set_location_assignment PIN_7 -to buttons_external_connection_export[0]
 
 set_location_assignment PIN_57 -to ds1302_reset_external_connection_export
 
-set_location_assignment PIN_58 -to ds1302_io_external_connection_export
 
 set_location_assignment PIN_59 -to ds1302_clk_export
-set_location_assignment PIN_60 -to bit1_0_conduit_end_export
-set_location_assignment PIN_61 -to pio_0_external_connection_export
+set_location_assignment PIN_58 -to ds1302_io_export
+set_location_assignment PIN_60 -to ds1302_io2_export
+set_global_assignment -name TCL_SCRIPT_FILE ip/bitout1/bitout1_hw.tcl
+set_global_assignment -name VERILOG_FILE ip/bitout1/bitout1.v
 set_global_assignment -name VERILOG_FILE ip/bit1/bit1top.v
 set_global_assignment -name TCL_SCRIPT_FILE ip/bit1/bit1_hw.tcl
 set_global_assignment -name TCL_SCRIPT_FILE ip/buttons/buttons_hw.tcl
