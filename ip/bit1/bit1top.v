@@ -6,11 +6,11 @@ module bit1top (
     input clk,
     input reset_n,
     input write_n,
-    input [31:0] writedata,
+    input [7:0] writedata,
     inout wire bidir_port,
     output wire coe_clk,
     output wire coe_reset,
-    output reg [31:0] readdata
+    output reg [7:0] readdata
 );
     wire clk_en, data_in, read_mux_out, wr_strobe;
     reg data_dir, data_out;
@@ -24,7 +24,7 @@ module bit1top (
         if (reset_n == 0)
             readdata <= 0;
         else if (clk_en)
-            readdata <= {32'b0 | read_mux_out};
+            readdata <= {8'b0 | read_mux_out};
     end
 
     always @(posedge clk or negedge reset_n) begin

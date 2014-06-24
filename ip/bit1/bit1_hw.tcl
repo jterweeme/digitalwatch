@@ -46,9 +46,9 @@ set_interface_property      s1 EXPORT_OF ""
 set_interface_property      s1 PORT_NAME_MAP ""
 set_interface_property      s1 SVD_ADDRESS_GROUP ""
 add_interface_port          s1 write_n write_n Input 1
-add_interface_port          s1 writedata writedata Input 32
+add_interface_port          s1 writedata writedata Input 8
 add_interface_port          s1 address address Input 3
-add_interface_port          s1 readdata readdata Output 32
+add_interface_port          s1 readdata readdata Output 8
 add_interface_port          s1 chipselect chipselect Input 1
 set_interface_assignment    s1 embeddedsw.configuration.isFlash 0
 set_interface_assignment    s1 embeddedsw.configuration.isMemoryDevice 0
@@ -63,6 +63,8 @@ set_interface_property      conduit_end EXPORT_OF ""
 set_interface_property      conduit_end PORT_NAME_MAP ""
 set_interface_property      conduit_end SVD_ADDRESS_GROUP ""
 add_interface_port          conduit_end bidir_port export Bidir 1
+add_interface_port          conduit_end coe_clk export Output 1
+add_interface_port          conduit_end coe_reset export Output 1
 
 
 

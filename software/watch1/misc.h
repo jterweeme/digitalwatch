@@ -10,6 +10,7 @@ class Terminal
 {
 public:
     virtual void puts(const char *) = 0;
+    virtual ~Terminal() { }
 };
 
 class JtagUart : public Terminal
@@ -93,6 +94,7 @@ class Observer
 {
 public:
     virtual void update() = 0;
+    virtual ~Observer() { }
 };
 
 class Timer
@@ -161,6 +163,7 @@ public:
     virtual TimeStamp getTimeStamp() = 0;
     virtual void incrementHours() {}
     virtual void incrementMinutes() {}
+    virtual ~RTC() { }
 };
 
 class FallBackRTC : public RTC
@@ -177,10 +180,13 @@ public:
 class DS1302 : public RTC
 {
     void write(int, uint8_t);
-    volatile void *base;
-    volatile uint32_t *io_handle;
-    volatile uint32_t *reset_handle;
-    volatile uint32_t *clk_handle;
+    volatile void * const io_base;
+    volatile void * const clk_base;
+    volatile void * const rst_base;
+    volatile uint8_t * const io_handle;
+    volatile uint8_t * const io_direction;
+    volatile uint8_t * const clk_handle;
+    volatile uint8_t * const reset_handle;
     static const uint8_t SECONDS = 0x80;
     static const uint8_t MINUTES = 0x82;
     static const uint8_t HOURS = 0x84;
@@ -197,9 +203,8 @@ class DS1302 : public RTC
     ds1302_struct rtc;
     void burstWrite(uint8_t *);
 public:
+    DS1302(volatile void * const io, volatile void * const clk, volatile void * const rst);
     TimeStamp getTimeStamp() { return TimeStamp(rtc); }
-    static DS1302 *getInstance();
-    void init(volatile uint32_t *io, volatile uint32_t *clk, volatile uint32_t *rst);
     void incrementMinutes();
     void incrementHours();
     void update();
@@ -207,13 +212,13 @@ public:
 
 class RTCFactory
 {
-    volatile uint32_t * const ds1302_clk;
-    volatile uint32_t * const ds1302_io;
-    volatile uint32_t * const ds1302_rst;
+    volatile void * const ds1302_clk;
+    volatile void * const ds1302_io;
+    volatile void * const ds1302_rst;
 public:
-    RTCFactory(volatile uint32_t * const ds1302_clk,
-            volatile uint32_t * const ds1302_io,
-            volatile uint32_t * const ds1302_rst);
+    RTCFactory(volatile void * const ds1302_clk,
+            volatile void * const ds1302_io,
+            volatile void * const ds1302_rst);
 
     RTC *createRTC();
 };

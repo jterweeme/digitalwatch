@@ -40,14 +40,8 @@ const char *TimeStamp::toString()
 
 void DS1302::stop()
 {
-    reset_handle[0] = 0;
+    *reset_handle = 0;
     ::usleep(4);
-}
-
-DS1302 *DS1302::getInstance()
-{
-    static DS1302 instance;
-    return &instance;
 }
 
 uint8_t DS1302::toggleRead()
@@ -56,11 +50,11 @@ uint8_t DS1302::toggleRead()
 
     for (int i = 0; i <= 7; i++)
     {
-        clk_handle[0] = 1;
+        *clk_handle = 1;
         ::usleep(1);
-        clk_handle[0] = 0;
+        *clk_handle = 0;
         ::usleep(1);
-        io_handle[0] ? data |= (1<<i) : data &= ~(1<<i);
+        *io_handle ? data |= (1<<i) : data &= ~(1<<i);
     }
 
     return data;
@@ -75,6 +69,20 @@ void DS1302::burstWrite(uint8_t *p)
         toggleWrite(*p++, false);
 
     stop();
+}
+
+DS1302::DS1302(volatile void * const io, volatile void * const clk, volatile void * const rst)
+  :
+    io_base(io),
+    clk_base(clk),
+    rst_base(rst),
+    io_handle((uint8_t *)io),
+    io_direction((uint8_t *)((uint8_t *)io + 1)),
+    clk_handle((uint8_t *)clk),
+    reset_handle((uint8_t *)rst)
+{
+    write(ENABLE, 0);
+    write(TRICKLE, 0);
 }
 
 void DS1302::incrementHours()
@@ -110,18 +118,18 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 {
     for (int i = 0; i <= 7; i++)
     {
-        io_handle[0] = ((data >> i) & 1);
+        *io_handle = ((data >> i) & 1);
         ::usleep(1);
-        clk_handle[0] = 1;
+        *clk_handle = 1;
         ::usleep(1);
 
         if (release && i == 7)
         {
-            io_handle[1] = 0;
+            *io_direction = 0;
         }
         else
         {
-            clk_handle[0] = 0;
+            *clk_handle = 0;
             ::usleep(1);
         }
     }
@@ -130,39 +138,29 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 RTC *RTCFactory::createRTC()
 {
     Uart::getInstance()->puts("RTC Factory\r\n");
-    DS1302 *test = DS1302::getInstance();
-    test->init(ds1302_io, ds1302_clk, ds1302_rst);
-    test->update();
-    TimeStamp testStamp = test->getTimeStamp();
+    static DS1302 test(ds1302_io, ds1302_clk, ds1302_rst);
+    test.update();
+    TimeStamp testStamp = test.getTimeStamp();
     Uart::getInstance()->puts(testStamp.toString());
 
     if (testStamp.getHour10() > 2)
         return FallBackRTC::getInstance();
 
-    return DS1302::getInstance();
-}
-
-void DS1302::init(volatile uint32_t *io, volatile uint32_t *clk, volatile uint32_t *rst)
-{
-    io_handle = io;
-    clk_handle = clk;
-    reset_handle = rst;
-    write(ENABLE, 0);
-    write(TRICKLE, 0);
+    return &test;
 }
 
 void DS1302::start()
 {
-    reset_handle[0] = 0;
-    clk_handle[0] = 0;
-    io_handle[1] = 1;
-    reset_handle[0] = 1;
+    *reset_handle = 0;
+    *clk_handle = 0;
+    *io_direction = 1;
+    *reset_handle = 1;
     ::usleep(4);
 }
 
-RTCFactory::RTCFactory(volatile uint32_t * const ds1302_clk,
-    volatile uint32_t * const ds1302_io,
-    volatile uint32_t * const ds1302_rst)
+RTCFactory::RTCFactory(volatile void * const ds1302_clk,
+    volatile void * const ds1302_io,
+    volatile void * const ds1302_rst)
   :
     ds1302_clk(ds1302_clk),
     ds1302_io(ds1302_io),

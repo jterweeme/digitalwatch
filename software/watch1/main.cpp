@@ -35,6 +35,7 @@ public:
     virtual Uart *getUart() = 0;
     virtual RTC *getRTC() = 0;
     virtual TimeDisplay *getTimeDisplay() = 0;
+    virtual ~IWatch() { }
 };
 
 class AbstractMode
@@ -47,6 +48,7 @@ public:
     virtual void init() { }
     virtual void increase() {}
     virtual void timerTick() {}
+    virtual ~AbstractMode() { }
 };
 
 class DisplayTimeMode : public AbstractMode
@@ -110,11 +112,10 @@ class Watch : public IWatch
     Timer timer;
     RTC *rtc;
     Terminal *debugger;
-    uint8_t mode;
-    AbstractMode *mode2;
     DisplayTimeMode dtm;
     IncrementHoursMode ihm;
     IncrementMinutesMode imm;
+    AbstractMode *mode2;
     TimerTick tt;
     ButtonS4Action a4;
     ButtonS5Action a5;
@@ -130,7 +131,10 @@ public:
     void timerTick() { mode2->timerTick(); }
 };
 
-Watch::Watch() :
+Watch::Watch()
+  :
+    uart((uint32_t *)UART_0_BASE),
+    jtagUart((uint32_t *)JTAG_UART_0_BASE),
 #ifdef LEDS_BASE
     leds((uint8_t *)LEDS_BASE),
 #endif
@@ -139,23 +143,20 @@ Watch::Watch() :
     segDisplay((uint32_t *)SEGDISPLAY_BASE),
 #endif
     timer((void *)TIMER_0_BASE, TIMER_0_IRQ_INTERRUPT_CONTROLLER_ID, TIMER_0_IRQ),
-    uart((uint32_t *)UART_0_BASE),
-    jtagUart((uint32_t *)JTAG_UART_0_BASE),
+    debugger(&uart),
     dtm(this),
     ihm(this),
     imm(this),
+    mode2(&dtm),
     tt(this),
     a4(this),
     a5(this)
 {
-    debugger = JtagUart::getInstance();
-    mode = DisplayTimeMode::ID;
-    mode2 = &dtm;
     mode2->init();
     debugger->puts("Initializing Digital Watch...\r\n");
-    volatile uint32_t * const clk = (uint32_t *)DS1302_CLK_BASE;
-    volatile uint32_t * const io = (uint32_t *)DS1302_IO_BASE;
-    volatile uint32_t * const rst = (uint32_t *)DS1302_RESET_BASE;
+    volatile void * const clk = (void *)DS1302_CLK_BASE;
+    volatile void * const io = (void *)DS1302_IO_BASE;
+    volatile void * const rst = (void *)DS1302_RESET_BASE;
     RTCFactory rtcFactory(clk, io, rst);
     rtc = rtcFactory.createRTC();
     buttons.setObserver(&a4, 4);
