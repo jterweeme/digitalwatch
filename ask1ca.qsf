@@ -115,8 +115,7 @@ set_location_assignment PIN_38 -to slave_template_0_user_interface_1[3]
 set_location_assignment PIN_37 -to slave_template_0_user_interface_1[2]
 set_location_assignment PIN_36 -to slave_template_0_user_interface_1[1]
 set_location_assignment PIN_35 -to slave_template_0_user_interface_1[0]
-set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
-set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION ON
 set_location_assignment PIN_5 -to buttons_external_connection_export[2]
 set_location_assignment PIN_6 -to buttons_external_connection_export[1]
 set_location_assignment PIN_7 -to buttons_external_connection_export[0]
@@ -148,3 +147,4 @@ set_location_assignment PIN_59 -to ds1302_coe_clk
 set_location_assignment PIN_57 -to ds1302_coe_reset
 set_location_assignment PIN_60 -to i2cbus_0_bidir_port
 set_location_assignment PIN_61 -to i2cbus_0_coe_clk
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"

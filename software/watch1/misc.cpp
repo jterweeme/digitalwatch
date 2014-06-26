@@ -5,6 +5,7 @@
 #include "misc.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/alt_irq.h>
 
 void DS1302::update()
 {
@@ -36,6 +37,79 @@ const char *TimeStamp::toString()
         ds.Seconds10 + 48, ds.Seconds + 48);
 
     return buffer;
+}
+
+Timer::Timer(volatile void * const base, const unsigned ctl, const unsigned irq)
+  :
+    base(base),
+    base32((uint32_t *)base)
+{
+    instance = this;
+    alt_ic_isr_register(ctl, irq, isr, 0, 0);
+}
+
+void JtagUart::putc(const char c)
+{
+    while (*ctl & 0xffff0000 == 0) { }
+    base[0] = c;
+}
+
+Uart *Uart::instance;
+JtagUart *JtagUart::instance;
+Timer *Timer::instance;
+Buttons *Buttons::instance;
+
+void Uart::putc(const char c)
+{
+    while ((base[2] & (1<<6)) == 0) { }
+    base[1] = c;
+}
+
+Buttons::Buttons(volatile void * const base, const unsigned ctl, const unsigned irq)
+  :
+    base(base),
+    base32((uint32_t *)base)
+{
+    instance = this;
+    base32[2] = 0xf;
+#ifdef BUTTONS_IRQ
+    alt_ic_isr_register(ctl, irq, isr, 0, 0);
+#endif
+}
+
+void Buttons::update()
+{
+    switch (base32[0])
+    {
+    case BUTTON_S4:
+        if (s4)
+            s4->update();
+
+        return;
+    case BUTTON_S5:
+        if (s5)
+            s5->update();
+
+        return;
+    }
+
+    base32[3] = 0;
+}
+
+void Buttons::setObserver(Observer *obs, int n)
+{
+    switch (n)
+    {
+    case 4:
+        s4 = obs;
+        return;
+    case 5:
+        s5 = obs;
+        return;
+    case 6:
+        s6 = obs;
+        return;
+    }
 }
 
 void DS1302::stop()
@@ -74,8 +148,9 @@ void DS1302::burstWrite(uint8_t *p)
 I2CBus::I2CBus(volatile void * const base)
   :
     base(base),
-    sda((uint8_t *)((uint8_t *)base + 1)),
-    scl((uint8_t *)((uint8_t *)base + 1))
+    sda((uint8_t *)((uint8_t *)base + 0)),
+    sda_dir((uint8_t *)((uint8_t *)base + 1)),
+    scl((uint8_t *)((uint8_t *)base + 2))
 {
 }
 
@@ -131,7 +206,7 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 
         if (release && i == 7)
         {
-            *io_direction = 0;
+            *io_direction = INPUT;
         }
         else
         {
@@ -143,11 +218,15 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 
 RTC *RTCFactory::createRTC()
 {
-    Uart::getInstance()->puts("RTC Factory\r\n");
+    Uart *uart = Uart::getInstance();
+    uart->puts("RTC Factory\r\n");
     static DS1302 test(ds1302_base);
     test.update();
     TimeStamp testStamp = test.getTimeStamp();
-    Uart::getInstance()->puts(testStamp.toString());
+    uart->puts(testStamp.toString());
+    PCF8563 pcf(i2cBus);
+    TimeStamp testStamp2 = pcf.getTimeStamp();
+    uart->puts(testStamp2.toString());
 
     if (testStamp.getHour10() > 2)
         return FallBackRTC::getInstance();
@@ -155,18 +234,40 @@ RTC *RTCFactory::createRTC()
     return &test;
 }
 
+void PCF8563::update()
+{
+    i2cBus->start();
+    i2cBus->stop();
+}
+
 void DS1302::start()
 {
     *reset_handle = 0;
     *clk_handle = 0;
-    *io_direction = 1;
+    *io_direction = OUTPUT;
     *reset_handle = 1;
     ::usleep(4);
 }
 
+RTCFactory::RTCFactory()
+  :
+    ds1302_base(NULL),
+    i2cBus(NULL)
+{
+}
+
 RTCFactory::RTCFactory(volatile void * const ds1302_base)
   :
-    ds1302_base(ds1302_base)
+    ds1302_base(ds1302_base),
+    i2cBus(NULL)
+{
+}
+
+RTCFactory::RTCFactory(volatile void * const ds1302_base,
+    I2CBus * const i2cBus)
+  :
+    ds1302_base(ds1302_base),
+    i2cBus(i2cBus)
 {
 }
 
@@ -202,6 +303,55 @@ void FallBackRTC::incrementHours()
     }
 }
 
+void I2CBus::start()
+{
+    *sda_dir = OUTPUT;
+    *sda = 1;
+    *scl = 1;
+    ::usleep(1);
+    *sda = 0;
+    ::usleep(1);
+    *scl = 0;
+    ::usleep(1);
+}
+
+void I2CBus::stop()
+{
+    *sda_dir = OUTPUT;
+    *sda = 0;
+    *scl = 1;
+    ::usleep(1);
+    *sda = 1;
+    ::usleep(1);
+}
+
+uint8_t TimeDisplay::lookup[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
+
+void TimeDisplay::setTime(const uint8_t uur, const uint8_t min)
+{
+    const uint8_t d = lookup[uur / 10];
+    uint8_t c = lookup[uur % 10];
+    c &= ~0x80;     // dot
+    const uint8_t b = lookup[min / 10];
+    const uint8_t a = lookup[min % 10];
+    write(a | b << 8 | c << 16 | d << 24);
+}
+
+void TimeDisplay::setTime(TimeStamp ts)
+{
+    const uint8_t d = lookup[ts.getHour10()];
+    uint8_t c = lookup[ts.getHour()];
+    c &= ~0x80;
+    const uint8_t b = lookup[ts.getMinutes10()];
+    const uint8_t a = lookup[ts.getMinutes()];
+    write(a | b << 8 | c << 16 | d << 24);
+}
+
+void SegDisplay::write(const uint32_t data)
+{
+    *handle = data;
+    handle[1] = 0xffffffff;
+}
 
 void FallBackRTC::update()
 {

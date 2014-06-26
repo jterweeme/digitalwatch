@@ -16,15 +16,6 @@ whilst being set.
 #include <stdint.h>
 #include <sys/alt_irq.h>
 
-class Leds
-{
-    volatile uint8_t * const handle;
-public:
-    Leds() : handle(0) { }
-    Leds(volatile uint8_t * const base) : handle(base) { }
-    void write(const uint8_t data) { *handle = data; }
-};
-
 class IWatch
 {
 public:
@@ -108,6 +99,7 @@ class Watch : public IWatch
     JtagUart jtagUart;
     Leds leds;
     Buttons buttons;
+    I2CBus i2cBus;
     TimeDisplay segDisplay;
     Timer timer;
     RTC *rtc;
@@ -139,6 +131,7 @@ Watch::Watch()
     leds((uint8_t *)LEDS_BASE),
 #endif
     buttons((void *)BUTTONS_BASE, BUTTONS_IRQ_INTERRUPT_CONTROLLER_ID, BUTTONS_IRQ),
+    i2cBus((void *)I2CBUS_0_BASE),
 #ifdef SEGDISPLAY_BASE
     segDisplay((uint32_t *)SEGDISPLAY_BASE),
 #endif
@@ -221,113 +214,6 @@ void Watch::nextMode()
         default:
             leds.write(0xff);
             break;
-    }
-}
-
-Timer::Timer(volatile void * const base, const unsigned ctl, const unsigned irq)
-  :
-    base(base),
-    base32((uint32_t *)base)
-{
-    instance = this;
-    alt_ic_isr_register(TIMER_0_IRQ_INTERRUPT_CONTROLLER_ID, TIMER_0_IRQ, isr, 0, 0);
-}
-
-Timer *Timer::instance;
-
-void JtagUart::putc(const char c)
-{
-    while (*ctl & 0xffff0000 == 0) { }
-    base[0] = c;
-}
-
-Uart *Uart::instance;
-JtagUart *JtagUart::instance;
-
-void Uart::putc(const char c)
-{
-    while ((base[2] & (1<<6)) == 0) { }
-    base[1] = c;
-}
-
-uint8_t TimeDisplay::lookup[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
-
-void TimeDisplay::setTime(const uint8_t uur, const uint8_t min)
-{
-    const uint8_t d = lookup[uur / 10];
-    uint8_t c = lookup[uur % 10];
-    c &= ~0x80;     // dot
-    const uint8_t b = lookup[min / 10];
-    const uint8_t a = lookup[min % 10];
-    write(a | b << 8 | c << 16 | d << 24);
-}
-
-void TimeDisplay::setTime(TimeStamp ts)
-{
-    const uint8_t d = lookup[ts.getHour10()];
-    uint8_t c = lookup[ts.getHour()];
-    c &= ~0x80;
-    const uint8_t b = lookup[ts.getMinutes10()];
-    const uint8_t a = lookup[ts.getMinutes()];
-    write(a | b << 8 | c << 16 | d << 24);
-}
-
-void SegDisplay::write(const uint32_t data)
-{
-    *handle = data;
-    handle[1] = 0xffffffff;
-}
-
-Buttons::Buttons(volatile void * const base, const unsigned ctl, const unsigned irq)
-  :
-    base(base),
-    base32((uint32_t *)base)
-{
-    instance = this;
-    base32[2] = 0xf;
-#ifdef BUTTONS_IRQ
-    alt_ic_isr_register(ctl, irq, isr, 0, 0);
-#endif
-}
-
-Buttons *Buttons::instance;
-
-void Buttons::update()
-{
-    switch (base32[0])
-    {
-    case BUTTON_S4:
-        if (s4)         // i.v.m. null-pointer
-            s4->update();
-
-        return;
-    case BUTTON_S5:
-        if (s5)         // i.v.m. null-pointer
-            s5->update();
-
-        return;
-    }
-
-    base32[3] = 0;
-}
-
-/*
-Er zijn drie buttons beschikbaar
-Elk van de drie buttons heeft een enkele Observer
-*/
-void Buttons::setObserver(Observer *obs, int n)
-{
-    switch (n)
-    {
-    case 4:
-        s4 = obs;
-        return;
-    case 5:
-        s5 = obs;
-        return;
-    case 6:
-        s6 = obs;
-        return;
     }
 }
 

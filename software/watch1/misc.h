@@ -6,6 +6,15 @@
 #define _MISC_H_
 #include <stdint.h>
 
+class Leds
+{
+    volatile uint8_t * const handle;
+public:
+    Leds() : handle(0) { }
+    Leds(volatile uint8_t * const base) : handle(base) { }
+    void write(const uint8_t data) { *handle = data; }
+};
+
 class Terminal
 {
 public:
@@ -116,9 +125,18 @@ class I2CBus
 {
     volatile void * const base;
     volatile uint8_t * const sda;
+    volatile uint8_t * const sda_dir;
     volatile uint8_t * const scl;
+    static const uint8_t INPUT = 0;
+    static const uint8_t OUTPUT = 1;
 public:
     I2CBus(volatile void * const base);
+    void start();
+    void stop();
+    bool private_write(uint8_t data);
+    void private_read(uint8_t *data, bool ack);
+    void write(uint8_t devAddr, uint8_t ctlAddr, uint8_t ctlData);
+    uint8_t read(uint8_t devAddr, uint8_t ctlAddr);
 };
 
 class Buttons
@@ -175,6 +193,17 @@ public:
     virtual ~RTC() { }
 };
 
+class PCF8563 : public RTC
+{
+    static const uint8_t ADDR = 0xa3;
+    I2CBus * const i2cBus;
+    ds1302_struct rtc;
+public:
+    PCF8563(I2CBus * const i2cBus) : i2cBus(i2cBus) { }
+    TimeStamp getTimeStamp() { return TimeStamp(rtc); }
+    void update();
+};
+
 class FallBackRTC : public RTC
 {
     ds1302_struct rtc;
@@ -194,6 +223,8 @@ class DS1302 : public RTC
     volatile uint8_t * const io_direction;
     volatile uint8_t * const clk_handle;
     volatile uint8_t * const reset_handle;
+    static const uint8_t INPUT = 0;
+    static const uint8_t OUTPUT = 1;
     static const uint8_t SECONDS = 0x80;
     static const uint8_t MINUTES = 0x82;
     static const uint8_t HOURS = 0x84;
@@ -220,8 +251,11 @@ public:
 class RTCFactory
 {
     volatile void * const ds1302_base;
+    I2CBus * const i2cBus;
 public:
+    RTCFactory();
     RTCFactory(volatile void * const ds1302_base);
+    RTCFactory(volatile void * const ds1302_base, I2CBus * const i2cBus);
     RTC *createRTC();
 };
 
