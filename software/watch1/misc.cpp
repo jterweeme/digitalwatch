@@ -4,6 +4,7 @@
 
 #include "misc.h"
 #include <stdio.h>
+#include <stdarg.h>
 #include <unistd.h>
 #include <sys/alt_irq.h>
 
@@ -26,6 +27,24 @@ void DS1302::write(int address, uint8_t data)
     toggleWrite(address, false);
     toggleWrite(data, false);
     stop();
+}
+
+int Utility::sprintf(char *str, const char *format, ...)
+{
+    va_list argp;
+    va_start(argp, format);
+    
+    for (const char *p = format; *p != '\0'; p++)
+    {
+        if (*p != '%')
+        {
+            *str++ = *p;
+            continue;
+        }
+    }
+
+    va_end(argp);
+    return 0;
 }
 
 const char *TimeStamp::toString()
@@ -216,24 +235,6 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
     }
 }
 
-RTC *RTCFactory::createRTC()
-{
-    Uart *uart = Uart::getInstance();
-    uart->puts("RTC Factory\r\n");
-    static DS1302 test(ds1302_base);
-    test.update();
-    TimeStamp testStamp = test.getTimeStamp();
-    uart->puts(testStamp.toString());
-    PCF8563 pcf(i2cBus);
-    TimeStamp testStamp2 = pcf.getTimeStamp();
-    uart->puts(testStamp2.toString());
-
-    if (testStamp.getHour10() > 2)
-        return FallBackRTC::getInstance();
-
-    return &test;
-}
-
 void PCF8563::update()
 {
     i2cBus->start();
@@ -247,28 +248,6 @@ void DS1302::start()
     *io_direction = OUTPUT;
     *reset_handle = 1;
     ::usleep(4);
-}
-
-RTCFactory::RTCFactory()
-  :
-    ds1302_base(NULL),
-    i2cBus(NULL)
-{
-}
-
-RTCFactory::RTCFactory(volatile void * const ds1302_base)
-  :
-    ds1302_base(ds1302_base),
-    i2cBus(NULL)
-{
-}
-
-RTCFactory::RTCFactory(volatile void * const ds1302_base,
-    I2CBus * const i2cBus)
-  :
-    ds1302_base(ds1302_base),
-    i2cBus(i2cBus)
-{
 }
 
 FallBackRTC *FallBackRTC::getInstance()
@@ -325,13 +304,13 @@ void I2CBus::stop()
     ::usleep(1);
 }
 
-uint8_t TimeDisplay::lookup[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
+uint8_t SegDisplayEx::lookup[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
 
 void TimeDisplay::setTime(const uint8_t uur, const uint8_t min)
 {
     const uint8_t d = lookup[uur / 10];
     uint8_t c = lookup[uur % 10];
-    c &= ~0x80;     // dot
+    c &= ~DOT;
     const uint8_t b = lookup[min / 10];
     const uint8_t a = lookup[min % 10];
     write(a | b << 8 | c << 16 | d << 24);
@@ -341,7 +320,7 @@ void TimeDisplay::setTime(TimeStamp ts)
 {
     const uint8_t d = lookup[ts.getHour10()];
     uint8_t c = lookup[ts.getHour()];
-    c &= ~0x80;
+    c &= ~DOT;
     const uint8_t b = lookup[ts.getMinutes10()];
     const uint8_t a = lookup[ts.getMinutes()];
     write(a | b << 8 | c << 16 | d << 24);

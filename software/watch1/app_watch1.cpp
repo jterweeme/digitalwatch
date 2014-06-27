@@ -93,6 +93,17 @@ public:
     void update() { watch->increment(); }
 };
 
+class RTCFactory
+{
+    volatile void * const ds1302_base;
+    I2CBus * const i2cBus;
+public:
+    RTCFactory();
+    RTCFactory(volatile void * const ds1302_base);
+    RTCFactory(volatile void * const ds1302_base, I2CBus * const i2cBus);
+    RTC *createRTC();
+};
+
 class Watch : public IWatch
 {
     Uart uart;
@@ -154,22 +165,62 @@ Watch::Watch()
     timer.setObserver(&tt);
 }
 
+RTCFactory::RTCFactory()
+  :
+    ds1302_base(0),
+    i2cBus(0)
+{
+}
+
+RTCFactory::RTCFactory(volatile void * const ds1302_base)
+  :
+    ds1302_base(ds1302_base),
+    i2cBus(0)
+{
+}
+
+RTCFactory::RTCFactory(volatile void * const ds1302_base,
+    I2CBus * const i2cBus)
+  :
+    ds1302_base(ds1302_base),
+    i2cBus(i2cBus)
+{
+}
+
+RTC *RTCFactory::createRTC()
+{
+    Uart *uart = Uart::getInstance();
+    uart->puts("RTC Factory\r\n");
+    static DS1302 test(ds1302_base);
+    test.update();
+    TimeStamp testStamp = test.getTimeStamp();
+    uart->puts(testStamp.toString());
+    PCF8563 pcf(i2cBus);
+    TimeStamp testStamp2 = pcf.getTimeStamp();
+    uart->puts(testStamp2.toString());
+
+    if (testStamp.getHour10() > 2)
+        return FallBackRTC::getInstance();
+
+    return &test;
+}
+
 void DisplayTimeMode::init()
 {
     context->getLeds()->write(~1);
-    context->getTimeDisplay()->setBlinkMask(0);
+    context->getTimeDisplay()->blinkMask(0);
 }
 
 void IncrementMinutesMode::init()
 {
     context->getLeds()->write(~4);
-    context->getTimeDisplay()->setBlinkMask(3);
+    context->getTimeDisplay()->blinkMask(3);
 }
 
 void IncrementHoursMode::init()
 {
     context->getLeds()->write(~2);
-    context->getTimeDisplay()->setBlinkMask(0x0c);
+    context->getTimeDisplay()->blinkMask(0x0c);
 }
 
 void IncrementHoursMode::increase()
@@ -199,21 +250,21 @@ void Watch::nextMode()
 {
     switch (mode2->id)
     {
-        case DisplayTimeMode::ID:
-            mode2 = &ihm;
-            mode2->init();
-            break;
-        case IncrementHoursMode::ID:
-            mode2 = &imm;
-            mode2->init();
-            break;
-        case IncrementMinutesMode::ID:
-            mode2 = &dtm;
-            mode2->init();
-            break;
-        default:
-            leds.write(0xff);
-            break;
+    case DisplayTimeMode::ID:
+        mode2 = &ihm;
+        mode2->init();
+        break;
+    case IncrementHoursMode::ID:
+        mode2 = &imm;
+        mode2->init();
+        break;
+    case IncrementMinutesMode::ID:
+        mode2 = &dtm;
+        mode2->init();
+        break;
+    default:
+        leds.write(0xff);
+        break;
     }
 }
 

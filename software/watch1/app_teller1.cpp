@@ -1,6 +1,7 @@
 #include <system.h>
 #include <stdio.h>
 #include "misc.h"
+#include "mystl.h"
 
 class Teller1
 {
@@ -8,25 +9,29 @@ public:
     Teller1();
     int tel();
 private:
-    SegDisplay sd;
+    SegDisplayEx sd;
+    mstd::vector<int> nummers;
 };
 
 Teller1::Teller1()
   :
-    sd((uint32_t *)SEGDISPLAY_BASE)
+    sd((uint32_t *)SEGDISPLAY_BASE),
+    nummers(10)
 {
+    sd.blinkMask(0x00);
 }
 
 int Teller1::tel()
 {
-    while (true)
-    {
-        for (volatile int i = 0; i < 0xffff; i++)
-        {
-        }
-    }
+    nummers.push_back(1);
+    nummers.push_back(2);
+    nummers.push_back(3);
+    int som = 0;
 
-    sd.setBlinkMask(0x88);
+    for (mstd::vector<int>::iterator it = nummers.begin(); it < nummers.end(); it++)
+        som += *it;
+
+    sd.writeInt(som);
     return 0;
 }
 

@@ -6,6 +6,12 @@
 #define _MISC_H_
 #include <stdint.h>
 
+class Utility
+{
+public:
+    static int sprintf(char *str, const char *format, ...);
+};
+
 class Leds
 {
     volatile uint8_t * const handle;
@@ -160,25 +166,35 @@ public:
 class SegDisplay
 {
     volatile uint32_t * const handle;
-    volatile uint8_t * const blinkMask;
+    volatile uint8_t * const p_blinkMask;
 public:
     void write(const uint32_t data);
-    void setBlinkMask(const uint8_t mask) { *blinkMask = mask; }
-    SegDisplay() : handle(0), blinkMask(0) { }
+    void blinkMask(const uint8_t mask) { *p_blinkMask = mask; }
+    uint8_t blinkMask() { return *p_blinkMask; }
+    SegDisplay() : handle(0), p_blinkMask(0) { }
 
     SegDisplay(volatile uint32_t * const base) :
         handle(base),
-        blinkMask((volatile uint8_t * const)base + 8)
+        p_blinkMask((volatile uint8_t * const)base + 8)
     { }
 };
 
-class TimeDisplay : public SegDisplay
+class SegDisplayEx : public SegDisplay
 {
+protected:
     static uint8_t lookup[];
 public:
-    TimeDisplay() : SegDisplay() { }
-    TimeDisplay(volatile uint32_t * const addr) : SegDisplay(addr) { }
-    void setMinutes(const uint8_t min) { write(lookup[0] | (lookup[0] << 8)); }
+    SegDisplayEx() : SegDisplay() { }
+    SegDisplayEx(volatile uint32_t * const addr) : SegDisplay(addr) { }
+    void writeInt(int n) { write(lookup[n % 10]); }
+};
+
+class TimeDisplay : public SegDisplayEx
+{
+    static const uint8_t DOT = 0x80;
+public:
+    TimeDisplay() : SegDisplayEx() { }
+    TimeDisplay(volatile uint32_t * const addr) : SegDisplayEx(addr) { }
     void setTime(uint8_t, uint8_t);
     void setTime(TimeStamp ts);
 };
@@ -246,17 +262,6 @@ public:
     void incrementMinutes();
     void incrementHours();
     void update();
-};
-
-class RTCFactory
-{
-    volatile void * const ds1302_base;
-    I2CBus * const i2cBus;
-public:
-    RTCFactory();
-    RTCFactory(volatile void * const ds1302_base);
-    RTCFactory(volatile void * const ds1302_base, I2CBus * const i2cBus);
-    RTC *createRTC();
 };
 
 #endif
