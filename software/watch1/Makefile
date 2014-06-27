@@ -22,11 +22,12 @@ app_watch1.flash: app_watch1.elf
 	elf2flash --epcs --after=../../$(BOARD).flash --input=$< --output=$@
 
 app_teller1.elf: app_teller1.o misc.o
-app_watch1.elf: app_watch1.o misc.o
+app_watch1.elf: app_watch1.o misc.o mystl.o
 
 app_teller1.o: app_teller1.cpp misc.h
 app_watch1.o: app_watch1.cpp misc.h
 misc.o: misc.cpp misc.h
+mystl.o: mystl.cpp mystl.h
 
 download: $(DOWNLOAD)
 	nios2-download -g $<

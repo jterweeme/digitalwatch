@@ -6,12 +6,6 @@
 #define _MISC_H_
 #include <stdint.h>
 
-class Utility
-{
-public:
-    static int sprintf(char *str, const char *format, ...);
-};
-
 class Leds
 {
     volatile uint8_t * const handle;

@@ -3,8 +3,7 @@
 */
 
 #include "misc.h"
-#include <stdio.h>
-#include <stdarg.h>
+#include "mystl.h"
 #include <unistd.h>
 #include <sys/alt_irq.h>
 
@@ -29,32 +28,16 @@ void DS1302::write(int address, uint8_t data)
     stop();
 }
 
-int Utility::sprintf(char *str, const char *format, ...)
-{
-    va_list argp;
-    va_start(argp, format);
-    
-    for (const char *p = format; *p != '\0'; p++)
-    {
-        if (*p != '%')
-        {
-            *str++ = *p;
-            continue;
-        }
-    }
-
-    va_end(argp);
-    return 0;
-}
-
 const char *TimeStamp::toString()
 {
     static char buffer[80];
-
-    ::sprintf(buffer, "Time = %c%c:%c%c:%c%c\r\n", ds.h24.Hour10 + 48,
-        ds.h24.Hour + 48, ds.Minutes10 + 48, ds.Minutes + 48,
-        ds.Seconds10 + 48, ds.Seconds + 48);
-
+    Utility::strcpy(buffer, "Time = xx:xx:xx\r\n");
+    buffer[7]  = ds.h24.Hour10 + '0';
+    buffer[8]  = ds.h24.Hour   + '0';
+    buffer[10] = ds.Minutes10  + '0';
+    buffer[11] = ds.Minutes    + '0';
+    buffer[13] = ds.Seconds10  + '0';
+    buffer[14] = ds.Seconds    + '0';
     return buffer;
 }
 

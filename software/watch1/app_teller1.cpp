@@ -3,6 +3,13 @@
 #include "misc.h"
 #include "mystl.h"
 
+class MyVector : public mstd::vector<int>
+{
+public:
+    MyVector(size_t capacity) : mstd::vector<int>(capacity) { }
+    int sum();
+};
+
 class Teller1
 {
 public:
@@ -10,7 +17,7 @@ public:
     int tel();
 private:
     SegDisplayEx sd;
-    mstd::vector<int> nummers;
+    MyVector nummers;
 };
 
 Teller1::Teller1()
@@ -21,17 +28,22 @@ Teller1::Teller1()
     sd.blinkMask(0x00);
 }
 
+int MyVector::sum()
+{
+    int som = 0;
+
+    for (iterator it = begin(); it < end(); it++)
+        som += *it;
+
+    return som;
+}
+
 int Teller1::tel()
 {
     nummers.push_back(1);
     nummers.push_back(2);
     nummers.push_back(3);
-    int som = 0;
-
-    for (mstd::vector<int>::iterator it = nummers.begin(); it < nummers.end(); it++)
-        som += *it;
-
-    sd.writeInt(som);
+    sd.writeInt(nummers.sum());
     return 0;
 }
 
