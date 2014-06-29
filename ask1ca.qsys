@@ -116,11 +116,11 @@
          type = "String";
       }
    }
-   element uart_0.s1
+   element ds1302.s1
    {
       datum baseAddress
       {
-         value = "270368";
+         value = "270456";
          type = "String";
       }
    }
@@ -132,22 +132,6 @@
          type = "String";
       }
    }
-   element leds.s1
-   {
-      datum baseAddress
-      {
-         value = "270400";
-         type = "String";
-      }
-   }
-   element timer_0.s1
-   {
-      datum baseAddress
-      {
-         value = "270336";
-         type = "String";
-      }
-   }
    element buttons.s1
    {
       datum baseAddress
@@ -156,11 +140,27 @@
          type = "String";
       }
    }
-   element ds1302.s1
+   element leds.s1
    {
       datum baseAddress
       {
-         value = "270456";
+         value = "270400";
+         type = "String";
+      }
+   }
+   element uart_0.s1
+   {
+      datum baseAddress
+      {
+         value = "270368";
+         type = "String";
+      }
+   }
+   element timer_0.s1
+   {
+      datum baseAddress
+      {
+         value = "270336";
          type = "String";
       }
    }
@@ -211,7 +211,7 @@
  <parameter name="projectName" value="klok1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1403648387026" />
+ <parameter name="timeStamp" value="1404077443479" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -466,7 +466,7 @@
  <module kind="ds1302" version="1.0" enabled="1" name="ds1302">
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
- <module kind="bit1" version="1.0" enabled="1" name="i2cbus_0">
+ <module kind="i2cbus1" version="1.0" enabled="1" name="i2cbus_0">
   <parameter name="AUTO_CLOCK_CLOCK_RATE" value="50000000" />
  </module>
  <connection
