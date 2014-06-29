@@ -5,6 +5,7 @@
 #ifndef _MISC_H_
 #define _MISC_H_
 #include <stdint.h>
+#include "mystl.h"
 
 class Leds
 {
@@ -18,7 +19,9 @@ public:
 class Terminal
 {
 public:
-    virtual void puts(const char *) = 0;
+    virtual void putc(const char c) = 0;
+    void puts(const char *s) { while (*s) putc(*s++); }
+    void printf(const char *format, ...);
     virtual ~Terminal() { }
 };
 
@@ -31,7 +34,6 @@ public:
     JtagUart(volatile uint32_t * const base) : base(base), ctl(base + 4) { instance = this; }
     static JtagUart *getInstance() { return instance; }
     void putc(const char);
-    void puts(const char *s) { while (*s) putc(*s++); }
 };
 
 class Uart : public Terminal
@@ -43,7 +45,6 @@ public:
     static void isr(void *context) { }
     static Uart *getInstance() { return instance; }
     void putc(const char);
-    void puts(const char *s) { while (*s) putc(*s++); }
 };
 
 struct ds1302_struct
@@ -130,13 +131,13 @@ class I2CBus
     static const uint8_t INPUT = 0;
     static const uint8_t OUTPUT = 1;
 public:
+    mstd::vector<uint8_t> slaves;
     I2CBus(volatile void * const base);
+    void scan();
     void start();
     void stop();
-    bool private_write(uint8_t data);
-    void private_read(uint8_t *data, bool ack);
-    void write(uint8_t devAddr, uint8_t ctlAddr, uint8_t ctlData);
-    uint8_t read(uint8_t devAddr, uint8_t ctlAddr);
+    uint8_t write(uint8_t data);
+    uint8_t read(bool ack);
 };
 
 class Buttons
@@ -212,17 +213,6 @@ public:
     PCF8563(I2CBus * const i2cBus) : i2cBus(i2cBus) { }
     TimeStamp getTimeStamp() { return TimeStamp(rtc); }
     void update();
-};
-
-class FallBackRTC : public RTC
-{
-    ds1302_struct rtc;
-public:
-    static FallBackRTC *getInstance();
-    void update();
-    void incrementMinutes();
-    void incrementHours();
-    TimeStamp getTimeStamp() { return TimeStamp(rtc); }
 };
 
 class DS1302 : public RTC

@@ -93,6 +93,17 @@ public:
     void update() { watch->increment(); }
 };
 
+class FallBackRTC : public RTC
+{
+    ds1302_struct rtc;
+public:
+    static FallBackRTC *getInstance();
+    void update();
+    void incrementMinutes();
+    void incrementHours();
+    TimeStamp getTimeStamp() { return TimeStamp(rtc); }
+};
+
 class RTCFactory
 {
     volatile void * const ds1302_base;
@@ -185,6 +196,69 @@ RTCFactory::RTCFactory(volatile void * const ds1302_base,
     ds1302_base(ds1302_base),
     i2cBus(i2cBus)
 {
+}
+
+FallBackRTC *FallBackRTC::getInstance()
+{
+    Uart::getInstance()->puts("Get FallBackRTC instance\r\n");
+    static FallBackRTC instance;
+    return &instance;
+}
+
+void FallBackRTC::incrementMinutes()
+{
+    if (++rtc.Minutes > 9)
+    {
+        rtc.Minutes = 0;
+
+        if (++rtc.Minutes10 > 5)
+            rtc.Minutes10 = 0;
+    }
+}
+
+void FallBackRTC::incrementHours()
+{
+    if (rtc.h24.Hour10 >= 2 && rtc.h24.Hour >= 3)
+    {
+        rtc.h24.Hour10 = 0;
+        rtc.h24.Hour = 0;
+    }
+    else if (rtc.h24.Hour++ >= 9)
+    {
+        rtc.h24.Hour = 0;
+        rtc.h24.Hour10++;
+    }
+}
+
+void FallBackRTC::update()
+{
+    if (rtc.Seconds++ >= 9)
+    {   rtc.Seconds = 0;
+        rtc.Seconds10++;
+    }   else return;
+
+    if (rtc.Seconds10 > 5)
+    {   rtc.Seconds10 = 0;
+        rtc.Minutes++;
+    }   else return;
+
+    if (rtc.Minutes > 9)
+    {   rtc.Minutes = 0;
+        rtc.Minutes10++;
+    }   else return;
+
+    if (rtc.Minutes10 > 5)
+    {   rtc.Minutes10 = 0;;
+        rtc.h24.Hour++;
+    }   else return;
+
+    if (rtc.h24.Hour > 9)
+    {   rtc.h24.Hour = 0;;
+        rtc.h24.Hour10++;
+    }   else return;
+
+    if (rtc.h24.Hour10 == 2 && rtc.h24.Hour > 3)
+        rtc.h24.Hour10 = rtc.h24.Hour = 0;
 }
 
 RTC *RTCFactory::createRTC()

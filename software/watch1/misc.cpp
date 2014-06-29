@@ -6,6 +6,7 @@
 #include "mystl.h"
 #include <unistd.h>
 #include <sys/alt_irq.h>
+#include <stdarg.h>
 
 void DS1302::update()
 {
@@ -120,6 +121,62 @@ void DS1302::stop()
     ::usleep(4);
 }
 
+void Terminal::printf(const char *format, ...)
+{
+    va_list argp;
+    va_start(argp, format);
+
+    for (const char *p = format; *p != '\0'; p++)
+    {
+        if (*p != '%')
+        {
+            putc(*p);
+            continue;
+        }
+
+        switch (*++p)
+        {
+        case 'u':
+            {
+                unsigned u = va_arg(argp, unsigned);
+                
+                if (u >= 1000)
+                    break;
+
+                if (u >= 100)
+                    putc(u / 100 + '0');
+
+                if (u >= 10)
+                    putc(u / 10 % 10 + '0');
+
+                putc(u % 10 + '0');
+            }
+
+            break;
+        case 's':
+            {
+                char *s = va_arg(argp, char *);
+                puts(s);
+            }
+
+            break;
+        case 'x':
+            {
+                unsigned u = va_arg(argp, unsigned);
+                const uint8_t foo = u & 0x0f;
+                const uint8_t bar = u >> 4;
+                char high = bar < 10 ? (char)(bar + 48) : (char)(bar + 55);
+                char low = foo < 10 ? (char)(foo + 48) : (char)(foo + 55);
+                putc(high);
+                putc(low);
+            }
+            break;
+        }
+    }
+
+    va_end(argp);
+}
+
 uint8_t DS1302::toggleRead()
 {
     uint8_t data = 0;
@@ -152,8 +209,47 @@ I2CBus::I2CBus(volatile void * const base)
     base(base),
     sda((uint8_t *)((uint8_t *)base + 0)),
     sda_dir((uint8_t *)((uint8_t *)base + 1)),
-    scl((uint8_t *)((uint8_t *)base + 2))
+    scl((uint8_t *)((uint8_t *)base + 2)),
+    slaves(100)
 {
+}
+
+void I2CBus::scan()
+{
+    for (uint8_t i = 0; i < 100; i++)
+    {
+        start();
+        uint8_t foo = write(i << 1);
+        stop();
+
+        if (foo == 0)
+            slaves.push_back(i);
+    }
+}
+
+uint8_t I2CBus::write(uint8_t data)
+{
+    uint8_t mask = 0x80;
+    *sda_dir = OUTPUT;
+    
+    for (int i = 0; i < 8; i++)
+    {
+        *scl = 0;
+        *sda = (data & mask) ? 1 : 0;
+        mask >>= 1;
+        *scl = 1;
+        ::usleep(1);
+        *scl = 0;
+        ::usleep(1);
+    }
+
+    *sda_dir = 0;
+    *scl = 1;
+    ::usleep(1);
+    uint8_t rval = *sda;
+    *scl = 0;
+    ::usleep(1);
+    return rval;
 }
 
 DS1302::DS1302(volatile void * const io)
@@ -233,38 +329,6 @@ void DS1302::start()
     ::usleep(4);
 }
 
-FallBackRTC *FallBackRTC::getInstance()
-{
-    Uart::getInstance()->puts("Get FallBackRTC instance\r\n");
-    static FallBackRTC instance;
-    return &instance;
-}
-
-void FallBackRTC::incrementMinutes()
-{
-    if (++rtc.Minutes > 9)
-    {
-        rtc.Minutes = 0;
-
-        if (++rtc.Minutes10 > 5)
-            rtc.Minutes10 = 0;
-    }
-}
-
-void FallBackRTC::incrementHours()
-{
-    if (rtc.h24.Hour10 >= 2 && rtc.h24.Hour >= 3)
-    {
-        rtc.h24.Hour10 = 0;
-        rtc.h24.Hour = 0;
-    }
-    else if (rtc.h24.Hour++ >= 9)
-    {
-        rtc.h24.Hour = 0;
-        rtc.h24.Hour10++;
-    }
-}
-
 void I2CBus::start()
 {
     *sda_dir = OUTPUT;
@@ -313,37 +377,5 @@ void SegDisplay::write(const uint32_t data)
 {
     *handle = data;
     handle[1] = 0xffffffff;
-}
-
-void FallBackRTC::update()
-{
-    if (rtc.Seconds++ >= 9)
-    {   rtc.Seconds = 0;
-        rtc.Seconds10++;
-    }   else return;
-
-    if (rtc.Seconds10 > 5)
-    {   rtc.Seconds10 = 0;
-        rtc.Minutes++;
-    }   else return;
-
-    if (rtc.Minutes > 9)
-    {   rtc.Minutes = 0;
-        rtc.Minutes10++;
-    }   else return;
-
-    if (rtc.Minutes10 > 5)
-    {   rtc.Minutes10 = 0;;
-        rtc.h24.Hour++;
-    }   else return;
-
-    if (rtc.h24.Hour > 9)
-    {   rtc.h24.Hour = 0;;
-        rtc.h24.Hour10++;
-    }   else return;
-
-    if (rtc.h24.Hour10 == 2 && rtc.h24.Hour > 3)
-        rtc.h24.Hour10 = rtc.h24.Hour = 0;
-
 }
 

@@ -10,7 +10,7 @@ DOWNLOAD = app_watch1.elf
 
 .PHONY: all
 
-all: app_watch1.hex app_teller1.elf
+all: app_watch1.hex app_teller1.elf app_i2cscan.elf
 
 watch1.png: watch1.uxf
 	umlet -action=convert -format=png -filename=$< -output=$@
@@ -21,12 +21,14 @@ app_watch1.hex: app_watch1.flash
 app_watch1.flash: app_watch1.elf
 	elf2flash --epcs --after=../../$(BOARD).flash --input=$< --output=$@
 
+app_i2cscan.elf: app_i2cscan.o misc.o mystl.o
 app_teller1.elf: app_teller1.o misc.o
 app_watch1.elf: app_watch1.o misc.o mystl.o
 
-app_teller1.o: app_teller1.cpp misc.h
-app_watch1.o: app_watch1.cpp misc.h
-misc.o: misc.cpp misc.h
+app_i2cscan.o: app_i2cscan.cpp misc.h mystl.h
+app_teller1.o: app_teller1.cpp misc.h mystl.h
+app_watch1.o: app_watch1.cpp misc.h mystl.h
+misc.o: misc.cpp misc.h mystl.h
 mystl.o: mystl.cpp mystl.h
 
 download: $(DOWNLOAD)

@@ -1,5 +1,4 @@
 #include <system.h>
-#include <stdio.h>
 #include "misc.h"
 #include "mystl.h"
 
