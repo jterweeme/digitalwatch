@@ -5,7 +5,7 @@
 #include "misc.h"
 #include "mystl.h"
 #include <unistd.h>
-#include <sys/alt_irq.h>
+//#include <sys/alt_irq.h>
 #include <stdarg.h>
 
 void DS1302::update()
@@ -41,6 +41,11 @@ const char *TimeStamp::toString()
     buffer[14] = ds.Seconds    + '0';
     return buffer;
 }
+
+typedef void (*alt_isr_func)(void* isr_context);
+
+extern int alt_ic_isr_register(unsigned long ic_id, unsigned long irq, alt_isr_func isr,
+                void *isr_context, void *flags);
 
 Timer::Timer(volatile void * const base, const unsigned ctl, const unsigned irq)
   :
