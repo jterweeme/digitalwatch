@@ -204,12 +204,33 @@ public:
     virtual ~RTC() { }
 };
 
+struct PCF8563_Regs
+{
+    uint8_t control_status_1;
+    uint8_t control_status_2;
+    uint8_t vl_seconds;
+    uint8_t minutes;
+    uint8_t hours;
+    uint8_t days;
+    uint8_t weekdays;
+    uint8_t century_months;
+    uint8_t years;
+    uint8_t minute_alarm;
+    uint8_t hour_alarm;
+    uint8_t day_alarm;
+    uint8_t weekday_alarm;
+    uint8_t clkout_control;
+    uint8_t timer_control;
+    uint8_t timer;
+} __attribute__ ((packed));
+
 class PCF8563 : public RTC
 {
-    static const uint8_t ADDR = 0xa3;
+    static const uint8_t ADDR = 0x51;
     I2CBus * const i2cBus;
-    ds1302_struct rtc;
 public:
+    ds1302_struct rtc;
+    PCF8563_Regs regs;
     PCF8563(I2CBus * const i2cBus) : i2cBus(i2cBus) { }
     TimeStamp getTimeStamp() { return TimeStamp(rtc); }
     void update();

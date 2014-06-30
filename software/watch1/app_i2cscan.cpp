@@ -3,7 +3,8 @@
 
 class App
 {
-    I2CBus bus;
+    I2CBus rtcBus;
+    I2CBus eepBus;
     Uart uart;
 public:
     App();
@@ -12,7 +13,8 @@ public:
 
 App::App()
   :
-    bus((void *)I2CBUS_0_BASE),
+    rtcBus((void *)I2CBUS_0_BASE),
+    eepBus((void *)EEPROM_BASE),
     uart((uint32_t *)UART_0_BASE)
 {
     uart.puts("I2C Scanner...\r\n");
@@ -20,10 +22,20 @@ App::App()
 
 int App::run()
 {
-    bus.scan();
+    rtcBus.scan();
+    eepBus.scan();
 
-    for (mstd::vector<uint8_t>::iterator it = bus.slaves.begin(); it < bus.slaves.end(); it++)
+    for (mstd::vector<uint8_t>::iterator it = rtcBus.slaves.begin();
+            it < rtcBus.slaves.end(); it++)
+    {
         uart.printf("0x%x\r\n", *it);
+    }
+
+    for (mstd::vector<uint8_t>::iterator it = eepBus.slaves.begin();
+            it < eepBus.slaves.end(); it++)
+    {
+        uart.printf("0x%x\r\n", *it);
+    }
 
     return 0;
 }

@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Jun 29, 2014 11:56:03 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1404078963532</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Jun 30, 2014 1:44:34 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1404085474069</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/data/stenden/dpc/tmp/digitalwatch/software/bsp</BspGeneratedLocation>
         <BspSettingsFile>./settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../ask1ca.sopcinfo</SopcDesignFile>
@@ -929,20 +929,26 @@
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>i2cbus_0</slaveDescriptor>
+                <slaveDescriptor>eeprom</slaveDescriptor>
                 <addressRange>0x00042070 - 0x00042077</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>ds1302</slaveDescriptor>
+                <slaveDescriptor>i2cbus_0</slaveDescriptor>
                 <addressRange>0x00042078 - 0x0004207F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>jtag_uart_0</slaveDescriptor>
+                <slaveDescriptor>ds1302</slaveDescriptor>
                 <addressRange>0x00042080 - 0x00042087</addressRange>
+                <addressSpan>8</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>jtag_uart_0</slaveDescriptor>
+                <addressRange>0x00042088 - 0x0004208F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>

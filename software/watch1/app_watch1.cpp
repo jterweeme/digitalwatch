@@ -270,6 +270,9 @@ RTC *RTCFactory::createRTC()
     TimeStamp testStamp = test.getTimeStamp();
     uart->puts(testStamp.toString());
     PCF8563 pcf(i2cBus);
+    pcf.update();
+    uint8_t sec = ((pcf.regs.vl_seconds >> 4) & 0x7); // + (pcf.regs.vl_seconds & 0xf);
+    uart->printf("%x\r\n", sec);
     TimeStamp testStamp2 = pcf.getTimeStamp();
     uart->puts(testStamp2.toString());
 

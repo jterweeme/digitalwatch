@@ -216,7 +216,7 @@ I2CBus::I2CBus(volatile void * const base)
 
 void I2CBus::scan()
 {
-    for (uint8_t i = 0; i < 100; i++)
+    for (uint8_t i = 0; i < 129; i++)
     {
         start();
         uint8_t foo = write(i << 1);
@@ -225,6 +225,37 @@ void I2CBus::scan()
         if (foo == 0)
             slaves.push_back(i);
     }
+}
+
+uint8_t I2CBus::read(bool ack)
+{
+    uint8_t foo = 0;
+    *sda_dir = INPUT;
+    *scl = 0;
+    ::usleep(1);
+    
+    for (int i = 0; i < 8; i++)
+    {
+        foo <<= 1;
+        ::usleep(1);
+        
+        if (*sda)
+            foo |= 1;
+        
+        *scl = 0;
+        ::usleep(1);
+    }
+
+    *scl = 0;
+    *sda_dir = OUTPUT;
+    *sda = ack ? 0 : 1;
+    *scl = 1;
+    ::usleep(1);
+    *scl = 0;
+    ::usleep(1);
+    *sda = 0;
+    ::usleep(1);
+    return foo;
 }
 
 uint8_t I2CBus::write(uint8_t data)
@@ -317,6 +348,13 @@ void DS1302::toggleWrite(uint8_t data, uint8_t release)
 void PCF8563::update()
 {
     i2cBus->start();
+    i2cBus->write(ADDR << 1);
+    i2cBus->write(0x0);
+    i2cBus->start();
+    i2cBus->write((ADDR << 1) | 1);
+    regs.control_status_1 = i2cBus->read(0);
+    regs.control_status_2 = i2cBus->read(0);
+    regs.vl_seconds = i2cBus->read(1);
     i2cBus->stop();
 }
 
